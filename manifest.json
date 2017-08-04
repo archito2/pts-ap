@@ -14,20 +14,12 @@
 			"version": "0.0.0"
 		},
 		"dataSources": {
-			"DNO_GW_BUILDER_SRV": {
-				"uri": "/sap/opu/odata/dol/DNO_GW_BUILDER_SRV/",
+			"apService": {
+				"uri": "proxy_abap/sap/opu/odata/dol/AP_GW_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",
 					"localUri": "localService/metadata.xml"
-				}
-			},
-			"DNO_SERVICE": {
-				"uri": "/sap/opu/odata/dol/DNO_SERVICE/",
-				"type": "OData",
-				"settings": {
-					"odataVersion": "2.0",
-					"localUri": "localService/DNO_SERVICE/metadata.xml"
 				}
 			}
 		}
@@ -80,7 +72,7 @@
 					"bundleName": "com.dolphin.i18n.i18n"
 				}
 			},
-			"": {
+			"apModel": {
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
 					"defaultOperationMode": "Server",
@@ -88,18 +80,7 @@
 					"defaultCountMode": "None",
 					"useBatch": false
 				},
-				"dataSource": "DNO_GW_BUILDER_SRV",
-				"preload": true
-			},
-			"notes": {
-				"type": "sap.ui.model.odata.v2.ODataModel",
-				"settings": {
-					"defaultOperationMode": "Server",
-					"defaultBindingMode": "OneTime",
-					"defaultCountMode": "None",
-					"useBatch": false
-				},
-				"dataSource": "DNO_SERVICE",
+				"dataSource": "apService",
 				"preload": true
 			}
 		},

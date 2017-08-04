@@ -14,40 +14,7 @@ sap.ui.define([
        * @public
        */
       onInit: function() {
-        var oViewModel,
-          fnSetAppNotBusy,
-          iOriginalBusyDelay =
-          this.getView()
-          .getBusyIndicatorDelay(),
-          userModel = new sap.ui.model.json.JSONModel("/services/userapi/currentUser");
-        oViewModel = new JSONModel({
-          busy: true,
-          delay: 0
-        });
-        this.getView()
-          .setModel(userModel, "userapi");
-        this.setModel(
-          oViewModel,
-          "appView");
-        fnSetAppNotBusy =
-          function() {
-            oViewModel.setProperty(
-              "/busy", false);
-            oViewModel.setProperty(
-              "/delay",
-              iOriginalBusyDelay
-            );
-          };
-        this.getOwnerComponent()
-          .getModel()
-          .metadataLoaded()
-          .then(fnSetAppNotBusy);
-        // apply content density mode to root view
-        this.getView()
-          .addStyleClass(
-            this.getOwnerComponent()
-            .getContentDensityClass()
-          );
+       
         // Hacking the dolphin header to show version number
         var DolShell = this.byId("myShell-header"),
           version = this.getOwnerComponent()
