@@ -1,0 +1,97 @@
+<mvc:View 
+	xmlns:core="sap.ui.core" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns="sap.m" controllerName="com.dolphin.controller.Hitlist" 
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page title="Hitlist">
+				<content>
+					<Table id="idJEResultsTable" inset="false" items="{ path: '/Tracks', filters : [ { path : 'Source', operator : 'EQ', value1 : 'SC'}] }">
+						<columns>
+							<Column id="RECNO" width="80px">
+								<header>
+									<Label design="Bold" text="{i18n>RECORD}"></Label>
+								</header>
+							</Column>
+							<Column id="RCDAT" width="100px">
+								<header>
+									<Label design="Bold" text="{i18n>RECEIPT_DATE}"></Label>
+								</header>
+							</Column>
+							<Column id="SOURCE" width="50px">
+								<header>
+									<Label design="Bold" text="{i18n>SOURCE}"></Label>
+								</header>
+							</Column>
+							<Column id="LIFNR" width="70px">
+								<header>
+									<Label design="Bold" text="{i18n>VENDOR}"></Label>
+								</header>
+							</Column>
+							<Column id="NAME1" width="100px" demandPopin="true" popinDisplay="Inline" minScreenWidth="500px">
+								<header>
+									<Label design="Bold" text="{i18n>VENDOR_NAME}"></Label>
+								</header>
+							</Column>
+							<Column id="STATS" idth="50px">
+								<header>
+									<Label design="Bold" text="{i18n>STATUS}"></Label>
+								</header>
+							</Column>
+							<Column id="REASON_CODE" width="100px">
+								<header>
+									<Label design="Bold" text="{i18n>REASON_CODE}"></Label>
+								</header>
+							</Column>
+							<Column id="BUKRS" width="60px">
+								<header>
+									<Label design="Bold" text="{i18n>COCD}"></Label>
+								</header>
+							</Column>
+							<Column id="XBLNR" width="100px">
+								<header>
+									<Label design="Bold" text="{i18n>INVOICENUM}"></Label>
+								</header>
+							</Column>
+							<Column id="XBLDT" width="110px">
+								<header>
+									<Label design="Bold" text="{i18n>DOCUMENT_DATE}"></Label>
+								</header>
+							</Column>
+							<Column id="Amount" width="100px" hAlign="Right">
+								<header>
+									<Label design="Bold" text="{i18n>AMOUNT}"></Label>
+								</header>
+							</Column>
+							<Column id="EBELN" width="80px">
+								<header>
+									<Label design="Bold" text="{i18n>PONUM}"></Label>
+								</header>
+							</Column>
+							<Column id="PDF" width="30px" hAlign="Center"></Column>
+						</columns>
+						<items>
+							<ColumnListItem vAlign="Middle" type="Navigation" press="onListItemPressed">
+								<cells>
+									<Text text="{RecNo}" />
+									<Text text="{ ReceiptDate}" wrapping="false"/>
+									<Text text="{Source}" wrapping="true" />
+									<Text text="{Vendor}"/>
+									<Text text="{Text1}" wrapping="true"/>
+									<Text text="{Status}" wrapping="true" />
+									<Text text="{ReasonCode}" wrapping="true" />
+									<Text text="{CompanyCode}"/>
+									<Text text="{Reference}"/>
+									<Text text="{DocumentDate}" wrapping="false"/>
+									<Text text="{PurchasingDocument}"/>
+									<Button icon="sap-icon://pdf-attachment" press="showImage"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

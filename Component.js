@@ -1,7 +1,7 @@
 sap.ui.define([
   "sap/ui/core/UIComponent",
   "sap/ui/Device"
-], function(UIComponent, Device) {
+], function (UIComponent, Device) {
   "use strict";
 
   return UIComponent.extend("com.dolphin.Component", {
@@ -15,9 +15,42 @@ sap.ui.define([
      * @public
      * @override
      */
-    init: function() {
+    init: function () {
       // call the base component's init function
+      sap.ui.core.BusyIndicator.show(1000);
       UIComponent.prototype.init.apply(this, arguments);
+      sap.ui.getCore().setModel(this.getModel("i18n"), "i18n");
+      var oApModel = this.getModel('apModel');
+      oApModel.setHeaders({ 'PTSMaxHits': '50' });
+
+      oApModel.attachMetadataLoaded(function () {
+        // var oMetaData = oApModel.getServiceMetadata();
+        sap.ui.core.BusyIndicator.hide();
+        sap.m.MessageToast.show('Successfull connection to SAP established, click away');
+      });
+      // var tracksRead = new Promise(function (resolve, reject) {
+      //   oApModel.read('/Tracks', {
+      //     success: function (oData, oResponse) {
+      //       resolve(oData);
+      //     },
+      //     error: function (oError) {
+      //       reject(oError)
+      //     }
+      //   });
+      // });
+      // tracksRead.then(function(oData){
+      //   debugger;
+      // },function(oError){
+      //   debugger;
+      // });
+      // oApModel.read('/Tracks', {
+      //   success: function (oData, oResponse) {
+      //     debugger;
+      //   },
+      //   error: function (oError) {
+
+      //   }
+      // })
 
       // set the device model
       // this.setModel(models.createDeviceModel(), "device");
@@ -31,7 +64,7 @@ sap.ui.define([
      * @public
      * @override
      */
-    destroy: function() {
+    destroy: function () {
       this._oErrorHandler.destroy();
       // call the base component's destroy function
       UIComponent.prototype.destroy.apply(this, arguments);
@@ -43,7 +76,7 @@ sap.ui.define([
      * @public
      * @return {string} css class, either 'sapUiSizeCompact' or 'sapUiSizeCozy' - or an empty string if no css class should be set
      */
-    getContentDensityClass: function() {
+    getContentDensityClass: function () {
       if (this._sContentDensityClass === undefined) {
         // check whether FLP has already set the content density class; do nothing in this case
         if (jQuery(document.body).hasClass("sapUiSizeCozy") ||
