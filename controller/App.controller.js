@@ -14,7 +14,6 @@ sap.ui.define([
        * @public
        */
       onInit: function() {
-       
         // Hacking the dolphin header to show version number
         var DolShell = this.byId("myShell-header"),
           version = this.getOwnerComponent()
