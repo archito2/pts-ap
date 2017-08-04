@@ -1,0 +1,103 @@
+{
+	"welcomeFile": "/webapp/index.html",
+	"routes": [
+		{
+			"path": "/cs1",
+			"target": {
+				"type": "destination",
+				"name": "DOL_CS1",
+				"entryPath": "/"
+			},
+			"description": "Target Content Server system"
+    },
+		{
+			"path": "/cs2",
+			"target": {
+				"type": "destination",
+				"name": "DOL_CS2",
+				"entryPath": "/"
+			},
+			"description": "Target Content Server system"
+    },
+		{
+			"path": "/cs3",
+			"target": {
+				"type": "destination",
+				"name": "DOL_CS3",
+				"entryPath": "/"
+			},
+			"description": "Target Content Server system"
+    },
+		{
+			"path": "/cs4",
+			"target": {
+				"type": "destination",
+				"name": "DOL_CS4",
+				"entryPath": "/"
+			},
+			"description": "Target Content Server system"
+    },
+		{
+			"path": "/cs5",
+			"target": {
+				"type": "destination",
+				"name": "DOL_CS5",
+				"entryPath": "/"
+			},
+			"description": "Target Content Server system"
+    },
+		{
+			"path": "/resources",
+			"target": {
+				"type": "service",
+				"name": "sapui5",
+				"entryPath": "/resources"
+			},
+			"description": "SAPUI5 Resources"
+    },
+		{
+			"path": "/test-resources",
+			"target": {
+				"type": "service",
+				"name": "sapui5",
+				"entryPath": "/test-resources"
+			},
+			"description": "SAPUI5 Test Resources"
+    },
+		{
+			"path": "/sap/opu/odata",
+			"target": {
+				"type": "destination",
+				"name": "DOL_E7C",
+				"entryPath": "/sap/opu/odata"
+			},
+			"description": "E7C"
+    },
+		{
+			"path": "/services/userapi",
+			"target": {
+				"type": "service",
+				"name": "userapi"
+			}
+    }
+  ],
+	"sendWelcomeFileRedirect": true,
+	"cacheControl": [
+		{
+			"directive": "private",
+			"maxAge": 0,
+			"path": "sap-ui-cachebuster-info.json"
+    },
+		{
+			"directive": "none",
+			"maxAge": 0,
+			"path": "**.html"
+    },
+		{
+			"directive": "public",
+			"maxAge": 86400
+    }
+  ],
+	"logoutPage": "/logout.html",
+	"ui5CacheBuster": true
+}

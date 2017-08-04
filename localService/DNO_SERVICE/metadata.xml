@@ -1,0 +1,31 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="/DOL/DNO_SERVICE" xml:lang="en" sap:schema-version="1">
+            <EntityType Name="Notes" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="DocID"/>
+                </Key>
+                <Property Name="DocID" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="ArchiveDocID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ArchiveID" Type="Edm.String" Nullable="false" MaxLength="30" sap:label="ArchiveID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocType" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="DocType" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Lines" Type="Edm.String" Nullable="false" MaxLength="1024" sap:label="Lines" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityContainer Name="/DOL/DNO_SERVICE_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="NotesSet" EntityType="/DOL/DNO_SERVICE.Notes" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <FunctionImport Name="append_note" ReturnType="/DOL/DNO_SERVICE.Notes" EntitySet="NotesSet" m:HttpMethod="GET" sap:label="Notes" sap:action-for="/DOL/DNO_SERVICE.Notes">
+                    <Parameter Name="ArchiveID" Type="Edm.String" Mode="In" MaxLength="30"/>
+                    <Parameter Name="DocID" Type="Edm.String" Mode="In" MaxLength="40"/>
+                    <Parameter Name="Impv_Newnotes" Type="Edm.String" Mode="In" MaxLength="1024"/>
+                </FunctionImport>
+            </EntityContainer>
+            <atom:link
+                xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="https://e7c.cloud:443/sap/opu/odata/dol/DNO_SERVICE/$metadata"/>
+                <atom:link
+                    xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="https://e7c.cloud:443/sap/opu/odata/dol/DNO_SERVICE/$metadata"/>
+                </Schema>
+            </edmx:DataServices>
+        </edmx:Edmx>

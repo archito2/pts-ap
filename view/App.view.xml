@@ -1,0 +1,19 @@
+<mvc:View controllerName="com.dolphin.controller.App"
+   xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns="sap.m" xmlns:u="sap.ui.unified">
+	<u:Shell id="myShell" icon="img/dolphin_logo.gif" tooltip = "1">
+		<u:headItems>
+			<u:ShellHeadItem tooltip="Home" icon="sap-icon://home" press="handlePressHome"/>
+		</u:headItems>
+		<u:headEndItems>
+			<u:ShellHeadItem icon="sap-icon://log" tooltip="Logoff" press="handleLogoffPress"/>
+		</u:headEndItems>
+		<u:user>
+			<u:ShellHeadUserItem showPopupIndicator="false" image="sap-icon://person-placeholder" username="{userapi>/lastName}, {userapi>/firstName}"
+				press="handleUserItemPressed"/>
+		</u:user>
+		<u:content id="rootContent">
+			<App id="app"/>
+		</u:content>
+	</u:Shell>
+</mvc:View>
