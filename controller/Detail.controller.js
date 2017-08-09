@@ -40,12 +40,24 @@ sap.ui.define([
         this.getModel('viewModel').setProperty('/UIModel', { 'CreateMode': true });
         var sRecNo = oEvent.getParameter("arguments").RecNo;
         this._callTracksService(sRecNo);
+        this._callInvoiceItemsService(sRecNo);
       },
       _callTracksService: function (sRecNo) {
         this.getOwnerComponent().getModel('apModel')
         .read("/Tracks('" + sRecNo + "')", {
           success: function (oData, oResponse) {
             this.getModel('viewModel').setProperty('/Tracks', oData);
+          }.bind(this),
+          error: function (oData, oResponse) {
+            console.log(oResponse);
+          }
+        });
+      },
+      _callInvoiceItemsService: function (sRecNo) {
+        this.getOwnerComponent().getModel('apModel')
+        .read("/Tracks('" + sRecNo + "')/InvoiceItems", {
+          success: function (oData, oResponse) {
+            this.getModel('viewModel').setProperty('/InvoiceItems', oData);
           }.bind(this),
           error: function (oData, oResponse) {
             console.log(oResponse);

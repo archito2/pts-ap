@@ -1,0 +1,77 @@
+<core:FragmentDefinition 
+    xmlns="sap.m" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.ui.layout.form" 
+    xmlns:core="sap.ui.core" 
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Table id="idItemsTable" inset="false" items="{ path: 'viewModel>/InvoiceItems/results'}">
+        <!-- Company Code -->
+        <columns>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_BUKRST}!=='X'}">
+                <Text text="Company Code"/>
+            </Column>
+            <!-- GL Account -->
+            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_GLACCT}!=='X'}">
+                <Text text="G/L Acc"/>
+            </Column>
+            <!-- Cost Center -->
+            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_KOSTLT}!=='X'}">
+                <Text text="Cost Center"/>
+            </Column>
+            <!-- Amount -->
+            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_NETWRT}!=='X'}">
+                <Text text="Amount"/>
+            </Column>
+            <!-- Order -->
+            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_AUFNRT}!=='X'}">
+                <Text text="Order"/>
+            </Column>
+            <!-- WBS Element -->
+            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_PROJT}!=='X'}">
+                <Text text="WBS Element"/>
+            </Column>
+            <!-- Text -->
+            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_SGTXTT}!=='X'}">
+                <Text text="Text"/>
+            </Column>
+            <!-- Txcod -->
+            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_TXCODT}!=='X'}">
+                <Text text="Tax Code"/>
+            </Column>
+            <!-- Profit Center -->
+            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_PRCTRT}!=='X'}">
+                <Text text="Profit Center"/>
+            </Column>
+            <!-- Sdate -->
+            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_SDATET}!=='X'}">
+                <Text text="Date"/>
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+                <cells>
+                    <!-- Company Code -->
+                    <Text text="{viewModel>Bukrs}"/>
+                    <!-- GL Account -->
+                    <Text text="{viewModel>Glacc}"/>
+                    <!-- Cost Center -->
+                    <Text text="{viewModel>Kostl}"/>
+                    <!-- Amount -->
+                    <Text text="{viewModel>Netwr}"/>
+                    <!-- Order -->
+                    <Text text="{viewModel>Aufnr}"/>
+                    <!-- WBS -->
+                    <Text text="{viewModel>Projk}"/>
+                    <!-- Text -->
+                    <Text text="{viewModel>Sgtxt}"/>
+                    <!-- Txcod -->
+                    <Text text="{viewModel>Mwskz}"/>
+                    <!-- Profit Center -->
+                    <Text text="{viewModel>Prctr}"/>
+                    <!-- Sdate -->
+                    <Text text="{viewModel>Sdate}"/>
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</core:FragmentDefinition>
