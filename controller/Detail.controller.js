@@ -24,6 +24,10 @@ sap.ui.define([
       /* =========================================================== */
       formatDate: function (date) {
       },
+      formatURL:function(sUrl){
+        return "<iframe style=\"border:none; overflow: hidden; height: 100%; width: 95%; position: absolute;\" height=\"100%\" width=\"100%\" src=" +
+											sUrl + "></iframe>";
+      },
       /* =========================================================== */
       /* event handlers                                              */
       /* =========================================================== */
