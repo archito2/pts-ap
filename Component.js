@@ -17,46 +17,36 @@ sap.ui.define([
      */
     init: function () {
       // call the base component's init function
-      sap.ui.core.BusyIndicator.show(1000);
+      sap.ui.core.BusyIndicator.show();
       UIComponent.prototype.init.apply(this, arguments);
-      sap.ui.getCore().setModel(this.getModel("i18n"), "i18n");
       var oApModel = this.getModel('apModel');
       oApModel.setHeaders({ 'PTSMaxHits': '50' });
-
-      oApModel.attachMetadataLoaded(function () {
-        // var oMetaData = oApModel.getServiceMetadata();
-        sap.ui.core.BusyIndicator.hide();
-        sap.m.MessageToast.show('Successfull connection to SAP established, click away');
-      });
-      // var tracksRead = new Promise(function (resolve, reject) {
-      //   oApModel.read('/Tracks', {
-      //     success: function (oData, oResponse) {
-      //       resolve(oData);
-      //     },
-      //     error: function (oError) {
-      //       reject(oError)
-      //     }
-      //   });
-      // });
-      // tracksRead.then(function(oData){
-      //   debugger;
-      // },function(oError){
-      //   debugger;
-      // });
-      // oApModel.read('/Tracks', {
-      //   success: function (oData, oResponse) {
+      oApModel.metadataLoaded()
+        .then(this._callUserDetailsService())
+        .then(this._callStatusSetServive())
+        .then(function(){
+          sap.ui.core.BusyIndicator.hide();
+          this.getRouter().initialize();    
+        }.bind(this))
+        .catch(function(oError){
+          debugger;
+        })
+      // oApModel.metadataLoaded().then(function () {
+      //   sap.m.MessageToast.show('Connection to SAP Gateway is successfull');
+      //   this._callUserDetailsService().then(function () {
       //     debugger;
-      //   },
-      //   error: function (oError) {
+      //     this.getRouter().initialize();
+      //   }.bind(this),
+      //     function (oError) {
+      //       debugger;
+      //     })
+      // }.bind(this));
+      oApModel.attachMetadataFailed(function () {
+        sap.ui.core.BusyIndicator.hide();
+        sap.m.MessageToast.show('Connection to SAP Gateway is failed!!!');
+      })
 
-      //   }
-      // })
 
-      // set the device model
-      // this.setModel(models.createDeviceModel(), "device");
-
-      // create the views based on the url/hash
-      this.getRouter().initialize();
     },
     /**
      * The component is destroyed by UI5 automatically.
@@ -91,6 +81,37 @@ sap.ui.define([
         }
       }
       return this._sContentDensityClass;
+    },
+    _callUserDetailsService: function (oEvent) {
+      return new Promise(function (resolve, reject) {
+        this.getModel('apModel').read("/UserListSet", {
+          success: function (oData, oResponse) {
+            sap.ui.getCore().setModel(oData, 'userModel');
+            resolve();
+          }.bind(this),
+          error: function (oError) {
+            reject(oError);
+          }.bind(this)
+        })
+      }.bind(this));
+    },
+    _callStatusSetServive: function (oEvent) {
+      return new Promise(function (resolve, reject) {
+        this.getModel('apModel').read("/StatusSet", {
+          success: function (oData, oResponse) {
+            var oWebStatus = oData.results.filter((item) => { return item.StatusNum.startsWith('WEB_') })
+              .reduce(function (obj, item) {
+                obj[item.StatusNum] = item.Description;
+                return obj;
+              }, {});
+            sap.ui.getCore().setModel(oWebStatus,'configModel');
+            resolve(oWebStatus);
+          }.bind(this),
+          error: function (oError) {
+            reject(oError);
+          }.bind(this)
+        })
+      }.bind(this));
     }
   });
 });

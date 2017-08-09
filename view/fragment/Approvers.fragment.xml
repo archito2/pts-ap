@@ -1,0 +1,38 @@
+<core:FragmentDefinition 
+    xmlns="sap.m" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.ui.layout.form" 
+    xmlns:core="sap.ui.core" 
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+   <Table id="idApproversTable" inset="false" 
+	items="{ path: 'viewModel>/Approvers/results'}">
+		<columns>
+			<Column>
+				<Text text="Approver ID"/>
+			</Column>
+			<Column>
+				<Text text="Decision"/>
+			</Column>
+			<Column>
+				<Text text="Current"/>
+			</Column>
+			<Column>
+				<Text text="Sequnce"/>
+			</Column>
+			<Column>
+				<Text text="Approver Name"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem vAlign="Middle" >
+				<cells>
+					<Text text="{viewModel>ApproverID}"/>
+					<Text text="{viewModel>Decision}"/>
+					<Text text="{viewModel>Curr}"/>
+					<Text text="{viewModel>Seq}"/>
+					<Text text="{viewModel>ApproverName}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

@@ -1,0 +1,42 @@
+<mvc:View 
+	xmlns:core="sap.ui.core" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns="sap.m" controllerName="com.dolphin.controller.Detail" 
+	xmlns:html="http://www.w3.org/1999/xhtml" class="sapUiSizeCompact">
+	<App>
+		<pages>
+			<Page title="Hitlist" showHeader= "false">
+				<content>
+					<IconTabBar id="idHeadIconTabBar" select="handleIconTabBarSelect" class="sapUiResponsiveContentPadding">
+						<items>
+							<IconTabFilter icon="sap-icon://header" text="Header" key="Ok">
+								<content>
+									<core:Fragment fragmentName="com.dolphin.view.fragment.HeaderDetails" type="XML"/>
+								</content>
+							</IconTabFilter>
+							<IconTabFilter icon="sap-icon://employee-approvals"  text="Approvers" key="Ok">
+								<content>
+									<core:Fragment fragmentName="com.dolphin.view.fragment.Approvers" type="XML"/>
+								</content>
+							</IconTabFilter>
+							<IconTabFilter icon="sap-icon://comment"  text="Comments" key="Ok">
+								<content>
+									<core:Fragment fragmentName="com.dolphin.view.fragment.Notes" type="XML"/>
+								</content>
+							</IconTabFilter>
+						</items>
+					</IconTabBar>
+					<IconTabBar id="idItemIconTabBar" select="handleIconTabBarSelect" class="sapUiResponsiveContentPadding">
+						<items>
+							<IconTabFilter id="idIconTabFilterItems" icon="sap-icon://begin"  text="Items" key="Ok">
+								<content>
+									<core:Fragment fragmentName="com.dolphin.view.fragment.Items" type="XML"/>
+								</content>
+							</IconTabFilter>
+						</items>
+					</IconTabBar>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

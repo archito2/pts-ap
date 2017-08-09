@@ -1,8 +1,9 @@
 sap.ui.define([
   "com/dolphin/controller/BaseController",
   "sap/ui/model/json/JSONModel",
-  "com/dolphin/util/Formatter"
-], function (BaseController, JSONModel, Formatter) {
+  "com/dolphin/util/Formatter",
+  "sap/m/MessageToast"
+], function (BaseController, JSONModel, Formatter, MessageToast) {
   "use strict";
   return BaseController.extend(
     "com.dolphin.controller.Hitlist", {
@@ -14,8 +15,7 @@ sap.ui.define([
        * @public
        */
       onInit: function () {
-        var oApModel = this.getOwnerComponent().getModel('apModel');
-        this.getView().setModel(oApModel);
+        this._searchTracks();
       },
       /* =========================================================== */
       /* formatter methods                                           */
@@ -40,6 +40,25 @@ sap.ui.define([
       },
       handleLogoffPress: function (oEvent) {
         sap.m.URLHelper.redirect("/logout.html", false);
+      },
+      handleSearchTracks: function (oEvent) {
+      },
+      handleDetailRowSelect: function (oEvent) {
+        this.getRouter().navTo('apDetail', { RecNo: oEvent.getSource().getBindingContext('tracksModel').getProperty().RecNo });
+      },
+      _searchTracks: function (aFilters) {
+        this
+          .getOwnerComponent()
+          .getModel('apModel')
+          .read('/Tracks', {
+            success: function (oData) {
+              this.setModel(new JSONModel(oData), 'tracksModel');
+              this.getModel('tracksModel').setProperty('/number', oData.results.length);
+            }.bind(this),
+            error: function (oError) {
+
+            }.bind(this)
+          });
       }
     });
 });

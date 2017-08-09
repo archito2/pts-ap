@@ -1,0 +1,122 @@
+<core:FragmentDefinition 
+    xmlns="sap.m" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.ui.layout.form" 
+    xmlns:core="sap.ui.core" 
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Table id="idItemsTable" inset="false" items="{ path: 'viewModel>/Items/results'}">
+        <columns>
+            <Column>
+                <Text text="Expense Type"/>
+            </Column>
+            <Column/>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_EXP_AMOUNTT}!=='X'}">
+                <Text text="Amount"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_EXP_CURRENCYT}!=='X'}">
+                <Text text="Currency"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_EXP_LAND1}!=='X'}">
+                <Text text="Country"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_EXP_DATE1}!=='X'}">
+                <Text text="Expense Date"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_NETWRT}!=='X'}">
+                <Text text="Converted Amount"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_GLACCT}!=='X'}">
+                <Text text="G/L"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_GLTXTT}!=='X'}">
+                <Text text="G/L Description"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_KOSTLT}!=='X'}">
+                <Text text="Cost Center"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_KOSTLTXTT}!=='X'}">
+                <Text text="Cost Center Description"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_CRG_TYPET}!=='X'}">
+                <Text text="Payment Method"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_AUFNRT}!=='X'}">
+                <Text text="Order"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_PRCTRT}!=='X'}">
+                <Text text="Profit Center"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_PPRCTT}!=='X'}">
+                <Text text="Partner Profit Center"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_PROJKT}!=='X'}">
+                <Text text="WBS Element"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_FKBERT}!=='X'}">
+                <Text text="Functional Area"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_BUKRST}!=='X'}">
+                <Text text="Company Code"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_SGTXTT}!=='X'}">
+                <Text text="Line Item Text"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_FISTLT}!=='X'}">
+                <Text text="Funds Center"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_GEBERT}!=='X'}">
+                <Text text="Fund"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_XREF1T}!=='X'}">
+                <Text text="Building Unit"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_XREF2T}!=='X'}">
+                <Text text="Work Order"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_VATT}!=='X'}">
+                <Text text="VAT"/>
+            </Column>
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_OFDOCUMENTIDT}!=='X'}">
+                <Text text="CC ID"/>
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem vAlign="Middle">
+                <cells>
+                     <Text text="{path : 'viewModel>Spkzl',formatter : '._getSpkzlName'}"/>  
+                    <!-- <Select forceSelection="true" selectedKey="{viewModel>Spkzl}" items="{
+						path: 'viewModel>/ExpenseType/results',templateShareable : false
+					}">
+                        <core:Item key="{viewModel>ExpType}" text="{viewModel>NameOfExpType}" />
+                    </Select> -->
+                    <Button visible = "{path : 'viewModel>Spkzl',formatter : '._isDetailVisible'}" 
+                        type="Accept"
+                        icon="sap-icon://action" 
+                        press ="handleDetailPress"/>
+                    <Text text="{viewModel>ExpAmount}"/>
+                    <Text text="{viewModel>ExpCurrency}"/>
+                    <Text text="{viewModel>ExpLand1}"/>
+                    <Text text="{viewModel>ExpDate}"/>
+                    <Text text="{viewModel>ExpAmount}"/>
+                    <Text text="{path :'viewModel>Glacc',formatter:'._removeLeadingZeroes'}"/>
+                    <Text text="{viewModel>Gltxt}"/>
+                    <Text text="{path :'viewModel>Kostl',formatter:'._removeLeadingZeroes'}"/>
+                    <Text text="{viewModel>Kostltxt}"/>
+                    <Text text="{viewModel>CrgType}"/>
+                    <Text text="{viewModel>Prctr}"/>
+                    <Text text="{viewModel>Pprct}"/>
+                    <Text text="{viewModel>Projk}"/>
+                    <Text text="{viewModel>Fkber}"/>
+                    <Text text="{viewModel>Bukrs}"/>
+                    <Text text="{viewModel>Sgtxt}"/>
+                    <Text text="{viewModel>Fistl}"/>
+                    <Text text="{viewModel>Geber}"/>
+                    <Text text="{viewModel>Xref1}"/>
+                    <Text text="{viewModel>Xref2}"/>
+                    <Text text="{viewModel>Vat}"/>
+                    <Text text="{viewModel>Ofdocumentid}"/>
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</core:FragmentDefinition>

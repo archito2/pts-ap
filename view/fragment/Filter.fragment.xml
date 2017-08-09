@@ -1,0 +1,119 @@
+<core:FragmentDefinition 
+    xmlns="sap.m" 
+    xmlns:core="sap.ui.core" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:fb="sap.ui.comp.filterbar" 
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <l:VerticalLayout width="100%">
+        <fb:FilterBar reset="onReset" search="handleSearchTracks" showRestoreButton="true" showClearButton="true">
+            <fb:filterItems>
+                <fb:FilterItem name="RecNo" label="Record">
+                    <fb:control>
+                        <Input app:filterId="RecNo" id="RecNo" placeholder="Enter Record number..." type="Text"/>
+                    </fb:control>
+                </fb:FilterItem>
+                <fb:FilterItem name="DocDate" label="Document Date">
+                    <fb:control>
+                        <DateRangeSelection  id="DocumentDate" placeholder="   "/>
+                    </fb:control>
+                </fb:FilterItem>
+                <fb:FilterItem app:filterId="Vendor" name="VendorCode" label="Vendor Code">
+                    <fb:control>
+                        <Input id="idVendorCodeInput" app:ovsService="VendorOVSSet" showValueHelp="true" app:ovsIdField="Vendor" app:ovsDescField="Name" app:ovsTitle="Select a vendor" valueHelpRequest="handleValueHelp" type="Text"></Input>
+                    </fb:control>
+                </fb:FilterItem>
+                <fb:FilterItem app:filterId="CompanyCode" name="CompanyCode" label="Company Code">
+                    <fb:control>
+                        <Input id="idCompanyCodeInput" app:ovsService="CompanycodeListSet" showValueHelp="true" app:ovsIdField="CompCode" app:ovsDescField="CompName" app:ovsTitle="Select a Company Code" valueHelpRequest="handleValueHelp" type="Text"></Input>
+                    </fb:control>
+                </fb:FilterItem>
+                <fb:FilterItem name="Amount" label="{i18n>AMOUNT}">
+                    <fb:control>
+                        <HBox alignItems="Center" justifyContent="SpaceAround">
+                            <Input id="AmountFrom" submit="search" type="Number"/>
+                            <Text id="AmountToLabel" textAlign="Center" width="1rem" text="-"/>
+                            <Input id="AmountTo" submit="search" type="Number"/>
+                        </HBox>
+                    </fb:control>
+                </fb:FilterItem>
+                <fb:FilterItem app:field="EBELN" name="PONum" label="{i18n>PO_NUM}">
+                    <fb:control>
+                        <Input id="PONum" submit="search"/>
+                    </fb:control>
+                </fb:FilterItem>
+                <fb:FilterItem app:field="XBLNR" name="InvoiceNum" label="{i18n>INVOICE_NUM}">
+                    <fb:control>
+                        <Input id="InvoiceNum" submit="search"/>
+                    </fb:control>
+                </fb:FilterItem>
+                <fb:FilterItem name="MaxHits" label="{i18n>MAX_HITS}">
+                    <fb:control>
+                        <Input id="MaxHits" value="50" change="onMaxHitsChange" type="Number" width="50px" submit="search"/>
+                    </fb:control>
+                </fb:FilterItem>
+            </fb:filterItems>
+            <fb:filterGroupItems>
+                <fb:FilterGroupItem name="DocumentNumber" label="{i18n>BELNR}" groupName="Misc" groupTitle="{i18n>MISC}">
+                    <fb:control>
+                        <Input id="DocumentNumber"/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem name="Source" label="{i18n>SOURCE}" groupName="Misc" groupTitle="{i18n>MISC}">
+                    <fb:control>
+                        <Input id="Source"/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem name="Currency" label="{i18n>WAERS}" groupName="Misc" groupTitle="{i18n>MISC}">
+                    <fb:control>
+                        <Input id="Currency"/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem name="DueDateNet" label="{i18n>DUEDT}" groupName="Misc" groupTitle="{i18n>MISC}">
+                    <fb:control>
+                        <DateRangeSelection placeholder="   " id="DueDateNet"/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem name="EntrySheet" label="{i18n>LBLNI}" groupName="Misc" groupTitle="{i18n>MISC}">
+                    <fb:control>
+                        <Input id="EntrySheet"/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem name="ExpressProcessing" label="{i18n>DTYPZ}" groupName="Misc" groupTitle="{i18n>MISC}">
+                    <fb:control>
+                        <Input id="ExpressProcessing"/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem name="FiscalYear" label="{i18n>GJAHR}" groupName="Misc" groupTitle="{i18n>MISC}">
+                    <fb:control>
+                        <Input id="FiscalYear" maxLength="4" type="Number"/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem name="PurchasingGroup" label="{i18n>BKGRP}" groupName="Misc" groupTitle="{i18n>MISC}">
+                    <fb:control>
+                        <Input id="PurchasingGroup"/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem name="ReceiptDate" label="{i18n>RCDAT}" groupName="Misc" groupTitle="{i18n>MISC}">
+                    <fb:control>
+                        <DateRangeSelection placeholder="   " id="ReceiptDate"/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem name="Text1" label="{i18n>NAME1}" groupName="Misc" groupTitle="{i18n>MISC}">
+                    <fb:control>
+                        <Input id="Text1"/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem name="Name" label="{i18n>VVALU}" groupName="Misc" groupTitle="{i18n>MISC}">
+                    <fb:control>
+                        <Input id="CharacterFieldOfLength12"/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem name="name1" label="{i18n>VVALU1}" groupName="Misc" groupTitle="{i18n>MISC}">
+                    <fb:control>
+                        <Input id="Field"/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+            </fb:filterGroupItems>
+        </fb:FilterBar>
+    </l:VerticalLayout>
+</core:FragmentDefinition>

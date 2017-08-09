@@ -2,12 +2,19 @@
 	xmlns:core="sap.ui.core" 
 	xmlns:mvc="sap.ui.core.mvc" 
 	xmlns="sap.m" controllerName="com.dolphin.controller.Hitlist" 
-	xmlns:html="http://www.w3.org/1999/xhtml">
+	xmlns:html="http://www.w3.org/1999/xhtml" class="sapUiSizeCompact">
 	<App>
 		<pages>
-			<Page title="Hitlist">
+			<Page title="Hitlist" showHeader= "false">
 				<content>
-					<Table id="idJEResultsTable" inset="false" items="{ path: '/Tracks', filters : [ { path : 'Source', operator : 'EQ', value1 : 'SC'}] }">
+					<core:Fragment fragmentName="com.dolphin.view.fragment.Filter" type="XML"/> 
+					<Table id="idJEResultsTable" inset="false" 
+					items="{ path: 'tracksModel>/results'}">
+						<headerToolbar>
+							<Toolbar>
+								<Title text="Results({tracksModel>/number})" level="H2"/>
+							</Toolbar>
+						</headerToolbar>
 						<columns>
 							<Column id="RECNO" width="80px">
 								<header>
@@ -69,23 +76,24 @@
 									<Label design="Bold" text="{i18n>PONUM}"></Label>
 								</header>
 							</Column>
-							<Column id="PDF" width="30px" hAlign="Center"></Column>
+							<Column id="PDF" width="30px" hAlign="Center"></Column> 
 						</columns>
 						<items>
-							<ColumnListItem vAlign="Middle" type="Navigation" press="onListItemPressed">
+							<ColumnListItem vAlign="Middle" type="Navigation" press="handleDetailRowSelect">
 								<cells>
-									<Text text="{RecNo}" />
-									<Text text="{ ReceiptDate}" wrapping="false"/>
-									<Text text="{Source}" wrapping="true" />
-									<Text text="{Vendor}"/>
-									<Text text="{Text1}" wrapping="true"/>
-									<Text text="{Status}" wrapping="true" />
-									<Text text="{ReasonCode}" wrapping="true" />
-									<Text text="{CompanyCode}"/>
-									<Text text="{Reference}"/>
-									<Text text="{DocumentDate}" wrapping="false"/>
-									<Text text="{PurchasingDocument}"/>
-									<Button icon="sap-icon://pdf-attachment" press="showImage"/>
+									<Text text="{tracksModel>RecNo}" />
+									<Text text="{tracksModel>ReceiptDate}" wrapping="false"/>
+									<Text text="{tracksModel>Source}" wrapping="true" />
+									<Text text="{tracksModel>Vendor}"/>
+									<Text text="{tracksModel>Text1}" wrapping="true"/>
+									<Text text="{tracksModel>Status}" wrapping="true" />
+									<Text text="{tracksModel>ReasonCode}" wrapping="true" />
+									<Text text="{tracksModel>CompanyCode}"/>
+									<Text text="{tracksModel>Reference}"/>
+									<Text text="{tracksModel>DocumentDate}" wrapping="false"/>
+									<Text text="{tracksModel>Currency}" wrapping="false"/>
+									<Text text="{tracksModel>PurchasingDocument}"/>
+									<Button icon="sap-icon://pdf-attachment" press="showImage"/> 
 								</cells>
 							</ColumnListItem>
 						</items>

@@ -116,15 +116,13 @@
 					]
 				},
 				{
-					"pattern": "search/{zprogram}",
-					"name": "search",
-					"target": [
-						"search"
-					]
+					"pattern": "apDetail/{RecNo}",
+					"name": "apDetail",
+					"target": "apDetail"
 				}
 			],
 			"targets": {
-				"hitlist":{
+				"hitlist": {
 					"viewName": "Hitlist",
 					"viewLevel": 1
 				},
@@ -134,8 +132,8 @@
 					"viewLevel": 1,
 					"title": "{i18n>HomeViewTitle}"
 				},
-				"search": {
-					"viewName": "Search",
+				"apDetail": {
+					"viewName": "Detail",
 					"viewLevel": 2
 				}
 			}
