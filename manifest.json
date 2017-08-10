@@ -21,6 +21,14 @@
 					"odataVersion": "2.0",
 					"localUri": "localService/metadata.xml"
 				}
+			},
+			"erService": {
+				"uri": "proxy_abap/sap/opu/odata/dol/AP_ER_GW_BUILDER_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
 			}
 		}
 	},
@@ -84,6 +92,14 @@
 					"useBatch": false
 				},
 				"dataSource": "apService"
+			},
+			"erModel": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultCountMode": "None",
+					"useBatch": false
+				},
+				"dataSource": "erService"
 			}
 		},
 		"resources": {
@@ -117,13 +133,6 @@
 					"pattern": "",
 					"name": "hitlist",
 					"target": "hitlist"
-				},
-				{
-					"pattern": "home",
-					"name": "home",
-					"target": [
-						"home"
-					]
 				},
 				{
 					"pattern": "apDetail/{RecNo}",

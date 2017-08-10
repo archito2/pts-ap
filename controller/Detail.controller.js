@@ -18,6 +18,7 @@ sap.ui.define([
         this.setModel(new JSONModel(), 'viewModel');
         this.setModel(new JSONModel(), 'configModel');
         this.getRouter().getRoute("apDetail").attachPatternMatched(this._onPatternMatched, this);
+        this.getRouter().getRoute("createER").attachPatternMatched(this._onPatternCreateERMatched, this);        
       },
       /* =========================================================== */
       /* formatter methods                                           */
@@ -37,10 +38,14 @@ sap.ui.define([
       /* =========================================================== */
       _onPatternMatched: function (oEvent) {
         this.getModel('configModel').setProperty('/WebConfig', sap.ui.getCore().getModel('configModel'));
-        this.getModel('viewModel').setProperty('/UIModel', { 'CreateMode': true });
+        this.getModel('viewModel').setProperty('/UIModel', { 'CreateMode': false });
         var sRecNo = oEvent.getParameter("arguments").RecNo;
         this._callTracksService(sRecNo);
         this._callInvoiceItemsService(sRecNo);
+      },
+      _onPatternCreateERMatched: function (oEvent) {
+        this.getModel('configModel').setProperty('/WebConfig', sap.ui.getCore().getModel('configModel'));
+        this.getModel('viewModel').setProperty('/UIModel', { 'CreateMode': true });
       },
       _callTracksService: function (sRecNo) {
         this.getOwnerComponent().getModel('apModel')
