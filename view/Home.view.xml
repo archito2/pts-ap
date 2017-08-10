@@ -1,0 +1,33 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:launchpad="sap.ushell.ui.launchpad"
+	xmlns:tile="sap.ushell.ui.tile" controllerName="com.dolphin.controller.Home"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page id="idPage" title="Home" showHeader="false">
+				<content>
+					<launchpad:DashboardGroupsContainer id="TileContainer" groups="{path : 'data>/results', templateShareable : false}">
+						<launchpad:groups>
+							<launchpad:TileContainer headerText="{data>section}" tiles="{path : 'data>tiles', templateShareable : false }" showPlaceholder="false">
+								<launchpad:tiles>
+									<launchpad:Tile>
+										<launchpad:tileViews>
+											<GenericTile header="{data>header}" subheader="{data>subheader}" press="handleTilePress">
+												<tileContent>
+													<TileContent unit="{data>unit}" footer="{data>footer}">
+														<content>
+                                                        <NumericContent value="{data>count}" icon="sap-icon://{data>icon}"/>
+														</content>
+													</TileContent>
+												</tileContent>
+											</GenericTile>
+										</launchpad:tileViews>
+									</launchpad:Tile>
+								</launchpad:tiles>
+							</launchpad:TileContainer>
+						</launchpad:groups>
+					</launchpad:DashboardGroupsContainer>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

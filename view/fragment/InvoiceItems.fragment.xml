@@ -5,8 +5,8 @@
     xmlns:core="sap.ui.core" 
     xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
     <Table id="idItemsTable" inset="false" items="{ path: 'viewModel>/InvoiceItems/results'}">
-        <!-- Company Code -->
         <columns>
+            <!-- Company Code -->
             <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_BUKRST}!=='X'}">
                 <Text text="Company Code"/>
             </Column>
@@ -51,25 +51,62 @@
             <ColumnListItem>
                 <cells>
                     <!-- Company Code -->
-                    <Text text="{viewModel>Bukrs}"/>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Bukrs}"/>
+                        <Input id="idInvoiceBukrsInput" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Bukrs}"
+                        app:ovsService="CompanycodeListSet" showValueHelp="true" app:ovsIdField="CompCode" app:ovsDescField="CompName" app:ovsTitle="Select a Company Code" valueHelpRequest="handleValueHelp"/>
+                    </VBox>
                     <!-- GL Account -->
-                    <Text text="{viewModel>Glacc}"/>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Glacc}"/>
+                        <Input id="idGlaccInput" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Glacc}"
+                        app:ovsReqdField="idInvoiceBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="GLOVSSet" showValueHelp="true" app:ovsIdField="GLAccount" app:ovsDescField="GLDescript" app:ovsTitle="Select a G/L Account" valueHelpRequest="handleValueHelp"/>
+                    </VBox>
                     <!-- Cost Center -->
-                    <Text text="{viewModel>Kostl}"/>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Kostl}"/>
+                        <Input id="idKostlInput" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Kostl}"
+                        app:ovsReqdField="idInvoiceBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="CostCenterOVSSet" showValueHelp="true" app:ovsIdField="CostCenter" app:ovsDescField="CostCenterDesc" app:ovsTitle="Select a Cost Center" valueHelpRequest="handleValueHelp"/>
+                    </VBox>
                     <!-- Amount -->
-                    <Text text="{viewModel>Netwr}"/>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Netwr}"/>
+                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Netwr}"/>
+                    </VBox>
                     <!-- Order -->
-                    <Text text="{viewModel>Aufnr}"/>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Aufnr}"/>
+                        <Input id="idAufnrInput" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Aufnr}"
+                        app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="OrderNumberOVSSet" showValueHelp="true" app:ovsIdField="OrderNumber" app:ovsDescField="Description" app:ovsTitle="Select a Company Code" valueHelpRequest="handleValueHelp"/>
+                    </VBox>
                     <!-- WBS -->
-                    <Text text="{viewModel>Projk}"/>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Projk}"/>
+                        <Input  id="idWbsInput" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Projk}" 
+                        app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="WBSOVSSet" showValueHelp="true" app:ovsIdField="WBSElement" app:ovsDescField="WBSElementDesc" app:ovsTitle="Select a WBS Element" valueHelpRequest="handleValueHelp"/>
+                    </VBox>
                     <!-- Text -->
-                    <Text text="{viewModel>Sgtxt}"/>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Sgtxt}"/>
+                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Sgtxt}"/>
+                    </VBox>
                     <!-- Txcod -->
-                    <Text text="{viewModel>Mwskz}"/>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Mwskz}"/>
+                        <Input id="idTxcodInput" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Mwskz}"
+                        app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="TaxCodeOVSSet" showValueHelp="true" app:ovsIdField="TaxCode" app:ovsDescField="TaxCodeDesc" app:ovsTitle="Select a Tax Code" valueHelpRequest="handleValueHelp"/>
+                    </VBox>
                     <!-- Profit Center -->
-                    <Text text="{viewModel>Prctr}"/>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Prctr}"/>
+                        <Input id="idPrctrInput" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Prctr}"
+                        app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="ProfitCenterOVSSet" showValueHelp="true" app:ovsIdField="ProfitCenter" app:ovsDescField="PRText" app:ovsTitle="Select a Profit Center" valueHelpRequest="handleValueHelp"/>
+                    </VBox>
                     <!-- Sdate -->
-                    <Text text="{viewModel>Sdate}"/>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Sdate}"/>
+                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Sdate}"/>
+                    </VBox>
                 </cells>
             </ColumnListItem>
         </items>

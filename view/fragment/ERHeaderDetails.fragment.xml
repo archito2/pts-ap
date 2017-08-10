@@ -1,0 +1,56 @@
+<core:FragmentDefinition 
+    xmlns="sap.m" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.ui.layout.form" 
+    xmlns:core="sap.ui.core" 
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <f:SimpleForm class="editableForm" id="idHeaderDetailsForm" layout="ResponsiveGridLayout" editable="true" adjustLabelSpan="false" labelSpanXL="6" labelSpanL="3" labelSpanM="4" labelSpanS="12" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="4" columnsL="2" columnsM="2" singleContainerFullSize="false">
+        <f:content>
+            <!-- Column 1 -->
+            <core:Title/>
+            <!-- Record Number -->
+            <Label visible="{=!${viewModel>/UIModel/CreateMode}}" text="ER#" />
+            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/RecNo}" />
+            <!-- Title -->
+            <Label text="Trip Title" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHBKTXT}!=='X'}" />
+            <Input visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHBKTXT}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" id="idInputTripTitle" value="{viewModel>/Tracks/DocumentHeaderText}"/>
+            <Text visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHBKTXT}!=='X'&amp;&amp;!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/DocumentHeaderText}" />
+            <!-- Currency -->
+            <Label text="Reimbursement Currency" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHWAERS}!=='X'}"/>
+            <Input editable="false" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHWAERS}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" id="idInputCurrency" value="{UserInfo>/Waers}"/>
+            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/Currency}" />
+            <!-- User -->
+            <Label text="Report For" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHXUSER}!=='X'}" />
+            <Input visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHXUSER}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" id="idInputXuser" value="{UserInfo>/Xuser}"/>
+            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/ApproversUserID}" />
+            <!-- Express -->
+            <Label visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHDTYPZ}!=='X'}" text="Express" />
+            <Switch customTextOn="Yes" customTextOff="No" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHDTYPZ}!=='X'}" enabled="{=${viewModel>/UIModel/CreateMode}}" state="{= ${viewModel>/Tracks/ExpressProcessing} === 'X'}"></Switch>
+            <!-- Date -->
+            <Label text="Received Date" />
+            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/ReceiptDate}" />
+            <DatePicker visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHRCDAT}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" value="{viewModel>/Tracks/ReceiptDate}" valueFormat="MM-dd-yy" displayFormat="short"/>
+            <!-- Column 2 -->
+            <core:Title/>
+            <!-- Status -->
+            <Label visible="{=!${viewModel>/UIModel/CreateMode}}" text="Status" />
+            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/Status}" />
+            <!-- Trip Date -->
+            <Label text="Trip Date" />
+            <DatePicker visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHXBLDT}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" value="{viewModel>/Tracks/DocumentDate}" valueFormat="MM-dd-yy" displayFormat="short"/>
+            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/DocumentDate}" />
+            <!-- Amount -->
+            <Label text="Reimbursement Amount" />
+            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/Amount}" />
+            <Input editable="false" visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputAmount" value="{viewModel>/Tracks/Amount}"/>
+            <!-- Cost Center -->
+            <Label text="Cost Center" />
+            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{UserInfo>/Kostl}" />
+            <Input editable="false" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHKOSTL}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" id="idInputKostl" value="{UserInfo>/Kostl}"/>
+            <!-- Company Code -->
+            <Label text="Company Code" />
+            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/UserInfo/Bukrs}" />
+            <Input editable="false" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHBUKRS}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" id="idInputBukrs" value="{UserInfo>/Bukrs}"/>
+        </f:content>
+    </f:SimpleForm>
+</core:FragmentDefinition>

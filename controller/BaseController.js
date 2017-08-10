@@ -49,11 +49,16 @@ sap.ui.define([
           ovsId = filterInput.data("ovsIdField"),
           ovsDesc = filterInput.data("ovsDescField"),
           ovsTitle = filterInput.data("ovsTitle"),
+          ovsReqdField = filterInput.data("ovsReqdField"),
+          ovsReqdFilter = filterInput.data("ovsReqdFilter"),
+          oReqdFilterControl = this.getView().byId(ovsReqdField),
           aFilter = [
             new Filter(filterInput.data("ovsIdField"), FilterOperator.EQ, oEvent.getParameter("value")),
             new Filter(filterInput.data("ovsDescField"), FilterOperator.EQ, oEvent.getParameter("value"))
           ],
           that = this;
+          if(oReqdFilterControl)
+            aFilter.push( new Filter(ovsReqdFilter, FilterOperator.EQ, oReqdFilterControl.getValue()));
         this
           .getOwnerComponent()
           .getModel('apModel')

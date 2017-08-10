@@ -66,6 +66,11 @@
 			"cozy": true
 		},
 		"models": {
+			"data": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "model/localTiles.json",
+				"preload": true
+			},
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
@@ -104,6 +109,11 @@
 			},
 			"routes": [
 				{
+					"pattern": "home",
+					"name": "home",
+					"target": "home"
+				},
+				{
 					"pattern": "",
 					"name": "hitlist",
 					"target": "hitlist"
@@ -119,6 +129,11 @@
 					"pattern": "apDetail/{RecNo}",
 					"name": "apDetail",
 					"target": "apDetail"
+				},
+				{
+					"pattern": "createER",
+					"name": "createER",
+					"target": "createER"
 				}
 			],
 			"targets": {
@@ -128,12 +143,14 @@
 				},
 				"home": {
 					"viewName": "Home",
-					"viewId": "home",
-					"viewLevel": 1,
-					"title": "{i18n>HomeViewTitle}"
+					"viewLevel": 1
 				},
 				"apDetail": {
 					"viewName": "Detail",
+					"viewLevel": 2
+				},
+				"createER": {
+					"viewName": "ERDetail",
 					"viewLevel": 2
 				}
 			}
