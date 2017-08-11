@@ -17,19 +17,19 @@
             <Text visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHBKTXT}!=='X'&amp;&amp;!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/DocumentHeaderText}" />
             <!-- Currency -->
             <Label text="Reimbursement Currency" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHWAERS}!=='X'}"/>
-            <Input editable="false" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHWAERS}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" id="idInputCurrency" value="{UserInfo>/Waers}"/>
+            <Input editable="false" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHWAERS}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" id="idInputCurrency" value="{viewModel>/Tracks/Currency}"/>
             <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/Currency}" />
             <!-- User -->
             <Label text="Report For" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHXUSER}!=='X'}" />
-            <Input visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHXUSER}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" id="idInputXuser" value="{UserInfo>/Xuser}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/ApproversUserID}" />
+            <Input visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHXUSER}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" id="idInputXuser" value="{viewModel>/Tracks/User}" showValueHelp="true" app:ovsService="UserListSet" app:ovsIdField="Xuser" app:ovsDescField="Fname" app:ovsTitle="Select a Company Code" valueHelpRequest="handleValueHelp"/>
+            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/User}" />
             <!-- Express -->
             <Label visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHDTYPZ}!=='X'}" text="Express" />
             <Switch customTextOn="Yes" customTextOff="No" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHDTYPZ}!=='X'}" enabled="{=${viewModel>/UIModel/CreateMode}}" state="{= ${viewModel>/Tracks/ExpressProcessing} === 'X'}"></Switch>
             <!-- Date -->
             <Label text="Received Date" />
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/ReceiptDate}" />
-            <DatePicker visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHRCDAT}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" value="{viewModel>/Tracks/ReceiptDate}" valueFormat="MM-dd-yy" displayFormat="short"/>
+            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/ReceiptDate}"  />
+            <DatePicker visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHRCDAT}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" dateValue="{viewModel>/Tracks/ReceiptDate}"/>
             <!-- Column 2 -->
             <core:Title/>
             <!-- Status -->
@@ -37,8 +37,8 @@
             <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/Status}" />
             <!-- Trip Date -->
             <Label text="Trip Date" />
-            <DatePicker visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHXBLDT}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" value="{viewModel>/Tracks/DocumentDate}" valueFormat="MM-dd-yy" displayFormat="short"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/DocumentDate}" />
+            <DatePicker visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHXBLDT}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" dateValue="{viewModel>/Tracks/DocDate}" />
+            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/DocDate}" />
             <!-- Amount -->
             <Label text="Reimbursement Amount" />
             <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/Amount}" />
@@ -46,11 +46,11 @@
             <!-- Cost Center -->
             <Label text="Cost Center" />
             <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{UserInfo>/Kostl}" />
-            <Input editable="false" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHKOSTL}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" id="idInputKostl" value="{UserInfo>/Kostl}"/>
+            <Input editable="false" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHKOSTL}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" id="idInputKostl" value="{configModel>/Kostl}"/>
             <!-- Company Code -->
             <Label text="Company Code" />
             <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/UserInfo/Bukrs}" />
-            <Input editable="false" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHBUKRS}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" id="idInputBukrs" value="{UserInfo>/Bukrs}"/>
+            <Input editable="false" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHBUKRS}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" id="idInputBukrs" value="{viewModel>/Tracks/CompanyCode}"/>
         </f:content>
     </f:SimpleForm>
 </core:FragmentDefinition>

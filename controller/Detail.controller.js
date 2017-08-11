@@ -17,10 +17,21 @@ sap.ui.define([
       onInit: function () {
         this.setModel(new JSONModel(
           {
-            'Tracks': {'DocumentHeaderText':'er1','CompanyCode':'1000','ReceiptDate':'/Date(1502337600000)/','DocDate':'/Date(1502337600000)/'}, 'SubLines': [], 'Items': [],
-            'Approvers': [], 'Contacts': [], 'Notes':[]
+            'Tracks': 
+              { 
+                'DocumentHeaderText': 'ER:' + new Date().getTime(), 
+                'CompanyCode': sap.ui.getCore().getModel('userModel').results[0].Bukrs, 
+                'Currency': sap.ui.getCore().getModel('userModel').results[0].Waers,
+                'User': sap.ui.getCore().getModel('userModel').results[0].Xuser,
+                'ReceiptDate': new Date(), 'DocDate': new Date() },
+                'SubLines': [], 
+                'Items': [],
+                'Approvers': [],
+                'Contacts': [], 
+                'Notes': []
           }), 'viewModel');
-        this.setModel(new JSONModel(), 'configModel');
+        
+        this.setModel(new JSONModel({'Kostl':sap.ui.getCore().getModel('userModel').results[0].Kostl}), 'configModel');
         this.getRouter().getRoute("apDetail").attachPatternMatched(this._onPatternMatched, this);
         this.getRouter().getRoute("createER").attachPatternMatched(this._onPatternCreateERMatched, this);
       },
@@ -82,22 +93,24 @@ sap.ui.define([
         var oTracks = this.getModel('viewModel').getProperty('/Tracks'),
           oErModel = this.getModel('erModel'),
           that = this;
-          oTracks.SubLines = this.getModel('viewModel').getProperty('/SubLines');
-          oTracks.ItemER = this.getModel('viewModel').getProperty('/Items');
-          oTracks.ApproversER = this.getModel('viewModel').getProperty('/Approvers');
-          oTracks.ContactsER = this.getModel('viewModel').getProperty('/Contacts');
-          oTracks.ERNotes = this.getModel('viewModel').getProperty('/Notes');
+        oTracks.SubLines = this.getModel('viewModel').getProperty('/SubLines');
+        oTracks.ItemER = this.getModel('viewModel').getProperty('/Items');
+        oTracks.ApproversER = this.getModel('viewModel').getProperty('/Approvers');
+        oTracks.ContactsER = this.getModel('viewModel').getProperty('/Contacts');
+        oTracks.ERNotes = this.getModel('viewModel').getProperty('/Notes');
         // oTracks.InvoiceItems = this.getModel('viewModel').getProperty('/Items').results;
         // oTracks.Sublines = this.getModel('viewModel').getProperty('/Sublines');
         sap.ui.core.BusyIndicator.show();
-        oErModel.setUseBatch(true);
-        oErModel.setHeaders({'PTSUser':'ADAMS'})
+        // oErModel.setUseBatch(true);
+        oErModel.setHeaders({ 'PTSUser': 'ADAMS', 'PTSLocale': 'E', 'PTSIgnoreWarning': 'X' });
+
         oErModel.create('/HeaderERSet', oTracks, {
           success: function (oData, response) {
-            MessageToast.show("Saved Successfully");
+            MessageToast.show(oData.Recno + ' created as a draft');
+            sap.ui.core.BusyIndicator.hide();
             // that._executeApprovalAction("", "A", sRecNo);
           },
-          error: function (oError) {       
+          error: function (oError) {
             sap.ui.core.BusyIndicator.hide();
             that.displayErrorPopup(oError);
           }

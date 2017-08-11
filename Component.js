@@ -1,7 +1,9 @@
 sap.ui.define([
   "sap/ui/core/UIComponent",
-  "sap/ui/Device"
-], function (UIComponent, Device) {
+  "sap/ui/Device",
+  "sap/ui/model/Filter",
+  "sap/ui/model/FilterOperator",
+], function (UIComponent, Device,Filter,FilterOperator) {
   "use strict";
 
   return UIComponent.extend("com.dolphin.Component", {
@@ -85,6 +87,7 @@ sap.ui.define([
     _callUserDetailsService: function (oEvent) {
       return new Promise(function (resolve, reject) {
         this.getModel('apModel').read("/UserListSet", {
+          filters : [ new Filter('Xuser', FilterOperator.EQ, 'sy-uname')],
           success: function (oData, oResponse) {
             sap.ui.getCore().setModel(oData, 'userModel');
             resolve();
