@@ -4,12 +4,12 @@
     xmlns:f="sap.ui.layout.form" 
     xmlns:core="sap.ui.core" 
     xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
-    <Table id="idItemsTable" inset="false" items="{ path: 'viewModel>/Items/results'}">
+    <Table id="idItemsTable" inset="false" items="{ path: 'viewModel>/Items'}">
         <columns>
             <Column>
                 <Text text="Expense Type"/>
             </Column>
-            <Column/>
+            <!-- <Column><Text text="Details"/></Column> -->
             <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_EXP_AMOUNTT}!=='X'}">
                 <Text text="Amount"/>
             </Column>
@@ -25,52 +25,68 @@
             <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_NETWRT}!=='X'}">
                 <Text text="Converted Amount"/>
             </Column>
-            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_GLACCT}!=='X'}">
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_GLACCT}!=='X'&amp;&amp;
+                ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
                 <Text text="G/L"/>
             </Column>
-            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_GLTXTT}!=='X'}">
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_GLTXTT}!=='X'&amp;&amp;
+                ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
                 <Text text="G/L Description"/>
             </Column>
             <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_KOSTLT}!=='X'}">
                 <Text text="Cost Center"/>
             </Column>
-            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_KOSTLTXTT}!=='X'}">
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_KOSTLTXTT}!=='X'&amp;&amp;
+                ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
                 <Text text="Cost Center Description"/>
             </Column>
             <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_CRG_TYPET}!=='X'}">
                 <Text text="Payment Method"/>
             </Column>
-            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_AUFNRT}!=='X'}">
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_AUFNRT}!=='X'&amp;&amp;
+                ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
                 <Text text="Order"/>
             </Column>
-            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_PRCTRT}!=='X'}">
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_PRCTRT}!=='X'&amp;&amp;
+                ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
                 <Text text="Profit Center"/>
             </Column>
-            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_PPRCTT}!=='X'}">
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_PPRCTT}!=='X'&amp;&amp;
+                ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
                 <Text text="Partner Profit Center"/>
             </Column>
-            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_PROJKT}!=='X'}">
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_PROJKT}!=='X'&amp;&amp;
+                ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
                 <Text text="WBS Element"/>
             </Column>
-            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_FKBERT}!=='X'}">
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_FKBERT}!=='X'&amp;&amp;
+                ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
                 <Text text="Functional Area"/>
             </Column>
-            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_BUKRST}!=='X'}">
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_BUKRST}!=='X'&amp;&amp;
+                ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
                 <Text text="Company Code"/>
             </Column>
             <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_SGTXTT}!=='X'}">
                 <Text text="Line Item Text"/>
             </Column>
-            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_FISTLT}!=='X'}">
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_FISTLT}!=='X'&amp;&amp;
+                ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
                 <Text text="Funds Center"/>
             </Column>
-            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_GEBERT}!=='X'}">
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_GEBERT}!=='X'&amp;&amp;
+                ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
                 <Text text="Fund"/>
             </Column>
-            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_XREF1T}!=='X'}">
+            <Column visible = "{=
+                ${viewModel>/WebStatus/WEB_ER_HIDE_XREF1T}!=='X'
+                    &amp;&amp;
+                ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
                 <Text text="Building Unit"/>
             </Column>
-            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_XREF2T}!=='X'}">
+            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_XREF2T}!=='X'
+            &amp;&amp;
+                ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
                 <Text text="Work Order"/>
             </Column>
             <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_VATT}!=='X'}">
@@ -83,38 +99,113 @@
         <items>
             <ColumnListItem vAlign="Middle">
                 <cells>
-                     <Text text="{path : 'viewModel>Spkzl',formatter : '._getSpkzlName'}"/>  
-                    <!-- <Select forceSelection="true" selectedKey="{viewModel>Spkzl}" items="{
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{path : 'viewModel>Spkzl',formatter : '._getSpkzlName'}"/>
+                        <Input placeholder= "Expense Type" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Spkzl}"/>
+                        <!-- <Select forceSelection="true" selectedKey="{viewModel>Spkzl}" items="{
 						path: 'viewModel>/ExpenseType/results',templateShareable : false
-					}">
-                        <core:Item key="{viewModel>ExpType}" text="{viewModel>NameOfExpType}" />
-                    </Select> -->
-                    <Button visible = "{path : 'viewModel>Spkzl',formatter : '._isDetailVisible'}" 
-                        type="Accept"
-                        icon="sap-icon://action" 
-                        press ="handleDetailPress"/>
-                    <Text text="{viewModel>ExpAmount}"/>
-                    <Text text="{viewModel>ExpCurrency}"/>
-                    <Text text="{viewModel>ExpLand1}"/>
-                    <Text text="{viewModel>ExpDate}"/>
-                    <Text text="{viewModel>ExpAmount}"/>
-                    <Text text="{path :'viewModel>Glacc',formatter:'._removeLeadingZeroes'}"/>
-                    <Text text="{viewModel>Gltxt}"/>
-                    <Text text="{path :'viewModel>Kostl',formatter:'._removeLeadingZeroes'}"/>
-                    <Text text="{viewModel>Kostltxt}"/>
-                    <Text text="{viewModel>CrgType}"/>
-                    <Text text="{viewModel>Prctr}"/>
-                    <Text text="{viewModel>Pprct}"/>
-                    <Text text="{viewModel>Projk}"/>
-                    <Text text="{viewModel>Fkber}"/>
-                    <Text text="{viewModel>Bukrs}"/>
-                    <Text text="{viewModel>Sgtxt}"/>
-                    <Text text="{viewModel>Fistl}"/>
-                    <Text text="{viewModel>Geber}"/>
-                    <Text text="{viewModel>Xref1}"/>
-                    <Text text="{viewModel>Xref2}"/>
-                    <Text text="{viewModel>Vat}"/>
-                    <Text text="{viewModel>Ofdocumentid}"/>
+					}"><core:Item key="{viewModel>ExpType}" text="{viewModel>NameOfExpType}" /></Select> -->
+                    </VBox>
+                    <!-- <Button visible = "{path : 'viewModel>Spkzl',formatter : '._isDetailVisible'}" type="Accept" icon="sap-icon://action" 
+                        press ="handleDetailPress"/> -->
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>ExpAmount}"/>
+                        <Input placeholder= "Amount" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>ExpAmount}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>ExpCurrency}"/>
+                        <Input placeholder= "Currency" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>ExpCurrency}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>ExpLand1}"/>
+                        <!-- <Input placeholder= "Country" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>ExpLand1}"/> -->
+                        <ComboBox showSecondaryValues= "true" filterSecondaryValues= "true" 
+                            value="{viewModel>ExpLand1}"
+					        selectedKey="{viewModel>ExpLand1}"
+					        items="{path: 'countryModel>/Countries'}">
+					        <core:ListItem key="{countryModel>code}" text="{countryModel>country}" additionalText="{countryModel>code}"/>
+				        </ComboBox>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>ExpDate}"/>
+                        <DatePicker  placeholder= "Date" visible="{=${viewModel>/UIModel/CreateMode}}" dateValue="{viewModel>ExExpDatepAmount}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>ExpAmount}"/>
+                        <Input editable="false" placeholder= "Amount" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>ExpAmount}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{path :'viewModel>Glacc',formatter:'._removeLeadingZeroes'}"/>
+                        <Input placeholder= "Glacc" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Glacc}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Gltxt}"/>
+                        <Input placeholder= "Glacc" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Gltxt}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{path :'viewModel>Kostl',formatter:'._removeLeadingZeroes'}"/>
+                        <Input placeholder= "Exp Amount" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Kostl}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Kostltxt}"/>
+                        <Input placeholder= "Kostl" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Kostltxt}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>CrgType}"/>
+                        <Input placeholder= "Crgtype" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>CrgType}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Aufnr}"/>
+                        <Input placeholder= "Order" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Aufnr}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Prctr}"/>
+                        <Input placeholder= "Profit Center" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Prctr}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Pprct}"/>
+                        <Input placeholder= "Partner Profit Center" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Pprct}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Projk}"/>
+                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Projk}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Fkber}"/>
+                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Fkber}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Bukrs}"/>
+                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Bukrs}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Sgtxt}"/>
+                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Sgtxt}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Fistl}"/>
+                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Fistl}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Geber}"/>
+                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Geber}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Xref1}"/>
+                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Xref1}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Xref2}"/>
+                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Xref2}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Vat}"/>
+                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Vat}"/>
+                    </VBox>
+                    <VBox>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Ofdocumentid}"/>
+                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Ofdocumentid}"/>
+                    </VBox>
                 </cells>
             </ColumnListItem>
         </items>

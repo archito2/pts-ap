@@ -79,6 +79,11 @@
 				"uri": "model/localTiles.json",
 				"preload": true
 			},
+			"countryModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "model/countryCodeMin.json",
+				"preload": true
+			},
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {

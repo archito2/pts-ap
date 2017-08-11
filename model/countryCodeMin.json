@@ -1,0 +1,16 @@
+{
+    "Countries": [
+        {
+            "country":"United States of America",
+            "code":"USA"
+        },
+        {
+            "country":"France",
+            "code":"FR"
+        },
+        {
+            "country":"China",
+            "code":"CHN"
+        }
+    ]
+}

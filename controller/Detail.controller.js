@@ -17,21 +17,22 @@ sap.ui.define([
       onInit: function () {
         this.setModel(new JSONModel(
           {
-            'Tracks': 
-              { 
-                'DocumentHeaderText': 'ER:' + new Date().getTime(), 
-                'CompanyCode': sap.ui.getCore().getModel('userModel').results[0].Bukrs, 
-                'Currency': sap.ui.getCore().getModel('userModel').results[0].Waers,
-                'User': sap.ui.getCore().getModel('userModel').results[0].Xuser,
-                'ReceiptDate': new Date(), 'DocDate': new Date() },
-                'SubLines': [], 
-                'Items': [],
-                'Approvers': [],
-                'Contacts': [], 
-                'Notes': []
+            'Tracks':
+            {
+              'DocumentHeaderText': 'ER:' + new Date().getTime(),
+              'CompanyCode': sap.ui.getCore().getModel('userModel').results[0].Bukrs,
+              'Currency': sap.ui.getCore().getModel('userModel').results[0].Waers,
+              'User': sap.ui.getCore().getModel('userModel').results[0].Xuser,
+              'ReceiptDate': new Date(), 'DocDate': new Date()
+            },
+            'SubLines': [],
+            'Items': [{},{}],
+            'Approvers': [],
+            'Contacts': [],
+            'Notes': []
           }), 'viewModel');
-        
-        this.setModel(new JSONModel({'Kostl':sap.ui.getCore().getModel('userModel').results[0].Kostl}), 'configModel');
+
+        this.setModel(new JSONModel({ 'Kostl': sap.ui.getCore().getModel('userModel').results[0].Kostl }), 'configModel');
         this.getRouter().getRoute("apDetail").attachPatternMatched(this._onPatternMatched, this);
         this.getRouter().getRoute("createER").attachPatternMatched(this._onPatternCreateERMatched, this);
       },
