@@ -57,8 +57,8 @@ sap.ui.define([
             new Filter(filterInput.data("ovsDescField"), FilterOperator.EQ, oEvent.getParameter("value"))
           ],
           that = this;
-          if(oReqdFilterControl)
-            aFilter.push( new Filter(ovsReqdFilter, FilterOperator.EQ, oReqdFilterControl.getValue()));
+        if (oReqdFilterControl)
+          aFilter.push(new Filter(ovsReqdFilter, FilterOperator.EQ, oReqdFilterControl.getValue()));
         this
           .getOwnerComponent()
           .getModel('apModel')
@@ -128,6 +128,34 @@ sap.ui.define([
       getResourceBundle: function () {
         return this.getOwnerComponent()
           .getModel("i18n").getResourceBundle();
-      }
+      },
+      /**
+     * Shows a message popup dialog in case of error
+     * @params : oError
+     */
+      displayErrorPopup: function (oError) {
+        sap.ui.core.BusyIndicator.hide();
+        var dialog = new sap.m.Dialog({
+          title: oError.statusText,
+          type: 'Message',
+          state: 'Error',
+          content: [new sap.m.Text({
+            text: oError.message
+          }), new sap.m.Text({
+            text: " "+JSON.parse(oError.responseText).error.message.value
+          })],
+          beginButton: new sap.m.Button({
+            text: 'OK',
+            press: function () {
+              dialog
+                .close();
+            }
+          }),
+          afterClose: function () {
+            dialog.destroy();
+          }
+        });
+        dialog.open();
+      },
     });
 });

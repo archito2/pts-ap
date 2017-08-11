@@ -37,6 +37,15 @@
 						</items>
 					</IconTabBar>
 				</content>
+				<footer>
+						<Toolbar id="DetailToolbar">
+							<content>
+								<Button id="messagePopoverButton" icon="sap-icon://message-popup" text="Open" visible="true" type="Emphasized" press="handleMessagePress" />
+								<ToolbarSpacer />
+								<Button text="Save" press="handleSave" tooltip="Save as a draft" />
+							</content>
+						</Toolbar>
+					</footer>
 			</Page>
 		</pages>
 	</App>
