@@ -1,0 +1,22 @@
+{
+    "currencies": [
+        {
+            "value": "USD"
+        },
+        {
+            "value": "EUR"
+        },
+        {
+            "value": "CHN"
+        },
+        {
+            "value": "CAD"
+        },
+        {
+            "value": "MXN"
+        },
+        {
+            "value": "INR"
+        }
+    ]
+}

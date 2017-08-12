@@ -26,13 +26,13 @@ sap.ui.define([
               'ReceiptDate': new Date(), 'DocDate': new Date()
             },
             'SubLines': [],
-            'Items': [{},{}],
+            'Items': [{}],
             'Approvers': [],
             'Contacts': [],
             'Notes': []
           }), 'viewModel');
 
-        this.setModel(new JSONModel({ 'Kostl': sap.ui.getCore().getModel('userModel').results[0].Kostl }), 'configModel');
+        this.setModel(new JSONModel({ 'Kostl': sap.ui.getCore().getModel('userModel').results[0].Kostl ,'rowSelected':false}), 'configModel');
         this.getRouter().getRoute("apDetail").attachPatternMatched(this._onPatternMatched, this);
         this.getRouter().getRoute("createER").attachPatternMatched(this._onPatternCreateERMatched, this);
       },
@@ -50,6 +50,34 @@ sap.ui.define([
       /* =========================================================== */
       handleSave: function (oEvent) {
         this._saveExpenseReport(oEvent);
+      },
+      handleAddItem: function(){
+        this.getModel('viewModel').getProperty('/Items').push({});
+        this.getModel('viewModel').refresh();
+      },
+      handleCopyItem: function(oEvent){
+        var sPath = this.byId('idItemsTable').getSelectedItems()[0].getBindingContext('viewModel').sPath;
+        var oSelectedRow = this.byId('idItemsTable').getSelectedItems()[0].getBindingContext('viewModel').getProperty(sPath);
+        this.getModel('viewModel').getProperty('/Items').push(oSelectedRow);
+        this.getModel('viewModel').refresh();
+      },
+      handleDeleteItem:function(oEvent){
+        var sPath = this.byId('idItemsTable').getSelectedItems()[0].getBindingContext('viewModel').sPath;
+        var selectedIndex = sPath.slice(sPath.lastIndexOf('/')+1);
+        this.getModel('viewModel').getProperty('/Items').splice(selectedIndex,1);
+        this.getModel('viewModel').refresh();
+      },
+      handleSelectionChange : function(oEvent){
+        this.getModel('configModel').setProperty('/rowSelected', oEvent.getSource().getSelectedItems().length>0);
+      },
+      handleCClines : function(oEvent){
+        var that = this;
+        if (!that.pressDialog) {
+          that.pressDialog = sap.ui.xmlfragment("com.dolphin.view.fragment.CreditCardLines", this);
+          this.getView().addDependent(that.pressDialog);
+        }
+        this.pressDialog.open();
+        this._callCCLinesService();
       },
       /* =========================================================== */
       /* Internal Methods                                            */
@@ -88,6 +116,17 @@ sap.ui.define([
               console.log(oResponse);
             }
           });
+      },
+      _callCCLinesService : function(){
+        this.getOwnerComponent().getModel('erModel')
+        .read("/CCLinesSet", {
+          success: function (oData, oResponse) {
+            this.getModel('viewModel').setProperty('/CCLines', oData);
+          }.bind(this),
+          error: function (oData, oResponse) {
+            console.log(oResponse);
+          }
+        });
       },
       //Save Expense Report
       _saveExpenseReport: function () {

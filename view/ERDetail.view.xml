@@ -27,15 +27,15 @@
 							</IconTabFilter>
 						</items>
 					</IconTabBar>
-					<IconTabBar id="idItemIconTabBar" select="handleIconTabBarSelect" class="sapUiResponsiveContentPadding">
+					<!-- <IconTabBar id="idItemIconTabBar" select="handleIconTabBarSelect" class="sapUiResponsiveContentPadding">
 						<items>
 							<IconTabFilter id="idIconTabFilterItems" icon="sap-icon://begin" text="Items" key="Ok">
-								<content>
+								<content> -->
 									<core:Fragment fragmentName="com.dolphin.view.fragment.ERInvoiceItems" type="XML"/>
-								</content>
+								<!-- </content>
 							</IconTabFilter>
 						</items>
-					</IconTabBar>
+					</IconTabBar> -->
 				</content>
 				<footer>
 						<Toolbar id="DetailToolbar">

@@ -1,0 +1,60 @@
+<core:FragmentDefinition 
+    xmlns="sap.m" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.ui.layout.form" 
+    xmlns:core="sap.ui.core" >
+    <Dialog showHeader="false">
+        <content>
+            <Table id="idCCLinesTable" inset="false" selectionChange="handleSelectionChange" mode="MultiSelect"
+            items="{ path: 'viewModel>/CCLines/results'}">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Used Credit Lines " level="H2"/>
+                        <ToolbarSpacer/>
+                        <Button text="Use" icon="sap-icon://accept" press="handleAcceptCCItems"/>
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column>
+                        <Text text="Expense Type"/>
+                    </Column>
+                    <Column>
+                        <Text text="Description"/>
+                    </Column>
+                    <Column>
+                        <Text text="Charged Amount"/>
+                    </Column>
+                    <Column>
+                        <Text text="Expense Amount"/>
+                    </Column>
+                    <Column>
+                        <Text text="Expense Country"/>
+                    </Column>
+                    <Column>
+                        <Text text="Expense Date"/>
+                    </Column>
+                    <Column>
+                        <Text text="CC Key"/>
+                    </Column>
+                    <Column>
+                        <Text text="Charge Type"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem >
+                        <cells>
+                            <Text text="{viewModel>TravelExpType}"/>
+                            <Text text="{viewModel>CCdescriptionText}"/>
+                            <Text text="{viewModel>NetPoValue}"/>
+                            <Text text="{viewModel>ReceiptAmount}"/>
+                            <Text text="{viewModel>Country}"/>
+                            <Text text="{path:'viewModel>DateOfCCTransaction',type: 'sap.ui.model.type.Date', formatOptions: {style: 'medium'}}"/>
+                            <Text text="{viewModel>Genkey}"/>
+                            <Text text="{viewModel>ChargeType}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

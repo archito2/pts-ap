@@ -79,6 +79,11 @@
 				"uri": "model/localTiles.json",
 				"preload": true
 			},
+			"currencyModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "model/currency.json",
+				"preload": true
+			},
 			"countryModel": {
 				"type": "sap.ui.model.json.JSONModel",
 				"uri": "model/countryCodeMin.json",

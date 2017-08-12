@@ -4,7 +4,18 @@
     xmlns:f="sap.ui.layout.form" 
     xmlns:core="sap.ui.core" 
     xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
-    <Table id="idItemsTable" inset="false" items="{ path: 'viewModel>/Items'}">
+    <Table selectionChange="handleSelectionChange" mode="SingleSelectMaster" id="idItemsTable" inset="false" items="{ path: 'viewModel>/Items'}">
+        <headerToolbar>
+            <Toolbar>
+                <Title text="Items" level="H2"/>
+                <ToolbarSpacer/>
+                <Button text="Add" icon="sap-icon://add" press="handleAddItem"/>
+                <Button enabled = "{configModel>/rowSelected}" text="Copy" icon="sap-icon://copy" press="handleCopyItem"/>
+                <Button enabled = "{configModel>/rowSelected}" text="Delete" icon="sap-icon://delete" press="handleDeleteItem"/>
+                <Button text="Credit Card Lines" icon="sap-icon://credit-card" press="handleCClines"/>
+                <Button text="Apply Template" icon="sap-icon://crm-service-manager" press="handleApplyTemplate"/>
+            </Toolbar>
+        </headerToolbar>
         <columns>
             <Column>
                 <Text text="Expense Type"/>
@@ -29,16 +40,8 @@
                 ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
                 <Text text="G/L"/>
             </Column>
-            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_GLTXTT}!=='X'&amp;&amp;
-                ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
-                <Text text="G/L Description"/>
-            </Column>
             <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_KOSTLT}!=='X'}">
                 <Text text="Cost Center"/>
-            </Column>
-            <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_KOSTLTXTT}!=='X'&amp;&amp;
-                ${viewModel>/WebStatus/WEB_ER_SHOW_GLFLD}==='X'}">
-                <Text text="Cost Center Description"/>
             </Column>
             <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_CRG_TYPET}!=='X'}">
                 <Text text="Payment Method"/>
@@ -99,6 +102,7 @@
         <items>
             <ColumnListItem vAlign="Middle">
                 <cells>
+                    <!-- Expense Type -->
                     <VBox>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{path : 'viewModel>Spkzl',formatter : '._getSpkzlName'}"/>
                         <Input placeholder= "Expense Type" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Spkzl}"/>
@@ -106,16 +110,37 @@
 						path: 'viewModel>/ExpenseType/results',templateShareable : false
 					}"><core:Item key="{viewModel>ExpType}" text="{viewModel>NameOfExpType}" /></Select> -->
                     </VBox>
+                    <!-- Detail -->
                     <!-- <Button visible = "{path : 'viewModel>Spkzl',formatter : '._isDetailVisible'}" type="Accept" icon="sap-icon://action" 
                         press ="handleDetailPress"/> -->
+                    <!-- Amount -->
                     <VBox>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>ExpAmount}"/>
-                        <Input placeholder= "Amount" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>ExpAmount}"/>
+                        <Input placeholder= "Amount" visible="{=${viewModel>/UIModel/CreateMode}}" 
+                        value="{
+                            parts:[
+                                {path :'viewModel>ExpAmount'},
+                                {path:'viewModel>ExpCurrency'}
+                            ],
+                            type:'sap.ui.model.type.Currency',
+                            formatOptions: {showMeasure: false}
+                        }"/>
                     </VBox>
+                    <!-- Currency -->
                     <VBox>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>ExpCurrency}"/>
-                        <Input placeholder= "Currency" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>ExpCurrency}"/>
+                        <Input 
+                            placeholder= "Currency" 
+                            visible="{=${viewModel>/UIModel/CreateMode}}" 
+                            value="{viewModel>ExpCurrency}"
+                            showSuggestion="true"
+                            suggestionItems="{currencyModel>/currencies}">
+                            <suggestionItems>
+                                <core:Item text="{currencyModel>value}" />
+                            </suggestionItems>
+                        </Input>
                     </VBox>
+                    <!-- Country -->
                     <VBox>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>ExpLand1}"/>
                         <!-- <Input placeholder= "Country" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>ExpLand1}"/> -->
@@ -126,29 +151,26 @@
 					        <core:ListItem key="{countryModel>code}" text="{countryModel>country}" additionalText="{countryModel>code}"/>
 				        </ComboBox>
                     </VBox>
+                    <!-- Expense Date -->
                     <VBox>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>ExpDate}"/>
                         <DatePicker  placeholder= "Date" visible="{=${viewModel>/UIModel/CreateMode}}" dateValue="{viewModel>ExExpDatepAmount}"/>
                     </VBox>
+                    <!-- Converted Amount -->
                     <VBox>
-                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>ExpAmount}"/>
-                        <Input editable="false" placeholder= "Amount" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>ExpAmount}"/>
+                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Netwr}"/>
+                        <Input editable="false" placeholder= "Amount" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Netwr}"/>
                     </VBox>
+                    <!-- Glacc -->
                     <VBox>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{path :'viewModel>Glacc',formatter:'._removeLeadingZeroes'}"/>
                         <Input placeholder= "Glacc" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Glacc}"/>
-                    </VBox>
-                    <VBox>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Gltxt}"/>
-                        <Input placeholder= "Glacc" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Gltxt}"/>
                     </VBox>
                     <VBox>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{path :'viewModel>Kostl',formatter:'._removeLeadingZeroes'}"/>
-                        <Input placeholder= "Exp Amount" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Kostl}"/>
-                    </VBox>
-                    <VBox>
+                        <Input placeholder= "Cost Center" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Kostl}"/>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Kostltxt}"/>
-                        <Input placeholder= "Kostl" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Kostltxt}"/>
                     </VBox>
                     <VBox>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>CrgType}"/>
