@@ -3,7 +3,7 @@ sap.ui.define([
   "sap/ui/Device",
   "sap/ui/model/Filter",
   "sap/ui/model/FilterOperator",
-], function (UIComponent, Device,Filter,FilterOperator) {
+], function (UIComponent, Device, Filter, FilterOperator) {
   "use strict";
 
   return UIComponent.extend("com.dolphin.Component", {
@@ -24,29 +24,32 @@ sap.ui.define([
       var oApModel = this.getModel('apModel');
       oApModel.setHeaders({ 'PTSMaxHits': '50' });
       oApModel.metadataLoaded()
-        .then(this._callUserDetailsService())
-        .then(this._callStatusSetServive())
-        .then(function(){
-          sap.ui.core.BusyIndicator.hide();
-          this.getRouter().initialize();    
-        }.bind(this))
-        .catch(function(oError){
+        .then(this._callUserDetailsService()
+          .then(this._callStatusSetServive()
+            .then(function () {
+              console.log('All data loaded, proceeding with router');
+              this.getRouter().initialize();
+            }.bind(this))))
+        .catch(function (oError) {
           debugger;
-        })
-      // oApModel.metadataLoaded().then(function () {
-      //   sap.m.MessageToast.show('Connection to SAP Gateway is successfull');
-      //   this._callUserDetailsService().then(function () {
-      //     debugger;
-      //     this.getRouter().initialize();
-      //   }.bind(this),
-      //     function (oError) {
-      //       debugger;
-      //     })
-      // }.bind(this));
+        });
+
+      // oApModel.metadataLoaded().then(
+      //   this._userDetailsService()
+      // );
+      // oApModel.attachRequestCompleted(function(){
+      //   debugger;
+      // });
+      // oApModel.metadataLoaded().then(
+      //   this._statusSetService()
+      // );
+      // oApModel.attachRequestCompleted(function(){
+      //   debugger;
+      // });
       oApModel.attachMetadataFailed(function () {
         sap.ui.core.BusyIndicator.hide();
         sap.m.MessageToast.show('Connection to SAP Gateway is failed!!!');
-      })
+      });
 
 
     },
@@ -85,10 +88,12 @@ sap.ui.define([
       return this._sContentDensityClass;
     },
     _callUserDetailsService: function (oEvent) {
+      console.log('Initiated user details service');
       return new Promise(function (resolve, reject) {
         this.getModel('apModel').read("/UserListSet", {
-          filters : [ new Filter('Xuser', FilterOperator.EQ, 'sy-uname')],
+          filters: [new Filter('Xuser', FilterOperator.EQ, 'sy-uname')],
           success: function (oData, oResponse) {
+            console.log('User details retrieved successfully');
             sap.ui.getCore().setModel(oData, 'userModel');
             resolve();
           }.bind(this),
@@ -99,15 +104,17 @@ sap.ui.define([
       }.bind(this));
     },
     _callStatusSetServive: function (oEvent) {
+      console.log('Initiated status set service');
       return new Promise(function (resolve, reject) {
         this.getModel('apModel').read("/StatusSet", {
           success: function (oData, oResponse) {
-            var oWebStatus = oData.results.filter((item) => { return item.StatusNum.startsWith('WEB_') })
+            console.log('Status sets retrieved successfully');
+            var oWebStatus = oData.results.filter(function(item)  { return item.StatusNum.startsWith('WEB_') })
               .reduce(function (obj, item) {
                 obj[item.StatusNum] = item.Description;
                 return obj;
               }, {});
-            sap.ui.getCore().setModel(oWebStatus,'configModel');
+            sap.ui.getCore().setModel(oWebStatus, 'configModel');
             resolve(oWebStatus);
           }.bind(this),
           error: function (oError) {
@@ -115,6 +122,33 @@ sap.ui.define([
           }.bind(this)
         })
       }.bind(this));
-    }
+    },
+    _userDetailsService: function (oEvent) {
+      debugger;
+      this.getModel('apModel').read("/UserListSet", {
+        filters: [new Filter('Xuser', FilterOperator.EQ, 'sy-uname')],
+        success: function (oData, oResponse) {
+          debugger;
+          sap.ui.getCore().setModel(oData, 'userModel');
+        }.bind(this),
+        error: function (oError) {
+        }.bind(this)
+      });
+    },
+    _statusSetService: function (oEvent) {
+      debugger;
+      this.getModel('apModel').read("/StatusSet", {
+        success: function (oData, oResponse) {
+          var oWebStatus = oData.results.filter(function(item)  { return item.StatusNum.startsWith('WEB_'); })
+            .reduce(function (obj, item) {
+              obj[item.StatusNum] = item.Description;
+              return obj;
+            }, {});
+          sap.ui.getCore().setModel(oWebStatus, 'configModel');
+        }.bind(this),
+        error: function (oError) {
+        }.bind(this)
+      });
+    },
   });
 });

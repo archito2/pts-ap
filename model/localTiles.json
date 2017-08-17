@@ -30,7 +30,7 @@
                     "icon": "bar-chart"
                 },
                 {
-                    "id": "04",
+                    "id": "hitlist",
                     "header": "Search",
                     "subheader": "Sub Header",
                     "footer": "03/17/2017",

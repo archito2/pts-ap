@@ -141,8 +141,6 @@ sap.ui.define([
           state: 'Error',
           content: [new sap.m.Text({
             text: oError.message
-          }), new sap.m.Text({
-            text: " "+JSON.parse(oError.responseText).error.message.value
           })],
           beginButton: new sap.m.Button({
             text: 'OK',

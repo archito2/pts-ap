@@ -1,0 +1,12 @@
+<core:FragmentDefinition 
+    xmlns="sap.m" 
+    xmlns:core="sap.ui.core">
+    <MessagePopover items="{messages>/results}">
+        <MessagePopoverItem 
+            type="{path : 'messages>TYPE',formatter : '._getErrorString'}" 
+            title="{path : 'messages>TYPE',formatter : '._getErrorString'} message(s)"
+            subtitle="Click for more"
+            description="{messages>MSG}">
+        </MessagePopoverItem>
+    </MessagePopover>
+</core:FragmentDefinition>

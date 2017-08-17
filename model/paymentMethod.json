@@ -1,0 +1,16 @@
+{
+    "methods": [
+        {
+            "key": "CC",
+            "value": "Company Card"
+        },
+        {
+            "key": "PC",
+            "value": "Personal Card"
+        },
+        {
+            "key": "CA",
+            "value": "Cash"
+        }
+    ]
+}

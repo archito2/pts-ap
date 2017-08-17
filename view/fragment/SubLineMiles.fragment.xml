@@ -1,0 +1,24 @@
+<core:FragmentDefinition 
+    xmlns:l="sap.ui.layout" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m" 
+    xmlns:core="sap.ui.core">
+    <Popover contentWidth= "25%" title="Details" class="sapUiContentPadding" placement="Right" initialFocus="email">
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button text="Close" press="handleDetailClose" />
+            </Toolbar>
+        </footer>
+        <l:VerticalLayout>
+            <l:content>
+                <Label text="Calculation Rate" />
+                <Text  id ="idCalcRateText" />
+                <Label text="Count" />
+                <Text  visible="{=!${viewModel>/UIModel/CreateMode}}" id="idCountText" />
+                <Input editable="false" placeholder= "Amount" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Netwr}"/>
+            </l:content>
+        </l:VerticalLayout>
+    </Popover>
+</core:FragmentDefinition> 
+

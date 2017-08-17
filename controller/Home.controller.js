@@ -14,6 +14,7 @@ sap.ui.define([
        * @public
        */
       onInit: function () {
+        sap.ui.core.BusyIndicator.hide();
       },
       /* =========================================================== */
       /* formatter methods                                           */
@@ -22,11 +23,11 @@ sap.ui.define([
       /* event handlers                                              */
       /* =========================================================== */
       handleTilePress : function(oEvent){
-          var oItem, oCtx, sId;
-			oItem = oEvent.getSource();
-			oCtx = oItem.getBindingContext('data');
-			sId = oCtx.getProperty("id");
-			this.getRouter().navTo(sId);
+        var oItem, oCtx, sId;
+        oItem = oEvent.getSource();
+        oCtx = oItem.getBindingContext('data');
+        sId = oCtx.getProperty("id");
+        this.getRouter().navTo(sId);
       }
       /* =========================================================== */
       /* Internal Methods                                            */

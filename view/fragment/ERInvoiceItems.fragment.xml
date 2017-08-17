@@ -20,7 +20,7 @@
             <Column>
                 <Text text="Expense Type"/>
             </Column>
-            <!-- <Column><Text text="Details"/></Column> -->
+            <Column width="5%"/>
             <Column visible = "{=${viewModel>/WebStatus/WEB_ER_HIDE_EXP_AMOUNTT}!=='X'}">
                 <Text text="Amount"/>
             </Column>
@@ -104,20 +104,21 @@
                 <cells>
                     <!-- Expense Type -->
                     <VBox>
-                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{path : 'viewModel>Spkzl',formatter : '._getSpkzlName'}"/>
-                        <Input placeholder= "Expense Type" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Spkzl}"/>
-                        <!-- <Select forceSelection="true" selectedKey="{viewModel>Spkzl}" items="{
-						path: 'viewModel>/ExpenseType/results',templateShareable : false
-					}"><core:Item key="{viewModel>ExpType}" text="{viewModel>NameOfExpType}" /></Select> -->
+                        <Text 
+                            visible="{=!${viewModel>/UIModel/CreateMode}}" text="{path : 'viewModel>Spkzl',formatter : '._getSpkzlName'}"/>
+                        <Select change="handleExpTypeChange"
+                            visible="{=${viewModel>/UIModel/CreateMode}}" forceSelection="true" selectedKey="{viewModel>Spkzl}" 
+                            items="{path: 'viewModel>/ExpenseTypeSet/results',templateShareable : false}">
+                            <core:Item key="{viewModel>ExpType}" text="{viewModel>NameOfExpType}" />
+                        </Select>
                     </VBox>
                     <!-- Detail -->
-                    <!-- <Button visible = "{path : 'viewModel>Spkzl',formatter : '._isDetailVisible'}" type="Accept" icon="sap-icon://action" 
-                        press ="handleDetailPress"/> -->
+                    <Button 
+                        enabled = "{path : 'viewModel>Spkzl',formatter : '._isDetailVisible'}" type="{path : 'viewModel>Spkzl',formatter : '._buttonType'}" icon="sap-icon://action" press ="handleDetailPress"/>
                     <!-- Amount -->
                     <VBox>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>ExpAmount}"/>
-                        <Input placeholder= "Amount" visible="{=${viewModel>/UIModel/CreateMode}}" 
-                        value="{
+                        <Input placeholder= "Amount" visible="{=${viewModel>/UIModel/CreateMode}}" value="{
                             parts:[
                                 {path :'viewModel>ExpAmount'},
                                 {path:'viewModel>ExpCurrency'}
@@ -129,12 +130,7 @@
                     <!-- Currency -->
                     <VBox>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>ExpCurrency}"/>
-                        <Input 
-                            placeholder= "Currency" 
-                            visible="{=${viewModel>/UIModel/CreateMode}}" 
-                            value="{viewModel>ExpCurrency}"
-                            showSuggestion="true"
-                            suggestionItems="{currencyModel>/currencies}">
+                        <Input placeholder= "Currency" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>ExpCurrency}" showSuggestion="true" suggestionItems="{currencyModel>/currencies}">
                             <suggestionItems>
                                 <core:Item text="{currencyModel>value}" />
                             </suggestionItems>
@@ -144,17 +140,14 @@
                     <VBox>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>ExpLand1}"/>
                         <!-- <Input placeholder= "Country" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>ExpLand1}"/> -->
-                        <ComboBox showSecondaryValues= "true" filterSecondaryValues= "true" 
-                            value="{viewModel>ExpLand1}"
-					        selectedKey="{viewModel>ExpLand1}"
-					        items="{path: 'countryModel>/Countries'}">
-					        <core:ListItem key="{countryModel>code}" text="{countryModel>country}" additionalText="{countryModel>code}"/>
-				        </ComboBox>
+                        <ComboBox showSecondaryValues= "true" filterSecondaryValues= "true" value="{viewModel>ExpLand1}" selectedKey="{viewModel>ExpLand1}" items="{path: 'countryModel>/Countries'}">
+                            <core:ListItem key="{countryModel>code}" text="{countryModel>country}" additionalText="{countryModel>code}"/>
+                        </ComboBox>
                     </VBox>
                     <!-- Expense Date -->
                     <VBox>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>ExpDate}"/>
-                        <DatePicker  placeholder= "Date" visible="{=${viewModel>/UIModel/CreateMode}}" dateValue="{viewModel>ExExpDatepAmount}"/>
+                        <DatePicker placeholder= "Date" visible="{=${viewModel>/UIModel/CreateMode}}" dateValue="{viewModel>ExpDate}"/>
                     </VBox>
                     <!-- Converted Amount -->
                     <VBox>
@@ -174,7 +167,12 @@
                     </VBox>
                     <VBox>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>CrgType}"/>
-                        <Input placeholder= "Crgtype" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>CrgType}"/>
+                        <!-- <Input editable="false" placeholder= "Crgtype" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>CrgType}"/> -->
+                        <Select 
+                            enabled= "false" visible="{=${viewModel>/UIModel/CreateMode}}" forceSelection="true" selectedKey="{viewModel>CrgType}" 
+                            items="{paymentMethodModel>/methods}" ediatble="false">
+                            <core:Item key="{paymentMethodModel>key}" text="{paymentMethodModel>value}" />
+                        </Select>
                     </VBox>
                     <VBox>
                         <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Aufnr}"/>

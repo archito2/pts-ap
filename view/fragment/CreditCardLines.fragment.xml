@@ -5,7 +5,7 @@
     xmlns:core="sap.ui.core" >
     <Dialog showHeader="false">
         <content>
-            <Table id="idCCLinesTable" inset="false" selectionChange="handleSelectionChange" mode="MultiSelect"
+            <Table id="idCCLinesTable" inset="false" selectionChange="handleCCSelectionChange" mode="MultiSelect"
             items="{ path: 'viewModel>/CCLines/results'}">
                 <headerToolbar>
                     <Toolbar>
@@ -43,14 +43,14 @@
                 <items>
                     <ColumnListItem >
                         <cells>
-                            <Text text="{viewModel>TravelExpType}"/>
-                            <Text text="{viewModel>CCdescriptionText}"/>
-                            <Text text="{viewModel>NetPoValue}"/>
-                            <Text text="{viewModel>ReceiptAmount}"/>
-                            <Text text="{viewModel>Country}"/>
-                            <Text text="{path:'viewModel>DateOfCCTransaction',type: 'sap.ui.model.type.Date', formatOptions: {style: 'medium'}}"/>
-                            <Text text="{viewModel>Genkey}"/>
-                            <Text text="{viewModel>ChargeType}"/>
+                            <Text text="{viewModel>Spkzl}"/>
+                            <Text text="{viewModel>Sgtxt}"/>
+                            <Text text="{viewModel>Netwr}"/>
+                            <Text text="{viewModel>ExpAmount}"/>
+                            <Text text="{viewModel>ExpLand1}"/>
+                            <Text text="{path:'viewModel>ExpDate',type: 'sap.ui.model.type.Date', formatOptions: {style: 'medium'}}"/>
+                            <Text text="{viewModel>Ofdocumentid}"/>
+                            <Text text="{viewModel>CrgType}"/>
                         </cells>
                     </ColumnListItem>
                 </items>

@@ -79,6 +79,11 @@
 				"uri": "model/localTiles.json",
 				"preload": true
 			},
+			"paymentMethodModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "model/paymentMethod.json",
+				"preload": true
+			},
 			"currencyModel": {
 				"type": "sap.ui.model.json.JSONModel",
 				"uri": "model/currency.json",
@@ -101,7 +106,8 @@
 					"defaultCountMode": "None",
 					"useBatch": false
 				},
-				"dataSource": "apService"
+				"dataSource": "apService",
+				"preload": true
 			},
 			"erModel": {
 				"type": "sap.ui.model.odata.v2.ODataModel",
@@ -109,7 +115,8 @@
 					"defaultCountMode": "None",
 					"useBatch": false
 				},
-				"dataSource": "erService"
+				"dataSource": "erService",
+				"preload": true
 			}
 		},
 		"resources": {
@@ -135,12 +142,12 @@
 			},
 			"routes": [
 				{
-					"pattern": "home",
+					"pattern": "",
 					"name": "home",
 					"target": "home"
 				},
 				{
-					"pattern": "",
+					"pattern": "hitlist",
 					"name": "hitlist",
 					"target": "hitlist"
 				},
@@ -148,6 +155,11 @@
 					"pattern": "apDetail/{RecNo}",
 					"name": "apDetail",
 					"target": "apDetail"
+				},
+				{
+					"pattern": "erDetail/{RecNo}",
+					"name": "erDetail",
+					"target": "createER"
 				},
 				{
 					"pattern": "createER",

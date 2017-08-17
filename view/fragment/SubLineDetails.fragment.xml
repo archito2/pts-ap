@@ -1,0 +1,35 @@
+<core:FragmentDefinition 
+    xmlns="sap.m" 
+    xmlns:core="sap.ui.core">
+    <Popover contentWidth= "25%" showHeader = "false" title="Details" class="sapUiContentPadding" placement="Right">
+        <subHeader>
+            <Toolbar>
+                <Title text="Sub Lines" />
+                <ToolbarSpacer/>
+                <!-- <Button text="Manager" icon="sap-icon://" press="handleAddManger"/><Button enabled = "{configModel>/rowSelected}" text="Reviewer" icon="sap-icon://add-employee" press="handleCopyItem"/> -->
+                <Button text="Add" icon="sap-icon://add" press="handleAddSubLines"/>
+            </Toolbar>
+        </subHeader>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button text="Close" press="handleSubLineDetailClose" />
+            </Toolbar>
+        </footer>
+        <Table id="idMilesTable" inset="false" items="{viewModel>SubLines}">
+            <columns>
+                <Column>
+                    <!-- <Text text="Description"/> -->
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem >
+                    <cells>
+                        <Input width="100%" placeholder= "Description" value="{viewModel>Xref1}"/>
+                        <!-- <Text text="{viewModel>Xref1}"/> -->
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Popover>
+</core:FragmentDefinition>
