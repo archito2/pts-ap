@@ -5,17 +5,17 @@
 		<pages>
 			<Page id="idPage" title="Home" showHeader="false">
 				<content>
-					<launchpad:DashboardGroupsContainer id="TileContainer" groups="{path : 'data>/results', templateShareable : false}">
+					<launchpad:DashboardGroupsContainer id="TileContainer" groups="{path : 'tiles>/results', templateShareable : false}">
 						<launchpad:groups>
-							<launchpad:TileContainer headerText="{data>section}" tiles="{path : 'data>tiles', templateShareable : false }" showPlaceholder="false">
+							<launchpad:TileContainer headerText="{tiles>section}" tiles="{path : 'tiles>tiles', templateShareable : false }" showPlaceholder="false">
 								<launchpad:tiles>
 									<launchpad:Tile>
 										<launchpad:tileViews>
-											<GenericTile header="{data>header}" subheader="{data>subheader}" press="handleTilePress">
+											<GenericTile header="{tiles>header}" subheader="{tiles>subheader}" press="handleTilePress">
 												<tileContent>
-													<TileContent unit="{data>unit}" footer="{data>footer}">
+													<TileContent unit="{tiles>unit}" footer="{tiles>footer}">
 														<content>
-                                                        <NumericContent value="{data>count}" icon="sap-icon://{data>icon}"/>
+                                                        <NumericContent busy="{tiles>busy}" value="{tiles>count}" icon="sap-icon://{tiles>icon}"/>
 														</content>
 													</TileContent>
 												</tileContent>

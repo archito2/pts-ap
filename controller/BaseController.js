@@ -135,12 +135,17 @@ sap.ui.define([
      */
       displayErrorPopup: function (oError) {
         sap.ui.core.BusyIndicator.hide();
+        var title,errorMsg;
+        if(oError.responseText){
+          errorMsg=JSON.parse(oError.responseText).error.message.value;
+          title=oError.message;
+        }
         var dialog = new sap.m.Dialog({
-          title: oError.statusText,
+          title:title,
           type: 'Message',
           state: 'Error',
           content: [new sap.m.Text({
-            text: oError.message
+            text: errorMsg
           })],
           beginButton: new sap.m.Button({
             text: 'OK',

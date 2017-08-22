@@ -132,7 +132,7 @@ sap.ui.define([
         oEvent.getSource().getParent().getParent().getSelectedItems().forEach(function (obj) {
           var sPath = obj.getBindingContext('viewModel').sPath;
           // console.log(obj.getBindingContext('viewModel').getProperty(sPath));
-          that.getModel('viewModel').getProperty('/Items').push(obj.getBindingContext('viewModel').getProperty(sPath));
+          that.getModel('viewModel').getProperty('/Items').results.push(obj.getBindingContext('viewModel').getProperty(sPath));
           that.getModel('viewModel').refresh();
         });
         oEvent.getSource().getParent().getParent().getParent().close();
@@ -230,7 +230,7 @@ sap.ui.define([
         this._callInvoiceItemsService(sRecNo);
       },
       _setMessageModel: function (oData) {
-        var oMsgModel = new JSONModel(oData);
+        var oMsgModel = new JSONModel(oData.error.innererror.errordetails);
         this.setModel(oMsgModel, 'messages');
       },
       // Calls the Tracks Service
@@ -319,15 +319,15 @@ sap.ui.define([
           that = this;
 
           
-        // oTracks.SubLines = [];
-        // oTracks.ItemER = this.getModel('viewModel').getProperty('/Items');
-        // this.getModel('viewModel').getProperty('/Items').forEach(function(item,index){
-        //   item.SubLines.forEach(function(subLine){
-        //     subLine.LineNum = index+1+'';
-        //     oTracks.SubLines.push(subLine);
-        //   }.bind({index:index,oTracks:oTracks}));
-        //   delete item.SubLines;
-        // }.bind(oTracks));
+        oTracks.SubLines = [];
+        oTracks.ItemER = this.getModel('viewModel').getProperty('/Items');
+        this.getModel('viewModel').getProperty('/Items').forEach(function(item,index){
+          item.SubLines.forEach(function(subLine){
+            subLine.LineNum = index+1+'';
+            oTracks.SubLines.push(subLine);
+          }.bind({index:index,oTracks:oTracks}));
+          delete item.SubLines;
+        }.bind(oTracks));
 
 
         // oTracks.er_item = this.getModel('viewModel').getProperty('/Items');
@@ -350,7 +350,7 @@ sap.ui.define([
           error: function (oError) {
             sap.ui.core.BusyIndicator.hide();
             that.displayErrorPopup(oError);
-            that._setMessageModel(oError);
+            // that._setMessageModel(oError);
           }.bind(this)
         });
       }

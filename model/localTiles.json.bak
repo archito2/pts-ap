@@ -5,36 +5,37 @@
             "section": "PTS",
             "tiles": [
                 {
-                    "id": "approvals",
+                    "id": "01",
                     "header": "My Approvals",
-                    "countable":true,
-                    "busy":true,
-                    "filterProperty":"Status",
-                    "filterValue":"20",
-                    "icon": "payment-approval"
+                    "subheader": "Sub Header",
+                    "footer": "03/17/2017",
+                    "unit": "EA",
+                    "icon": "bar-chart",
+                    "count":"10"
                 },
                 {
-                    "id": "submissions",
-                    "icon": "sales-document",
+                    "id": "02",
                     "header": "My Submissions",
-                    "countable":true,
-                    "busy":true,
-                    "filterProperty":"Status",
-                    "filterValue":"002"
+                    "subheader": "Sub Header",
+                    "footer": "03/17/2017",
+                    "unit": "EA",
+                    "icon": "bar-chart"
                 },
                 {
-                    "id": "drafts",
-                    "icon": "monitor-payments",
+                    "id": "03",
                     "header": "My Drafts",
-                    "countable":true,
-                    "busy":true,
-                    "filterProperty":"MyApprovalsStr",
-                    "filterValue":"C"
+                    "subheader": "Sub Header",
+                    "footer": "03/17/2017",
+                    "unit": "EA",
+                    "icon": "bar-chart"
                 },
                 {
-                    "id": "historySearch",
-                    "icon": "my-sales-order",
-                    "header": "Search"
+                    "id": "hitlist",
+                    "header": "Search",
+                    "subheader": "Sub Header",
+                    "footer": "03/17/2017",
+                    "unit": "EA",
+                    "icon": "bar-chart"
                 }
             ]
         },
