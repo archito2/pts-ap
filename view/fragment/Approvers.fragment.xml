@@ -4,7 +4,7 @@
 	xmlns:f="sap.ui.layout.form" 
 	xmlns:core="sap.ui.core" 
 	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
-	<Table id="idApproversTable" inset="false" items="{ path: 'viewModel>/Approvers/results'}">
+	<Table id="idApproversTable" inset="false" items="{ path: '/Approvers'}">
 		<headerToolbar>
 			<Toolbar>
 				<!-- <Title text="Items" level="H2"/> -->
@@ -20,7 +20,7 @@
 						</Menu>
 					</menu>
 				</MenuButton>
-				<Input width="10%" visible="{=${viewModel>/WebStatus/WEB_ER_HIDE_PHXUSER}!=='X'&amp;&amp;${viewModel>/UIModel/CreateMode}}" value="{viewModel>/Tracks/User}" showValueHelp="true" app:ovsService="UserListSet" app:ovsIdField="Xuser" app:ovsDescField="Fname" app:ovsTitle="Select a Company Code" valueHelpRequest="handleValueHelp"/>
+				<Input width="10%" visible="{=${/WebStatus/WEB_ER_HIDE_PHXUSER}!=='X'&amp;&amp;${/UIModel/CreateMode}}" value="{/Tracks/User}" showValueHelp="true" app:ovsService="UserListSet" app:ovsIdField="Xuser" app:ovsDescField="Fname" app:ovsTitle="Select a Company Code" valueHelpRequest="handleValueHelp"/>
 				<Button enabled = "{configModel>/rowSelected}" text="Delete" icon="sap-icon://delete" press="handleDeleteItem"/>
 			</Toolbar>
 		</headerToolbar>
@@ -44,11 +44,11 @@
 		<items>
 			<ColumnListItem vAlign="Middle">
 				<cells>
-					<Text text="{viewModel>ApproverID}"/>
-					<Text text="{viewModel>Decision}"/>
-					<Text text="{viewModel>Curr}"/>
-					<Text text="{viewModel>Seq}"/>
-					<Text text="{viewModel>ApproverName}"/>
+					<Text text="{ApproverID}"/>
+					<Text text="{Decision}"/>
+					<Text text="{Curr}"/>
+					<Text text="{Seq}"/>
+					<Text text="{ApproverName}"/>
 				</cells>
 			</ColumnListItem>
 		</items>

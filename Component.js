@@ -28,6 +28,8 @@ sap.ui.define([
           .then(this._callStatusSetServive()
             .then(function () {
               console.log('All data loaded, proceeding with router');
+              //Set the the headers for the AP Model
+              oApModel.setHeaders({'PTSUser':sap.ui.getCore().getModel('userModel').results[0].Xuser,'PTSMaxHits': '50' });
               this.getRouter().initialize();
             }.bind(this))))
         .catch(function (oError) {

@@ -29,7 +29,7 @@ sap.ui.define([
         var oCtx = oEvent.getSource().getBindingContext('tiles'),
           sPath = oCtx.getPath() + '/id',
           sTileId = oCtx.getProperty(sPath);
-        this.getRouter().navTo("resultTable", {
+        this.getRouter().navTo("hitlist", {
           navParam: sTileId
         });
       },

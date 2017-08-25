@@ -8,3 +8,7 @@
 /*    background-image: -ms-linear-gradient(top,#008C99 0,#00707a 50%,#dde4eb 100%) !important;*/
 /*    background-image: linear-gradient(to bottom,#008C99 0,#00707a 50%,#dde4eb 100%) !important*/
 /*}*/
+
+.sapUiGlobalBackgroundColor, .sapMShellGlobalInnerBackground {
+    background-color: rgba(0, 153, 123, 0.03);
+}

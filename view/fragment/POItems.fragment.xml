@@ -1,0 +1,64 @@
+<core:FragmentDefinition 
+    xmlns="sap.m" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.ui.layout.form" 
+    xmlns:core="sap.ui.core" 
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Popover contentWidth= "50%" title="Invoice Account Assignment" class="sapUiContentPadding" placement="Top">
+        <Table id="idInvoiceItemsTable" items="{/POItems}">
+            <columns>
+                <!-- Purcahse Item -->
+                <Column visible = "{=${/WebStatus/WEB_HIDE_PO_ITEMPL}!=='X'}">
+                    <Text text="Item"/>
+                </Column>
+                <!-- Short Text -->
+                <Column  visible = "{=${/WebStatus/WEB_HIDE_SHORT_TEXTPL}!=='X'}">
+                    <Text text="Short Text"/>
+                </Column>
+                <!-- PO Quantity -->
+                <Column   visible = "{=${/WebStatus/WEB_HIDE_QUANTITYPL}!=='X'}">
+                    <Text text="PO Quantity"/>
+                </Column>
+                <!-- Net Price -->
+                <Column   visible = "{=${/WebStatus/WEB_HIDE_NET_PRICEPL}!=='X'}">
+                    <Text text="Net Price"/>
+                </Column>
+                <!-- Material -->
+                <Column   visible = "{=${/WebStatus/WEB_HIDE_MATERIALPL}!=='X'}">
+                    <Text text="Material"/>
+                </Column>
+                <!-- Company Code -->
+                <Column   visible = "{=${/WebStatus/WEB_HIDE_CO_CODEPL}!=='X'}">
+                    <Text text="Co Code"/>
+                </Column>
+                <!-- Plant -->
+                <Column   visible = "{=${/WebStatus/WEB_HIDE_PLANTPL}!=='X'}">
+                    <Text text="Plant"/>
+                </Column>
+                <!-- Material Group -->
+                <Column   visible = "{=${/WebStatus/WEB_HIDE_MAT_GRPPL}!=='X'}">
+                    <Text text="Material Group"/>
+                </Column>
+                <!-- Sub Total -->
+                <Column   visible = "{=${/WebStatus/WEB_HIDE_SUBTOTALPL}!=='X'}">
+                    <Text text="Subtotal"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{PoItem}"/>
+                        <Text text="{ShortText}"/>
+                        <Text text="{Quantity}"/>
+                        <Text text="{NetPrice}"/>
+                        <Text text="{Material}"/>
+                        <Text text="{CoCode}"/>
+                        <Text text="{Plant}"/>
+                        <Text text="{MatGrp}"/>
+                        <Text text="{Subtotal1}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Popover>
+</core:FragmentDefinition>

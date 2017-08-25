@@ -3,5 +3,5 @@
     xmlns:core="sap.ui.core" 
     xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
     <FeedInput showIcon="false" post="onNotesPost" />
-    <TextArea value= "{viewModel>/Notes/results/0/Lines}" editable="false" width="100%" rows="5" busy= "{viewModel>/busy}" busyIndicatorDelay= "1" />
+    <TextArea value= "{/Notes/0/Lines}" editable="false" width="100%" rows="5" busy= "{viewModel>/busy}" busyIndicatorDelay= "1" />
 </core:FragmentDefinition>

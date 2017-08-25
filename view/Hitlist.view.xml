@@ -8,11 +8,13 @@
 			<Page title="Hitlist" showHeader= "false">
 				<content>
 					<core:Fragment fragmentName="com.dolphin.view.fragment.Filter" type="XML"/> 
-					<Table id="idJEResultsTable" inset="false" 
-					items="{ path: 'tracksModel>/results'}">
+					<Table id="idJEResultsTable" 
+						BusyIndicatorDelay="1000"
+						inset="false" 
+						items="{/Tracks}">
 						<headerToolbar>
 							<Toolbar>
-								<Title text="Results({tracksModel>/number})" level="H2"/>
+								<Title text="Results({/number})" level="H2"/>
 							</Toolbar>
 						</headerToolbar>
 						<columns>
@@ -81,18 +83,18 @@
 						<items>
 							<ColumnListItem vAlign="Middle" type="Navigation" press="handleDetailRowSelect">
 								<cells>
-									<Text text="{tracksModel>RecNo}" />
-									<Text text="{tracksModel>ReceiptDate}" wrapping="false"/>
-									<Text text="{tracksModel>Source}" wrapping="true" />
-									<Text text="{tracksModel>Vendor}"/>
-									<Text text="{tracksModel>Text1}" wrapping="true"/>
-									<Text text="{tracksModel>Status}" wrapping="true" />
-									<Text text="{tracksModel>ReasonCode}" wrapping="true" />
-									<Text text="{tracksModel>CompanyCode}"/>
-									<Text text="{tracksModel>Reference}"/>
-									<Text text="{tracksModel>DocumentDate}" wrapping="false"/>
-									<Text text="{tracksModel>Currency}" wrapping="false"/>
-									<Text text="{tracksModel>PurchasingDocument}"/>
+									<Text text="{RecNo}" />
+									<Text text="{ReceiptDate}" wrapping="false"/>
+									<Text text="{Source}" wrapping="true" />
+									<Text text="{Vendor}"/>
+									<Text text="{Text1}" wrapping="true"/>
+									<Text text="{Status}" wrapping="true" />
+									<Text text="{ReasonCode}" wrapping="true" />
+									<Text text="{CompanyCode}"/>
+									<Text text="{Reference}"/>
+									<Text text="{DocumentDate}" wrapping="false"/>
+									<Text text="{Currency}" wrapping="false"/>
+									<Text text="{PurchasingDocument}"/>
 									<Button icon="sap-icon://pdf-attachment" press="showImage"/> 
 								</cells>
 							</ColumnListItem>

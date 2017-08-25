@@ -29,33 +29,33 @@
 													<core:Fragment fragmentName="com.dolphin.view.fragment.Notes" type="XML"/>
 												</content>
 											</IconTabFilter>
+											<IconTabFilter icon="sap-icon://history" text="History" key="Ok">
+												<content>
+													<core:Fragment fragmentName="com.dolphin.view.fragment.HistoryItems" type="XML"/>
+												</content>
+											</IconTabFilter>
 										</items>
 									</IconTabBar>
 									<IconTabBar id="idItemIconTabBar" select="handleIconTabBarSelect" class="sapUiResponsiveContentPadding">
 										<items>
-											<IconTabFilter id="idIconTabFilterItems" icon="sap-icon://begin" text="Items" key="Ok">
+											<IconTabFilter visible="{=!${/UIModel/isPORecord}}" icon="sap-icon://sales-order-item" text="G/L Lines" key="Ok">
 												<content>
 													<core:Fragment fragmentName="com.dolphin.view.fragment.InvoiceItems" type="XML"/>
+												</content>
+											</IconTabFilter>
+											<IconTabFilter icon="sap-icon://begin" text="Invoice" key="Ok">
+												<content>
+													<core:Fragment fragmentName="com.dolphin.view.fragment.POBasedItems" type="XML"/>
 												</content>
 											</IconTabFilter>
 										</items>
 									</IconTabBar>
 								</Panel>
 							</l:SplitPane>
-							<l:SplitPane  requiredParentWidth="400" id="default1">
+							<l:SplitPane requiredParentWidth="400" id="default1">
 								<Panel height="100%">
-								<!-- //PDF goes here -->
-								<!-- <core:HTML 
-									content =
-									"<iframe frameborder=&quot;1&quot;
-										style=&quot;overflow: hidden; height: 100%; width: 100%; position: absolute;&quot;
-										height=&quot;100%&quot; width=&quot;100%&quot;
-										src=""{viewModel>/Tracks/URI}""></iframe>">
-								</core:HTML> -->
-
-								 <core:HTML 
-								 	content = "{parts:['viewModel>/Tracks/URI'],formatter:'.formatURL'}">
-								</core:HTML>  
+									<core:HTML content = "{parts:['/Tracks/URI'],formatter:'.formatURL'}">
+									</core:HTML>
 								</Panel>
 							</l:SplitPane>
 						</l:PaneContainer>

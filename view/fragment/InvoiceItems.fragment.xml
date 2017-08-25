@@ -4,54 +4,54 @@
     xmlns:f="sap.ui.layout.form" 
     xmlns:core="sap.ui.core" 
     xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
-    <Table id="idItemsTable" inset="false" items="{ path: 'viewModel>/InvoiceItems/results'}">
+    <Table id="idItemsTable" inset="false" items="{/InvoiceItems}">
         <headerToolbar>
             <Toolbar>
                 <Title text="Items" level="H2"/>
                 <ToolbarSpacer/>
-                <Link text="Add" emphasized="true">
+                <!-- <Link text="Add" emphasized="true"> -->
                 <Button text="Copy" press="onOpenPressed"/>
             </Toolbar>
         </headerToolbar>
         <columns>
             <!-- Company Code -->
-            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_BUKRST}!=='X'}">
+            <Column visible = "{=${/WebStatus/WEB_HIDE_BUKRST}!=='X'}">
                 <Text text="Company Code"/>
             </Column>
             <!-- GL Account -->
-            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_GLACCT}!=='X'}">
+            <Column visible = "{=${/WebStatus/WEB_HIDE_GLACCT}!=='X'}">
                 <Text text="G/L Acc"/>
             </Column>
             <!-- Cost Center -->
-            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_KOSTLT}!=='X'}">
+            <Column visible = "{=${/WebStatus/WEB_HIDE_KOSTLT}!=='X'}">
                 <Text text="Cost Center"/>
             </Column>
             <!-- Amount -->
-            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_NETWRT}!=='X'}">
+            <Column visible = "{=${/WebStatus/WEB_HIDE_NETWRT}!=='X'}">
                 <Text text="Amount"/>
             </Column>
             <!-- Order -->
-            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_AUFNRT}!=='X'}">
+            <Column visible = "{=${/WebStatus/WEB_HIDE_AUFNRT}!=='X'}">
                 <Text text="Order"/>
             </Column>
             <!-- WBS Element -->
-            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_PROJT}!=='X'}">
+            <Column visible = "{=${/WebStatus/WEB_HIDE_PROJT}!=='X'}">
                 <Text text="WBS Element"/>
             </Column>
             <!-- Text -->
-            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_SGTXTT}!=='X'}">
+            <Column visible = "{=${/WebStatus/WEB_HIDE_SGTXTT}!=='X'}">
                 <Text text="Text"/>
             </Column>
             <!-- Txcod -->
-            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_TXCODT}!=='X'}">
+            <Column visible = "{=${/WebStatus/WEB_HIDE_TXCODT}!=='X'}">
                 <Text text="Tax Code"/>
             </Column>
             <!-- Profit Center -->
-            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_PRCTRT}!=='X'}">
+            <Column visible = "{=${/WebStatus/WEB_HIDE_PRCTRT}!=='X'}">
                 <Text text="Profit Center"/>
             </Column>
             <!-- Sdate -->
-            <Column visible = "{=${viewModel>/WebStatus/WEB_HIDE_SDATET}!=='X'}">
+            <Column visible = "{=${/WebStatus/WEB_HIDE_SDATET}!=='X'}">
                 <Text text="Date"/>
             </Column>
         </columns>
@@ -60,53 +60,53 @@
                 <cells>
                     <!-- Company Code -->
                     <VBox>
-                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Bukrs}"/>
-                        <Input id="idInvoiceBukrsInput" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Bukrs}" app:ovsService="CompanycodeListSet" showValueHelp="true" app:ovsIdField="CompCode" app:ovsDescField="CompName" app:ovsTitle="Select a Company Code" valueHelpRequest="handleValueHelp"/>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Bukrs}"/>
+                        <Input id="idInvoiceBukrsInput" visible="{=${/UIModel/CreateMode}}" value="{Bukrs}" app:ovsService="CompanycodeListSet" showValueHelp="true" app:ovsIdField="CompCode" app:ovsDescField="CompName" app:ovsTitle="Select a Company Code" valueHelpRequest="handleValueHelp"/>
                     </VBox>
                     <!-- GL Account -->
                     <VBox>
-                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Glacc}"/>
-                        <Input id="idGlaccInput" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Glacc}" app:ovsReqdField="idInvoiceBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="GLOVSSet" showValueHelp="true" app:ovsIdField="GLAccount" app:ovsDescField="GLDescript" app:ovsTitle="Select a G/L Account" valueHelpRequest="handleValueHelp"/>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Glacc}"/>
+                        <Input id="idGlaccInput" visible="{=${/UIModel/CreateMode}}" value="{Glacc}" app:ovsReqdField="idInvoiceBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="GLOVSSet" showValueHelp="true" app:ovsIdField="GLAccount" app:ovsDescField="GLDescript" app:ovsTitle="Select a G/L Account" valueHelpRequest="handleValueHelp"/>
                     </VBox>
                     <!-- Cost Center -->
                     <VBox>
-                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Kostl}"/>
-                        <Input id="idKostlInput" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Kostl}" app:ovsReqdField="idInvoiceBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="CostCenterOVSSet" showValueHelp="true" app:ovsIdField="CostCenter" app:ovsDescField="CostCenterDesc" app:ovsTitle="Select a Cost Center" valueHelpRequest="handleValueHelp"/>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Kostl}"/>
+                        <Input id="idKostlInput" visible="{=${/UIModel/CreateMode}}" value="{Kostl}" app:ovsReqdField="idInvoiceBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="CostCenterOVSSet" showValueHelp="true" app:ovsIdField="CostCenter" app:ovsDescField="CostCenterDesc" app:ovsTitle="Select a Cost Center" valueHelpRequest="handleValueHelp"/>
                     </VBox>
                     <!-- Amount -->
                     <VBox>
-                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Netwr}"/>
-                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Netwr}"/>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Netwr}"/>
+                        <Input visible="{=${/UIModel/CreateMode}}" value="{Netwr}"/>
                     </VBox>
                     <!-- Order -->
                     <VBox>
-                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Aufnr}"/>
-                        <Input id="idAufnrInput" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Aufnr}" app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="OrderNumberOVSSet" showValueHelp="true" app:ovsIdField="OrderNumber" app:ovsDescField="Description" app:ovsTitle="Select a Company Code" valueHelpRequest="handleValueHelp"/>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Aufnr}"/>
+                        <Input id="idAufnrInput" visible="{=${/UIModel/CreateMode}}" value="{Aufnr}" app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="OrderNumberOVSSet" showValueHelp="true" app:ovsIdField="OrderNumber" app:ovsDescField="Description" app:ovsTitle="Select a Company Code" valueHelpRequest="handleValueHelp"/>
                     </VBox>
                     <!-- WBS -->
                     <VBox>
-                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Projk}"/>
-                        <Input id="idWbsInput" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Projk}" app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="WBSOVSSet" showValueHelp="true" app:ovsIdField="WBSElement" app:ovsDescField="WBSElementDesc" app:ovsTitle="Select a WBS Element" valueHelpRequest="handleValueHelp"/>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Projk}"/>
+                        <Input id="idWbsInput" visible="{=${/UIModel/CreateMode}}" value="{Projk}" app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="WBSOVSSet" showValueHelp="true" app:ovsIdField="WBSElement" app:ovsDescField="WBSElementDesc" app:ovsTitle="Select a WBS Element" valueHelpRequest="handleValueHelp"/>
                     </VBox>
                     <!-- Text -->
                     <VBox>
-                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Sgtxt}"/>
-                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Sgtxt}"/>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Sgtxt}"/>
+                        <Input visible="{=${/UIModel/CreateMode}}" value="{Sgtxt}"/>
                     </VBox>
                     <!-- Txcod -->
                     <VBox>
-                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Mwskz}"/>
-                        <Input id="idTxcodInput" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Mwskz}" app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="TaxCodeOVSSet" showValueHelp="true" app:ovsIdField="TaxCode" app:ovsDescField="TaxCodeDesc" app:ovsTitle="Select a Tax Code" valueHelpRequest="handleValueHelp"/>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Mwskz}"/>
+                        <Input id="idTxcodInput" visible="{=${/UIModel/CreateMode}}" value="{Mwskz}" app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="TaxCodeOVSSet" showValueHelp="true" app:ovsIdField="TaxCode" app:ovsDescField="TaxCodeDesc" app:ovsTitle="Select a Tax Code" valueHelpRequest="handleValueHelp"/>
                     </VBox>
                     <!-- Profit Center -->
                     <VBox>
-                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Prctr}"/>
-                        <Input id="idPrctrInput" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Prctr}" app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="ProfitCenterOVSSet" showValueHelp="true" app:ovsIdField="ProfitCenter" app:ovsDescField="PRText" app:ovsTitle="Select a Profit Center" valueHelpRequest="handleValueHelp"/>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Prctr}"/>
+                        <Input id="idPrctrInput" visible="{=${/UIModel/CreateMode}}" value="{Prctr}" app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="ProfitCenterOVSSet" showValueHelp="true" app:ovsIdField="ProfitCenter" app:ovsDescField="PRText" app:ovsTitle="Select a Profit Center" valueHelpRequest="handleValueHelp"/>
                     </VBox>
                     <!-- Sdate -->
                     <VBox>
-                        <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>Sdate}"/>
-                        <Input visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Sdate}"/>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Sdate}"/>
+                        <Input visible="{=${/UIModel/CreateMode}}" value="{Sdate}"/>
                     </VBox>
                 </cells>
             </ColumnListItem>

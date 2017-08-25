@@ -4,112 +4,202 @@
     xmlns:f="sap.ui.layout.form" 
     xmlns:core="sap.ui.core" 
     xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
-    <f:SimpleForm id="idHeaderDetailsForm" layout="ResponsiveGridLayout" editable="true" adjustLabelSpan="true" labelSpanXL="3" labelSpanL="3" labelSpanM="4" labelSpanS="12" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+    <f:SimpleForm id="idHeaderDetailsForm" layout="ResponsiveGridLayout" editable="true" adjustLabelSpan="true" labelSpanXL="3" labelSpanL="6" labelSpanM="6" labelSpanS="12" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
         <f:content>
             <!-- Column 1 -->
             <core:Title/>
             <!-- Record Number -->
-            <Label visible="{=!${viewModel>/UIModel/CreateMode}}" text="Record Number" design="Bold" />
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/RecNo}" />
+            <Label visible="{=!${/UIModel/CreateMode}}" text="Record Number" design="Bold" />
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/RecNo}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!-- Vendor Number -->
             <Label text="Vendor #" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHLIFNR}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputVendorNumber" value="{viewModel>/Tracks/Vendor}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/Vendor}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputVendorNumber" value="{/Tracks/Vendor}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/Vendor}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!-- Amount -->
             <Label text="Amount" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHWRBTR}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputAmount" value="{viewModel>/Tracks/Amount}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/Amount}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputAmount" value="{/Tracks/Amount}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/Amount}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!-- Currency -->
             <Label text="Currency" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHWAERS}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputCurrency" value="{viewModel>/Tracks/Currency}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/Currency}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputCurrency" value="{/Tracks/Currency}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/Currency}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!-- Document Date -->
             <Label text="Document Date" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHXBLDT}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputDocumentDate" value="{viewModel>/Tracks/DocumentDate}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{
-                    path: 'viewModel>/Tracks/DocumentDate',
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputDocumentDate" value="{/Tracks/DocumentDate}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{
+                    path: '/Tracks/DocumentDate',
                     type: 'sap.ui.model.type.Date',
                     formatOptions: { pattern: 'MM/dd/yyyy'}
-                }" />
+                }">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!-- Company Code -->
             <Label text="Company Code" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHBUKRS}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputCompanyCode" value="{viewModel>/Tracks/CompanyCode}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/CompanyCode}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputCompanyCode" value="{/Tracks/CompanyCode}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/CompanyCode}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!-- Purchasing Document -->
             <Label text="Purchasing Document" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHEBELN}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputPurchasingDocument" value="{viewModel>/Tracks/PurchasingDocument}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/PurchasingDocument}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputPurchasingDocument" value="{/Tracks/PurchasingDocument}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/PurchasingDocument}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!-- Payment Method -->
             <Label text="Payment Method" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHRZAWE}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputPaymentMethod" value="{viewModel>/Tracks/PaymentMethod}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/PaymentMethod}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputPaymentMethod" value="{/Tracks/PaymentMethod}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/PaymentMethod}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!-- Payment Method Supple-->
             <Label text="Payment Method Supplementary" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHUzawe}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputPmtmethSupplement" value="{viewModel>/Tracks/PmtmethSupplement}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/PmtmethSupplement}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputPmtmethSupplement" value="{/Tracks/PmtmethSupplement}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/PmtmethSupplement}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!-- Vvalu -->
             <Label text="Name" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHVVALU}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputName" value="{viewModel>/Tracks/Name}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/Name}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputName" value="{/Tracks/Name}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/Name}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!-- Logical System -->
             <Label text="Logical System" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHAWSYS}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputLogicalSystem" value="{viewModel>/Tracks/LogicalSystem}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/LogicalSystem}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputLogicalSystem" value="{/Tracks/LogicalSystem}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/LogicalSystem}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!-- Column 2 -->
             <core:Title/>
             <!--  Reference -->
             <Label text="Reference" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHXBLNR}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputReferenceNumber" value="{viewModel>/Tracks/Reference}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/Reference}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputReferenceNumber" value="{/Tracks/Reference}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/Reference}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!--  Vendor -->
             <Label text="Vendor" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHNAME1}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputVendorName" value="{viewModel>/Tracks/Name1}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/Name1}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputVendorName" value="{/Tracks/Name1}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/Name1}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!--  Tax Amount -->
             <Label text="Tax Amount" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHWmwst}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputTaxAmount" value="{viewModel>/Tracks/TaxAmount}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/TaxAmount}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputTaxAmount" value="{/Tracks/TaxAmount}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/TaxAmount}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!--  Tax Code  -->
             <Label text="Tax Code" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHTXCOD}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputTaxCode" value="{viewModel>/Tracks/TaxCode}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/TaxCode}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputTaxCode" value="{/Tracks/TaxCode}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/TaxCode}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!--  Recieved Date  -->
             <Label text="Recieved Date" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHRCDAT}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputReceiptDate" value="{viewModel>/Tracks/ReceiptDate}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" 
-                text="{
-                    path : 'viewModel>/Tracks/ReceiptDate', 
-                    type: 'sap.ui.model.type.Date',
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputReceiptDate" value="{/Tracks/ReceiptDate}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{
+                    path : '/Tracks/ReceiptDate',                     type: 'sap.ui.model.type.Date',
                     formatOptions: { pattern: 'MM/dd/yyyy'}
-                    }" />
+                    }">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!--  Plant  -->
             <Label text="Plant" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHWERKS}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputPlant" value="{viewModel>/Tracks/Plant}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/Plant}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputPlant" value="{/Tracks/Plant}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/Plant}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!--  Delivery Note  -->
             <Label text="Delivery Note" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHLFSNR}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputDeliveryNote" value="{viewModel>/Tracks/DeliveryNote}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/DeliveryNote}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputDeliveryNote" value="{/Tracks/DeliveryNote}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/DeliveryNote}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!--  Payment Reference  -->
             <Label text="Payment Reference" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHKIDNO}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputPaymentReference" value="{viewModel>/Tracks/PaymentReference}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/PaymentReference}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputPaymentReference" value="{/Tracks/PaymentReference}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/PaymentReference}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!--  Vvalu1  -->
             <Label text="Vvalu1" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHVVALU1}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputName1" value="{viewModel>/Tracks/Name1}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/Name1}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputName1" value="{/Tracks/Name1}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/Name1}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!--  Dtypz  -->
             <Label text="Express Processing" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHDTYPZ}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputExpressProcessing" value="{viewModel>/Tracks/ExpressProcessing}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/ExpressProcessing}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputExpressProcessing" value="{/Tracks/ExpressProcessing}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/ExpressProcessing}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!--  Vvalu2  -->
             <Label text="Vvalu2" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHVVALU2}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputText2" value="{viewModel>/Tracks/Text2}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/Text2}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputText2" value="{/Tracks/Text2}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/Text2}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
             <!--  Document Header Text  -->
             <Label text="Express Processing" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHBKTXT}!=='X'}" design="Bold" />
-            <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputDocumentHeaderText" value="{viewModel>/Tracks/DocumentHeaderText}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/DocumentHeaderText}" />
+            <Input visible="{=${/UIModel/CreateMode}}" id="idInputDocumentHeaderText" value="{/Tracks/DocumentHeaderText}"/>
+            <Text visible="{=!${/UIModel/CreateMode}}" text="{/Tracks/DocumentHeaderText}">
+                <layoutData>
+                    <l:GridData span="XL6" />
+                </layoutData>
+            </Text>
         </f:content>
     </f:SimpleForm>
 </core:FragmentDefinition>

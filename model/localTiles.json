@@ -9,8 +9,8 @@
                     "header": "My Approvals",
                     "countable":true,
                     "busy":true,
-                    "filterProperty":"Status",
-                    "filterValue":"20",
+                    "filterProperty":"MyApprovalsStr",
+                    "filterValue":"X",
                     "icon": "payment-approval"
                 },
                 {

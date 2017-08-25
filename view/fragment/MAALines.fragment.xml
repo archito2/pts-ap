@@ -1,0 +1,132 @@
+<core:FragmentDefinition 
+    xmlns="sap.m" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.ui.layout.form" 
+    xmlns:core="sap.ui.core" 
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Popover contentWidth= "50%" title="Invoice Account Assignment" class="sapUiContentPadding" placement="Top">
+        <Table id="idGlLinesTable" inset="false" items="{/MAALines}">
+        <headerToolbar>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <!-- <Link text="Add" emphasized="true"> -->
+                <Button text="Edit" press="handleEditPoBasedItemsClicked"/>
+            </Toolbar>
+        </headerToolbar>
+            <columns>
+                <!-- PO Doc -->
+                <Column visible = "{=${/WebStatus/WEB_HIDE_EBELNMAA}!=='X'}">
+                    <Text text="Purch. Doc"/>
+                </Column>
+                 <!-- PO Number -->
+                <Column visible = "{=${/WebStatus/WEB_HIDE_EBELPMAA}!=='X'}">
+                    <Text text="Item"/>
+                </Column>
+                <!-- Company Code -->
+                <Column visible = "{=${/WebStatus/WEB_HIDE_BUKRSMAA}!=='X'}">
+                    <Text text="Company Code"/>
+                </Column>
+                <!-- GL Account -->
+                <Column visible = "{=${/WebStatus/WEB_HIDE_GLACCMAA}!=='X'}">
+                    <Text text="G/L Acc"/>
+                </Column>
+                <!-- Cost Center -->
+                <Column visible = "{=${/WebStatus/WEB_HIDE_KOSTLMAA}!=='X'}">
+                    <Text text="Cost Center"/>
+                </Column>
+                <!-- Amount -->
+                <Column visible = "{=${/WebStatus/WEB_HIDE_NETWRMAA}!=='X'}">
+                    <Text text="Amount"/>
+                </Column>
+                <!-- Order -->
+                <Column visible = "{=${/WebStatus/WEB_HIDE_AUFNRMAA}!=='X'}">
+                    <Text text="Order"/>
+                </Column>
+                <!-- WBS Element -->
+                <Column visible = "{=${/WebStatus/WEB_HIDE_PROJMAA}!=='X'}">
+                    <Text text="WBS Element"/>
+                </Column>
+                <!-- Text -->
+                <Column visible = "{=${/WebStatus/WEB_HIDE_SGTXTMAA}!=='X'}">
+                    <Text text="Text"/>
+                </Column>
+                <!-- Txcod -->
+                <Column visible = "{=${/WebStatus/WEB_HIDE_TXCODMAA}!=='X'}">
+                    <Text text="Tax Code"/>
+                </Column>
+                <!-- Profit Center -->
+                <Column visible = "{=${/WebStatus/WEB_HIDE_PRCTRMAA}!=='X'}">
+                    <Text text="Profit Center"/>
+                </Column>
+                <!-- Sdate -->
+                <Column visible = "{=${/WebStatus/WEB_HIDE_SDATEMAA}!=='X'}">
+                    <Text text="Date"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                     <!-- Purchasing DOC -->
+                        <VBox>
+                            <Text visible="{=!${/UIModel/CreateMode}}" text="{Ebeln}"/>
+                        </VBox>
+                         <!--Purchasing Item -->
+                        <VBox>
+                            <Text visible="{=!${/UIModel/CreateMode}}" text="{Ebelp}"/>
+                        </VBox>
+                        <!-- Company Code -->
+                        <VBox>
+                            <Text visible="{=!${/UIModel/CreateMode}}" text="{Bukrs}"/>
+                            <Input id="idGlLinesBukrsInput" visible="{=${/UIModel/CreateMode}}" value="{Bukrs}" app:ovsService="CompanycodeListSet" showValueHelp="true" app:ovsIdField="CompCode" app:ovsDescField="CompName" app:ovsTitle="Select a Company Code" valueHelpRequest="handleValueHelp"/>
+                        </VBox>
+                        <!-- GL Account -->
+                        <VBox>
+                            <Text visible="{=!${/UIModel/CreateMode}}" text="{Glacc}"/>
+                            <Input id="idGlLinesGlaccInput" visible="{=${/UIModel/CreateMode}}" value="{Glacc}" app:ovsReqdField="idInvoiceBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="GLOVSSet" showValueHelp="true" app:ovsIdField="GLAccount" app:ovsDescField="GLDescript" app:ovsTitle="Select a G/L Account" valueHelpRequest="handleValueHelp"/>
+                        </VBox>
+                        <!-- Cost Center -->
+                        <VBox>
+                            <Text visible="{=!${/UIModel/CreateMode}}" text="{Kostl}"/>
+                            <Input id="idGlLinesKostlInput" visible="{=${/UIModel/CreateMode}}" value="{Kostl}" app:ovsReqdField="idInvoiceBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="CostCenterOVSSet" showValueHelp="true" app:ovsIdField="CostCenter" app:ovsDescField="CostCenterDesc" app:ovsTitle="Select a Cost Center" valueHelpRequest="handleValueHelp"/>
+                        </VBox>
+                        <!-- Amount -->
+                        <VBox>
+                            <Text visible="{=!${/UIModel/CreateMode}}" text="{Netwr}"/>
+                            <Input visible="{=${/UIModel/CreateMode}}" value="{Netwr}"/>
+                        </VBox>
+                        <!-- Order -->
+                        <VBox>
+                            <Text visible="{=!${/UIModel/CreateMode}}" text="{Aufnr}"/>
+                            <Input id="idGlLinesAufnrInput" visible="{=${/UIModel/CreateMode}}" value="{Aufnr}" app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="OrderNumberOVSSet" showValueHelp="true" app:ovsIdField="OrderNumber" app:ovsDescField="Description" app:ovsTitle="Select a Company Code" valueHelpRequest="handleValueHelp"/>
+                        </VBox>
+                        <!-- WBS -->
+                        <VBox>
+                            <Text visible="{=!${/UIModel/CreateMode}}" text="{Projk}"/>
+                            <Input id="idGlLinesWbsInput" visible="{=${/UIModel/CreateMode}}" value="{Projk}" app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="WBSOVSSet" showValueHelp="true" app:ovsIdField="WBSElement" app:ovsDescField="WBSElementDesc" app:ovsTitle="Select a WBS Element" valueHelpRequest="handleValueHelp"/>
+                        </VBox>
+                        <!-- Text -->
+                        <VBox>
+                            <Text visible="{=!${/UIModel/CreateMode}}" text="{Sgtxt}"/>
+                            <Input visible="{=${/UIModel/CreateMode}}" value="{Sgtxt}"/>
+                        </VBox>
+                        <!-- Txcod -->
+                        <VBox>
+                            <Text visible="{=!${/UIModel/CreateMode}}" text="{Mwskz}"/>
+                            <Input id="idGlLinesTxcodInput" visible="{=${/UIModel/CreateMode}}" value="{Mwskz}" app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="TaxCodeOVSSet" showValueHelp="true" app:ovsIdField="TaxCode" app:ovsDescField="TaxCodeDesc" app:ovsTitle="Select a Tax Code" valueHelpRequest="handleValueHelp"/>
+                        </VBox>
+                        <!-- Profit Center -->
+                        <VBox>
+                            <Text visible="{=!${/UIModel/CreateMode}}" text="{Prctr}"/>
+                            <Input id="idGlLinesPrctrInput" visible="{=${/UIModel/CreateMode}}" value="{Prctr}" app:ovsReqdField="idBukrsInput" app:ovsReqdFilter= "CompanyCode" app:ovsService="ProfitCenterOVSSet" showValueHelp="true" app:ovsIdField="ProfitCenter" app:ovsDescField="PRText" app:ovsTitle="Select a Profit Center" valueHelpRequest="handleValueHelp"/>
+                        </VBox>
+                        <!-- Sdate -->
+                        <VBox>
+                            <Text visible="{=!${/UIModel/CreateMode}}" text="{Sdate}"/>
+                            <Input visible="{=${/UIModel/CreateMode}}" value="{Sdate}"/>
+                        </VBox>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Popover>
+</core:FragmentDefinition>

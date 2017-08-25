@@ -1,0 +1,40 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:l="sap.ui.layout" 
+	xmlns:f="sap.ui.layout.form" 
+	xmlns:core="sap.ui.core" 
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Table items="{ path: '/HistoryItems'}">
+		<columns>
+			<Column>
+				<Text text="Status"/>
+			</Column>
+			<Column>
+				<Text text="Date"/>
+			</Column>
+			<Column>
+				<Text text="Time"/>
+			</Column>
+			<Column>
+				<Text text="User"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem vAlign="Middle">
+				<cells>
+					<Text text="{Stats}"/>
+					<Text text="{
+						path : 'Trdat',  
+						type: 'sap.ui.model.type.Date',
+                    	formatOptions: { pattern: 'MM/dd/yyyy'}
+					}"/>
+					<Text text="{
+						path : 'Trtim', 
+						formatter:'.formatTime'
+					}"/>
+					<Text text="{Trusr}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

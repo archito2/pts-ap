@@ -1,0 +1,87 @@
+<core:FragmentDefinition 
+    xmlns="sap.m" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.ui.layout.form" 
+    xmlns:core="sap.ui.core" 
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Table id="idInvoiceItemsTable" items="{/POBasedLines}">
+        <headerToolbar>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <!-- <Link text="Add" emphasized="true"> -->
+                <Button text="Add" press="handleAddPoBasedItemsClicked"/>
+            </Toolbar>
+        </headerToolbar>
+        <columns>
+            <!-- Purcahse Document -->
+            <Column mergeDuplicates = "true" visible = "{=${/WebStatus/WEB_HIDE_EBELNPOL}!=='X'}">
+                <Text text="PO"/>
+            </Column>
+            <!-- Purchase Item -->
+            <Column mergeDuplicates = "true" visible = "{=${/WebStatus/WEB_HIDE_EBELPPOL}!=='X'}">
+                <Text text="PO Item"/>
+            </Column>
+            <!-- Material -->
+            <Column  mergeDuplicates = "true" visible = "{=${/WebStatus/WEB_HIDE_MATNRPOL}!=='X'}">
+                <Text text="Material"/>
+            </Column>
+            <!-- Quantity -->
+            <Column  mergeDuplicates = "true" visible = "{=${/WebStatus/WEB_HIDE_MENGEPOL}!=='X'}">
+                <Text text="Quantity"/>
+            </Column>
+            <!-- Business Unit -->
+            <Column  mergeDuplicates = "true" visible = "{=${/WebStatus/WEB_HIDE_MEINSPOL}!=='X'}">
+                <Text text="Business Unit"/>
+            </Column>
+            <!-- Tax Code -->
+            <Column  mergeDuplicates = "true" visible = "{=${/WebStatus/WEB_HIDE_MWSKZPOL}!=='X'}">
+                <Text text="Tax Code"/>
+            </Column>
+            <!-- Amount -->
+            <Column  mergeDuplicates = "true" visible = "{=${/WebStatus/WEB_HIDE_NETWRPOL}!=='X'}">
+                <Text text="Amount"/>
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+                <cells>
+                    <!-- Purcahse Document -->
+                    <VBox>
+                        <Link press="handlePoLinkClicked" visible="{=!${/UIModel/CreateMode}}" text="{Ebeln}" emphasized="true" />
+                        <Input id="idInvoice1BukrsInput" visible="{=${/UIModel/CreateMode}}" value="{Ebeln}" />
+                    </VBox>
+                    <!-- Purchase Item -->
+                    <VBox>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Ebelp}"/>
+                        <Input id="idInvoice1GlaccInput" visible="{=${/UIModel/CreateMode}}" value="{Ebelp}" />
+                    </VBox>
+                    <!-- Material -->
+                    <VBox>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Matnr}"/>
+                        <Input id="idInvoice1KostlInput" visible="{=${/UIModel/CreateMode}}" value="{Matnr}" />
+                    </VBox>
+                    <!-- Quantity -->
+                    <VBox>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Menge}"/>
+                        <Input visible="{=${/UIModel/CreateMode}}" value="{Menge}"/>
+                    </VBox>
+                    <!-- Business Unit -->
+                    <VBox>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Meins}"/>
+                        <Input id="idInvoice1AufnrInput" visible="{=${/UIModel/CreateMode}}" value="{Meins}" />
+                    </VBox>
+                    <!-- Tax Code -->
+                    <VBox>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Mwskz}"/>
+                        <Input id="idInvoice1WbsInput" visible="{=${/UIModel/CreateMode}}" value="{Mwskz}" />
+                    </VBox>
+                    <!-- Amount -->
+                    <VBox>
+                        <Text visible="{=!${/UIModel/CreateMode}}" text="{Netwr}"/>
+                        <Input visible="{=${/UIModel/CreateMode}}" value="{Netwr}"/>
+                    </VBox>
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</core:FragmentDefinition>

@@ -147,12 +147,12 @@
 					"target": "home"
 				},
 				{
-					"pattern": "hitlist",
+					"pattern": "search/{navParam}",
 					"name": "hitlist",
 					"target": "hitlist"
 				},
 				{
-					"pattern": "apDetail/{RecNo}",
+					"pattern": "detail/{RecNo}",
 					"name": "apDetail",
 					"target": "apDetail"
 				},
