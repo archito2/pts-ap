@@ -54,7 +54,10 @@ sap.ui.define([
                 if (urlPattern === 'apDetail') {
                     this.getModel().setProperty('/WebConfig', sap.ui.getCore().getModel('configModel'));
                     this.getModel().setProperty('/UIModel', {
-                        'CreateMode': false
+                        'CreateMode': false,
+                        'InvoiceItems' :{
+                            'CreateMode': false
+                        }
                     });
                     this._callTracksService(sRecNo);
                     this._callInvoiceItemsService(sRecNo);
@@ -119,6 +122,11 @@ sap.ui.define([
             /* =========================================================== */
             /* event handlers                                              */
             /* =========================================================== */
+            handleEditInvoiceItem : function(oEvent){
+                var bCreateMode = this.getModel().getProperty('/UIModel/InvoiceItems/CreateMode');
+                this.getModel().setProperty('/UIModel/InvoiceItems/CreateMode',!bCreateMode);
+                this.getModel().refresh();
+            },
             handleSave: function (oEvent) {
                 this._saveExpenseReport(oEvent);
             },
