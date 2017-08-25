@@ -4,7 +4,7 @@
     xmlns:f="sap.ui.layout.form" 
     xmlns:core="sap.ui.core" 
     xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
-    <f:SimpleForm class="editableForm" id="idHeaderDetailsForm" layout="ResponsiveGridLayout" editable="true" adjustLabelSpan="false" labelSpanXL="6" labelSpanL="3" labelSpanM="4" labelSpanS="12" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="4" columnsL="2" columnsM="2" singleContainerFullSize="false">
+    <f:SimpleForm id="idHeaderDetailsForm" layout="ResponsiveGridLayout" editable="true" adjustLabelSpan="true" labelSpanXL="3" labelSpanL="3" labelSpanM="4" labelSpanS="12" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
         <f:content>
             <!-- Column 1 -->
             <core:Title/>
@@ -26,7 +26,11 @@
             <!-- Document Date -->
             <Label text="Document Date" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHXBLDT}!=='X'}" design="Bold" />
             <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputDocumentDate" value="{viewModel>/Tracks/DocumentDate}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/DocumentDate}" />
+            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{
+                    path: 'viewModel>/Tracks/DocumentDate',
+                    type: 'sap.ui.model.type.Date',
+                    formatOptions: { pattern: 'MM/dd/yyyy'}
+                }" />
             <!-- Company Code -->
             <Label text="Company Code" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHBUKRS}!=='X'}" design="Bold" />
             <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputCompanyCode" value="{viewModel>/Tracks/CompanyCode}"/>
@@ -72,7 +76,12 @@
             <!--  Recieved Date  -->
             <Label text="Recieved Date" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHRCDAT}!=='X'}" design="Bold" />
             <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputReceiptDate" value="{viewModel>/Tracks/ReceiptDate}"/>
-            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" text="{viewModel>/Tracks/ReceiptDate}" />
+            <Text visible="{=!${viewModel>/UIModel/CreateMode}}" 
+                text="{
+                    path : 'viewModel>/Tracks/ReceiptDate', 
+                    type: 'sap.ui.model.type.Date',
+                    formatOptions: { pattern: 'MM/dd/yyyy'}
+                    }" />
             <!--  Plant  -->
             <Label text="Plant" visible="{=${configModel>/WebStatus/WEB_ER_HIDE_PHWERKS}!=='X'}" design="Bold" />
             <Input visible="{=${viewModel>/UIModel/CreateMode}}" id="idInputPlant" value="{viewModel>/Tracks/Plant}"/>
