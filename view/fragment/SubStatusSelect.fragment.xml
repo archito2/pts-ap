@@ -1,0 +1,32 @@
+<core:FragmentDefinition 
+    xmlns="sap.m" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.ui.layout.form" 
+    xmlns:core="sap.ui.core">
+    <Dialog contentWidth="200px" showHeader="false">
+        <content >
+            <Table  mode="SingleSelectMaster" id="idSubStatusTable" items="{/SubStatusSet}">
+                <columns>
+                    <Column>
+                        <Text text="Name"/>
+                    </Column>
+                    <Column>
+                        <Text text="Reason Code"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem >
+                        <cells>
+                            <Text text="{Stdes}"/>
+                            <Text text="{Substats}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+        <buttons>
+            <Button icon="sap-icon://accept" text="Accept" type="Accept" press="handleAcceptReasonCodeButtonClick" tooltip="Accept" />
+            <Button icon="sap-icon://decline" text="Cancel" type="Reject" press="handleRejectReasonCodeButtonClick" tooltip="Reject" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

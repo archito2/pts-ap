@@ -56,15 +56,11 @@ sap.ui.define([
                     this.getModel().setProperty('/UIModel', {
                         'CreateMode': false
                     });
-                    this._callTracksService(sRecNo).then(
-                        function () {
-                            this._callInvoiceItemsService(sRecNo);
-                            this._callApproverService(sRecNo);
-                            this._callHistoryItemsService(sRecNo);
-                            this._callNotesService(sRecNo);
-                        }.bind(this));
-
-
+                    this._callTracksService(sRecNo);
+                    this._callInvoiceItemsService(sRecNo);
+                    this._callApproverService(sRecNo);
+                    this._callHistoryItemsService(sRecNo);
+                    this._callNotesService(sRecNo);
                 }
             },
             /* =========================================================== */
@@ -201,9 +197,6 @@ sap.ui.define([
                     }
                 }
             },
-            /**
-             * We will pop up the detail for selected expense type
-             */
             handleDetailPress: function (oEvent) {
                 var sExpType = oEvent.getSource().getBindingContext().getProperty('Spkzl'),
                     sQuantity = oEvent.getSource().getBindingContext().getProperty('Menge'),
@@ -255,17 +248,42 @@ sap.ui.define([
                 var oCtx = oEvent.getSource().getBindingContext(),
                     sPath = oCtx.getPath(),
                     sPoNumber = oCtx.getProperty(sPath).Ebeln,
-                    sPOItem = oCtx.getProperty(sPath).Ebelp;
-                var aPOItems = this.getModel().getProperty('/POItems'),
+                    sPOItem = oCtx.getProperty(sPath).Ebelp,
+                    aPOItems = this.getModel().getProperty('/POItems'),
                     aLocalPOItems = aPOItems.filter(function (item) {
-                        return item.Ebeln === sPoNumber;
+                        return item.PoNumber === sPoNumber;
                     });
                 this.getModel().setProperty('/LocalPOItems', aLocalPOItems);
+                this.getModel().refresh();
                 if (!this._oPopover) {
                     this._oPopover = sap.ui.xmlfragment("com.dolphin.view.fragment.POItems", this);
                     this.getView().addDependent(this._oPopover);
                 }
                 this._oPopover.openBy(oEvent.getSource());
+            },
+            handleSaveButtonClick: function (oEvent) {
+                this._saveAP();
+            },
+            handleAcceptButtonClick: function (oEvent) {
+                this._saveAP().then(function () {
+                    this.pressDialog.open();
+                    this._callSubStatusSetService(this.getModel().getProperty('/Tracks').RecNo);
+                }.bind(this), function (oError) {
+                    sap.m.MessageToast.show(oError.message);
+                });
+                if (!this.pressDialog) {
+                    this.pressDialog = sap.ui.xmlfragment("com.dolphin.view.fragment.SubStatusSelect", this);
+                    this.getView().addDependent(this.pressDialog);
+                }
+            },
+            handleAcceptReasonCodeButtonClick: function (oEvent) {
+                var oCtx = sap.ui.getCore().byId('idSubStatusTable').getSelectedItem().getBindingContext(),
+                    sPath = oCtx.getPath(),
+                    sSubstats = oCtx.getProperty(sPath).Substats,
+                    sRecNo = this.getModel().getProperty('/Tracks').RecNo;
+                this._callSetSubStatusCode('061', sSubstats, sRecNo)
+                    .then(this._callWorkflowService(sRecNo, 'A')).catch(function () {
+                    });
             },
             /* =========================================================== */
             /* Internal Methods                                            */
@@ -291,24 +309,20 @@ sap.ui.define([
             },
             // Calls the Tracks Service
             _callTracksService: function (sRecNo) {
-                return new Promise(function (resolve, reject) {
-                    this.getOwnerComponent().getModel('apModel')
-                        .read("/Tracks('" + sRecNo + "')", {
-                            success: function (oData, oResponse) {
-                                this.getModel().setProperty('/Tracks', oData);
-                                if (oData.PurchasingDocument) {
-                                    this.getModel().setProperty('/UIModel/isPORecord', true);
-                                    this._callPOItemsService(sRecNo);
-                                    resolve();
-                                } else
-                                    this.getModel().setProperty('/UIModel/isPORecord', false);
-                            }.bind(this),
-                            error: function (oData, oResponse) {
-                                console.log(oResponse);
-                                reject(oResponse);
-                            }
-                        });
-                }.bind(this));
+                this.getOwnerComponent().getModel('apModel')
+                    .read("/Tracks('" + sRecNo + "')", {
+                        success: function (oData, oResponse) {
+                            this.getModel().setProperty('/Tracks', oData);
+                            if (oData.PurchasingDocument) {
+                                this.getModel().setProperty('/UIModel/isPORecord', true);
+                                this._callPOItemsService(sRecNo);
+                            } else
+                                this.getModel().setProperty('/UIModel/isPORecord', false);
+                        }.bind(this),
+                        error: function (oData, oResponse) {
+                            console.log(oResponse);
+                        }
+                    });
             },
             // Calls the Invoice Items Service
             _callInvoiceItemsService: function (sRecNo) {
@@ -370,6 +384,36 @@ sap.ui.define([
                         }
                     });
             },
+            _callSubStatusSetService: function (sRecNo) {
+                this.getModel('apModel')
+                    .read("/SubStatusSet", {
+                        filters: [
+                            new Filter('RecNo', FilterOperator.EQ, sRecNo),
+                            new Filter('Stats', FilterOperator.EQ, '061')
+                        ],
+                        success: function (oData) {
+                            this.getModel().setProperty('/SubStatusSet', oData.results);
+                        }.bind(this),
+                        error: function (oError) {
+                            console.log(oError);
+                        }
+                    });
+            },
+            _callSetSubStatusCode: function (sStats, sSubstats, sRecNo) {
+                return new Promise(function (resolve, reject) {
+                    this.getModel('apModel')
+                        .callFunction("/set_substatus_code", {
+                            urlParameters: { Stats: sStats, RecNo: sRecNo, Substats: sSubstats },
+                            method: "POST",
+                            success: function (oData) {
+                                resolve();
+                            }.bind(this),
+                            error: function (oError) {
+                                reject(oError);
+                            }
+                        });
+                }.bind(this));
+            },
             _callCCLinesService: function () {
                 this.getOwnerComponent().getModel('erModel')
                     .read("/CCLinesSet", {
@@ -406,7 +450,7 @@ sap.ui.define([
                         ],
                         success: function (oData, oResponse) {
                             this.getModel().setProperty('/ExpenseTypeSet', oData);
-                            var oExpTypes = oData.results.reduce((oFinal, oLine) => {
+                            var oExpTypes = oData.results.reduce(function (oFinal, oLine) {
                                 oFinal[oLine.ExpType] = oFinal[oLine.ExpType] || {};
                                 oFinal[oLine.ExpType].CompanyCode = oLine.CompanyCode;
                                 oFinal[oLine.ExpType].NameOfExpType = oLine.NameOfExpType;
@@ -424,6 +468,19 @@ sap.ui.define([
                         }
                     });
                 sap.ui.core.BusyIndicator.hide();
+            },
+            _callWorkflowService: function (sRecNo, sDecision) {
+                this.getModel('apModel')
+                    .callFunction("/record_action", {
+                        urlParameters: { USER: '', RECNO: sRecNo, DECISION: 'A' },
+                        method: "POST",
+                        success: function (oData) {
+                            debugger;
+                        }.bind(this),
+                        error: function (oError) {
+                            console.log(oError);
+                        }
+                    });
             },
             //Save Expense Report
             _saveExpenseReport: function () {
@@ -473,6 +530,31 @@ sap.ui.define([
                         // that._setMessageModel(oError);
                     }.bind(this)
                 });
+            },
+            _saveAP: function () {
+                var apModel = this.getModel('apModel'),
+                    oTracks = this.getModel().getProperty('/Tracks');
+
+                oTracks.InvoiceItems = this.getModel().getProperty('/InvoiceItems');
+                apModel.setHeaders({
+                    'PTSUser': 'ADAMS',
+                    'PTSLocale': 'E',
+                });
+                sap.ui.core.BusyIndicator.show();
+                return new Promise(function (resolve, reject) {
+                    apModel.create('/Tracks', oTracks, {
+                        success: function (oData) {
+                            MessageToast.show(oData.RecNo + ' saved');
+                            sap.ui.core.BusyIndicator.hide();
+                            resolve();
+                        },
+                        error: function (oError) {
+                            sap.ui.core.BusyIndicator.hide();
+                            MessageToast.show(oError.statusText);
+                            reject(oError);
+                        }.bind(this)
+                    });
+                }.bind(this));
             },
             _splitInvoiceItems: function () {
                 // debugger;

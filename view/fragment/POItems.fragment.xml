@@ -5,7 +5,7 @@
     xmlns:core="sap.ui.core" 
     xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
     <Popover contentWidth= "50%" title="Invoice Account Assignment" class="sapUiContentPadding" placement="Top">
-        <Table id="idInvoiceItemsTable" items="{/POItems}">
+        <Table id="idInvoiceItemsTable" items="{/LocalPOItems}">
             <columns>
                 <!-- Purcahse Item -->
                 <Column visible = "{=${/WebStatus/WEB_HIDE_PO_ITEMPL}!=='X'}">

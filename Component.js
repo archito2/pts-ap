@@ -111,7 +111,7 @@ sap.ui.define([
         this.getModel('apModel').read("/StatusSet", {
           success: function (oData, oResponse) {
             console.log('Status sets retrieved successfully');
-            var oWebStatus = oData.results.filter(function(item)  { return item.StatusNum.startsWith('WEB_') })
+            var oWebStatus = oData.results.filter(function(item)  { return item.StatusNum.indexOf('WEB_') === 0 ;})
               .reduce(function (obj, item) {
                 obj[item.StatusNum] = item.Description;
                 return obj;
@@ -141,7 +141,7 @@ sap.ui.define([
       debugger;
       this.getModel('apModel').read("/StatusSet", {
         success: function (oData, oResponse) {
-          var oWebStatus = oData.results.filter(function(item)  { return item.StatusNum.startsWith('WEB_'); })
+          var oWebStatus = oData.results.filter(function(item)  { return item.StatusNum.indexOf('WEB_') === 0 ; })
             .reduce(function (obj, item) {
               obj[item.StatusNum] = item.Description;
               return obj;

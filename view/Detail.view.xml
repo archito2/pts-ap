@@ -54,13 +54,25 @@
 							</l:SplitPane>
 							<l:SplitPane requiredParentWidth="400" id="default1">
 								<Panel height="100%">
-									<core:HTML content = "{parts:['/Tracks/URI'],formatter:'.formatURL'}">
-									</core:HTML>
+									<core:HTML content = "{parts:['/Tracks/URI'],formatter:'.formatURL'}"></core:HTML>
 								</Panel>
 							</l:SplitPane>
 						</l:PaneContainer>
 					</l:ResponsiveSplitter>
 				</content>
+				<footer>
+					<Toolbar>
+						<content>
+							<!-- <Button id="messagePopoverButton" icon="{messagePopover>/messagePopoverButonIcon}" text="{messagePopover>/messagePopoverButonText}" visible="{messagePopover>/messagePopoverVisible}" type="Emphasized" press="handleMessagePopoverPress" /> -->
+							<ToolbarSpacer />
+							<Button icon="sap-icon://save" type="Emphasized" text="Save" press="handleSaveButtonClick" tooltip="Save" />
+							<Button icon="sap-icon://accept" text="Accept" type="Accept" press="handleAcceptButtonClick" tooltip="Accept" />
+							<Button icon="sap-icon://decline" text="Reject" type="Reject" press="handleRejectButtonClick" tooltip="Reject" />
+							<Button icon="sap-icon://close-command-field" text="Last" press="handleReject2LastButtonClick" tooltip="Reject to last"/>
+							<Button icon="sap-icon://open-command-field" text="Forward" press="handleForwardButtonClick" tooltip="Forward" />
+						</content>
+					</Toolbar>
+				</footer>
 			</Page>
 		</pages>
 	</App>
