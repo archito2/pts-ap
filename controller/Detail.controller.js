@@ -63,7 +63,8 @@ sap.ui.define([
                         'forward': {
                             'visible': true,
                         }
-                    }
+                    },
+                    'busy': false
                 });
                 if (urlPattern === 'apDetail') {
                     var sRecNo = oEvent.getParameter('arguments').RecNo;
@@ -77,8 +78,8 @@ sap.ui.define([
                     //This is create AP
                     this.getModel().setProperty('/UIModel', {
                         'CreateMode': true,
-                        'InvoiceItems': {
-                            'CreateMode': true
+                        'invoiceItems': {
+                            'createMode': true
                         }
                     });
                     var currTime = new Date();
@@ -163,7 +164,7 @@ sap.ui.define([
                 var userModel = sap.ui.getCore().getModel('userModel');
                 var oInvoiceItem = {
                     Bukrs: this.getModel().getProperty('/CRHeader/Bukrs'),
-                    Shkzg:'S'
+                    Shkzg: 'S'
                 };
                 if (this.getModel().getProperty('/InvoiceItems'))
                     this.getModel().getProperty('/InvoiceItems').push(oInvoiceItem);
@@ -172,8 +173,8 @@ sap.ui.define([
                 this.getModel().refresh();
             },
             handleEditInvoiceItem: function (oEvent) {
-                var bCreateMode = this.getModel().getProperty('/UIModel/InvoiceItems/CreateMode');
-                this.getModel().setProperty('/UIModel/InvoiceItems/CreateMode', !bCreateMode);
+                var bCreateMode = this.getModel().getProperty('/UIModel/invoiceItems/createMode');
+                this.getModel().setProperty('/UIModel/invoiceItems/createMode', !bCreateMode);
                 this.getModel().refresh();
             },
             handleInvoiceCopyItem: function (oEvent) {
@@ -203,7 +204,7 @@ sap.ui.define([
                 //Get the slected row and apply the balance
                 var sPath = this.byId('idInvoiceItemsTable').getSelectedItems()[0].getBindingContext().sPath;
                 var oSelectedRow = this.byId('idInvoiceItemsTable').getSelectedItems()[0].getBindingContext().getProperty(sPath);
-                oSelectedRow.Netwr = ""+Math.round(((fHeaderTotal - fItemAmount)*100)/100);
+                oSelectedRow.Netwr = "" + Math.round(((fHeaderTotal - fItemAmount) * 100) / 100);
                 this.getModel().refresh();
             },
             handleInvoiceDistributeBalances: function (oEvent) {
@@ -212,15 +213,15 @@ sap.ui.define([
                     fHeaderTotal = parseFloat(sHeaderTotal),
                     iNumberOfLines = this.getModel().getProperty('/InvoiceItems').length,
                     fDistributionAmount = fHeaderTotal / iNumberOfLines;
-                    fDistributionAmount = Math.round(fDistributionAmount*100)/100;
-                var finalDiff = fHeaderTotal - fDistributionAmount*this.getModel().getProperty('/InvoiceItems').length;
-                this.getModel().getProperty('/InvoiceItems').forEach(function (invoiceItem,index) {
-                    if(index===0)
-                        invoiceItem.Netwr = ""+Math.round((fDistributionAmount+finalDiff)*100)/100;
+                fDistributionAmount = Math.round(fDistributionAmount * 100) / 100;
+                var finalDiff = fHeaderTotal - fDistributionAmount * this.getModel().getProperty('/InvoiceItems').length;
+                this.getModel().getProperty('/InvoiceItems').forEach(function (invoiceItem, index) {
+                    if (index === 0)
+                        invoiceItem.Netwr = "" + Math.round((fDistributionAmount + finalDiff) * 100) / 100;
                     else
-                        invoiceItem.Netwr = ""+fDistributionAmount;
+                        invoiceItem.Netwr = "" + fDistributionAmount;
                 });
-               
+
 
                 this.getModel().refresh();
             },
@@ -383,14 +384,14 @@ sap.ui.define([
             },
             handleCreateButtonClick: function (oEvent) {
                 sap.ui.core.BusyIndicator.show();
-                Helper.createAP('002',this.getModel('apModel'), this.getModel()).then(function (oData) {
+                Helper.createAP('002', this.getModel('apModel'), this.getModel()).then(function (oData) {
                         //Success
                         sap.ui.core.BusyIndicator.hide();
                         var sRecNo = oData.Recno;
                         MessageToast.show('Record # ' + sRecNo + ' created successfullly');
-                        // this.getRouter().navTo("apDetail", {
-                        //     RecNo: sRecNo
-                        // });
+                        this.getRouter().navTo("apDetail", {
+                            RecNo: sRecNo
+                        });
                     }.bind(this),
                     function (oError) {
                         //Error
@@ -400,14 +401,14 @@ sap.ui.define([
             },
             handleSubmitButtonClick: function (oEvent) {
                 sap.ui.core.BusyIndicator.show();
-                Helper.createAP('010',this.getModel('apModel'), this.getModel()).then(function (oData) {
+                Helper.createAP('010', this.getModel('apModel'), this.getModel()).then(function (oData) {
                         //Success
                         sap.ui.core.BusyIndicator.hide();
                         var sRecNo = oData.Recno;
                         MessageToast.show('Record # ' + sRecNo + ' submitted successfullly');
-                        // this.getRouter().navTo("apDetail", {
-                        //     RecNo: sRecNo
-                        // });
+                        this.getRouter().navTo("apDetail", {
+                            RecNo: sRecNo
+                        });
                     }.bind(this),
                     function (oError) {
                         //Error
@@ -417,6 +418,29 @@ sap.ui.define([
             },
             removeLeadingZeros: function (oEvent) {
 
+            },
+            onNotesPost: function (oEvent) {
+                this.getModel().setProperty('/UIModel/busy',true);
+                Helper.saveNotes(
+                    this.getModel('apModel'),
+                    sap.ui.getCore().getModel('userModel').results[0].Xuser,
+                    oEvent,
+                    this.getModel().getProperty('/Tracks/RecNo')).then(function (oData) {
+                    //Success
+                    // this._callNotesService(this.getModel().getProperty('/Tracks/RecNo'));
+                    this.getModel().setProperty('/UIModel/busy', false);
+                    Helper.getNotes(
+                        this.getModel('apModel'),
+                        this.getModel().getProperty('/Tracks/RecNo')).then(function (oData) {
+                        //Success
+                        this.getModel().setProperty('/Notes', oData.results);
+                        this.getModel().setProperty('/UIModel/busy', false);
+                        this.getModel().refresh();
+                    }.bind(this));
+                }.bind(this)).catch(function (oError) {
+                    //Error
+                    this.getModel().setProperty('/UIModel/busy', false);
+                });
             },
             /* =========================================================== */
             /* Internal Methods                                            */

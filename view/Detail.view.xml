@@ -63,7 +63,7 @@
 							</l:SplitPane>
 							<l:SplitPane requiredParentWidth="400" >
 								<Panel visible="true" height="100%">
-									<core:HTML content = "{parts:['/Tracks/URI'],formatter:'.formatURL'}"></core:HTML>
+									<core:HTML content = "{parts:['/Tracks/URI'],formatter:'.formatter.formatURL'}"></core:HTML>
 								</Panel>
 							</l:SplitPane>
 						</l:PaneContainer>

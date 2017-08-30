@@ -11,13 +11,13 @@ sap.ui.define([
          * Will try to create a new record
          * @return Promise
          */
-        createAP: function (sStatus,apModel, viewModel) {
+        createAP: function (sStatus, apModel, viewModel) {
             var oTracks = viewModel.getProperty('/CRHeader');
             oTracks.Stats = sStatus;
             // Approver set property names are different in save and create
-            if(viewModel.getProperty('/Approvers')){
-                var aModified = viewModel.getProperty('/Approvers').map(function(approver){
-                    var modifiedApprover={};
+            if (viewModel.getProperty('/Approvers')) {
+                var aModified = viewModel.getProperty('/Approvers').map(function (approver) {
+                    var modifiedApprover = {};
                     modifiedApprover.ApproversUserid = approver.ApproverID;
                     modifiedApprover.SeqNoOfApprover = approver.Seq;
                     return modifiedApprover;
@@ -31,7 +31,7 @@ sap.ui.define([
             apModel.setHeaders({
                 'PTSUser': 'ADAMS',
                 'PTSLocale': 'E',
-                'PTSIgnoreWarning':''
+                'PTSIgnoreWarning': ''
             });
             return new Promise(function (resolve, reject) {
                 apModel.create('/CRHeaderSet', oTracks, {
@@ -54,6 +54,36 @@ sap.ui.define([
                     filters: [new Filter('USER', FilterOperator.EQ, sUserId)],
                     success: function (oData) {
                         resolve(oData.results);
+                    },
+                    error: function (oError) {
+                        reject(oError);
+                    }
+                });
+            });
+        },
+        saveNotes: function (apModel, sUserId, oEvent, sRecNo) {
+            return new Promise(function (resolve, reject) {
+                apModel.callFunction("/append_note", {
+                    method: "POST",
+                    urlParameters: {
+                        "NOTE_USER": '',
+                        "IMPV_NEWNOTES": oEvent.getSource().getValue(),
+                        "RECNO": sRecNo
+                    },
+                    success: function (oData) {
+                        resolve(oData);
+                    },
+                    error: function (oError) {
+                        reject(oError);
+                    }
+                });
+            });
+        },
+        getNotes: function (apModel, sRecNo) {
+            return new Promise(function (resolve, reject) {
+                apModel.read("/Tracks('" + sRecNo + "')/Notes", {
+                    success: function (oData) {
+                        resolve(oData);
                     },
                     error: function (oError) {
                         reject(oError);

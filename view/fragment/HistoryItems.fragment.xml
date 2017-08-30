@@ -30,7 +30,7 @@
 					}"/>
 					<Text text="{
 						path : 'Trtim', 
-						formatter:'.formatTime'
+						formatter:'.formatter.formatTime'
 					}"/>
 					<Text text="{Trusr}"/>
 				</cells>
