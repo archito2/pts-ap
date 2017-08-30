@@ -9,11 +9,11 @@
             <Toolbar>
                 <Title text="Items" level="H2"/>
                 <ToolbarSpacer/>
-                <Button text="Add" icon="sap-icon://add" press="handleAddItem"/>
-                <Button enabled = "{configModel>/rowSelected}" text="Copy" icon="sap-icon://copy" press="handleCopyItem"/>
-                <Button enabled = "{configModel>/rowSelected}" text="Delete" icon="sap-icon://delete" press="handleDeleteItem"/>
+                <Button text="Add" icon="sap-icon://add" press="handleERAddItem"/>
+                <Button enabled = "{configModel>/rowSelected}" text="Copy" icon="sap-icon://copy" press="handleERCopyItem"/>
+                <Button enabled = "{configModel>/rowSelected}" text="Delete" icon="sap-icon://delete" press="handleERDeleteItem"/>
                 <Button text="Credit Card Lines" icon="sap-icon://credit-card" press="handleCClines"/>
-                <Button text="Apply Template" icon="sap-icon://crm-service-manager" press="handleApplyTemplate"/>
+                <Button text="Apply Template" icon="sap-icon://crm-service-manager" press="handleERApplyTemplate"/>
             </Toolbar>
         </headerToolbar>
         <columns>

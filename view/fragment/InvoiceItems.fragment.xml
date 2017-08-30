@@ -4,7 +4,7 @@
     xmlns:f="sap.ui.layout.form" 
     xmlns:core="sap.ui.core" 
     xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
-    <Table id="idItemsTable" inset="false" items="{/InvoiceItems}">
+    <Table id="idInvoiceItemsTable" mode="SingleSelectMaster" items="{/InvoiceItems}">
         <headerToolbar>
             <Toolbar>
                 <ToolbarSpacer/>
@@ -78,7 +78,7 @@
                     <!-- Cost Center -->
                     <VBox>
                         <Text visible="{=!${/UIModel/InvoiceItems/CreateMode}}" text="{Kostl}"/>
-                        <Input id="idKostlInput" visible="{=${/UIModel/InvoiceItems/CreateMode}}" value="{path:'Kostl',formatter :'.formatter.removeLeadingZeros'}" app:ovsReqdField="{Bukrs}" app:ovsReqdFilter= "CompanyCode" app:ovsService="CostCenterOVSSet" showValueHelp="true" app:ovsIdField="CostCenter" app:ovsDescField="CostCenterDesc" app:ovsTitle="Select a Cost Center" valueHelpRequest="handleValueHelp"/>
+                        <Input id="idKostlInput" visible="{=${/UIModel/InvoiceItems/CreateMode}}" value="{Kostl}" app:ovsReqdField="{Bukrs}" app:ovsReqdFilter= "CompanyCode" app:ovsService="CostCenterOVSSet" showValueHelp="true" app:ovsIdField="CostCenter" app:ovsDescField="CostCenterDesc" app:ovsTitle="Select a Cost Center" valueHelpRequest="handleValueHelp"/>
                     </VBox>
                     <!-- Amount -->
                     <VBox>

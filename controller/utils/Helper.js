@@ -11,10 +11,19 @@ sap.ui.define([
          * Will try to create a new record
          * @return Promise
          */
-        createAP: function (apModel, viewModel) {
+        createAP: function (sStatus,apModel, viewModel) {
             var oTracks = viewModel.getProperty('/CRHeader');
-            oTracks.Stats = '002';
-            oTracks.CRApprovers = [];
+            oTracks.Stats = sStatus;
+            // Approver set property names are different in save and create
+            if(viewModel.getProperty('/Approvers')){
+                var aModified = viewModel.getProperty('/Approvers').map(function(approver){
+                    var modifiedApprover={};
+                    modifiedApprover.ApproversUserid = approver.ApproverID;
+                    modifiedApprover.SeqNoOfApprover = approver.Seq;
+                    return modifiedApprover;
+                });
+            }
+            oTracks.CRApprovers = aModified;
             oTracks.CRAttachments = viewModel.getProperty('/Attachments/GUIDs');
             oTracks.CRContacts = [];
             oTracks.CRItems = viewModel.getProperty('/InvoiceItems');
@@ -22,6 +31,7 @@ sap.ui.define([
             apModel.setHeaders({
                 'PTSUser': 'ADAMS',
                 'PTSLocale': 'E',
+                'PTSIgnoreWarning':''
             });
             return new Promise(function (resolve, reject) {
                 apModel.create('/CRHeaderSet', oTracks, {
