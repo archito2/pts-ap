@@ -3,16 +3,20 @@
 	xmlns:mvc="sap.ui.core.mvc" 
 	xmlns:l="sap.ui.layout" 
 	xmlns="sap.m" controllerName="com.dolphin.controller.Detail" 
-	xmlns:html="http://www.w3.org/1999/xhtml" class="sapUiSizeCompact">
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	class="sapUiSizeCompact">
 	<App>
 		<pages>
-			<Page title="Hitlist" showHeader= "false">
+			<Page title="Details" showNavButton="true" showHeader= "true">
+				<headerContent>
+					<Button icon="sap-icon://action" tooltip="Share" />
+				</headerContent>
 				<content>
-					<l:ResponsiveSplitter defaultPane="default">
-						<l:PaneContainer>
-							<l:SplitPane requiredParentWidth="400" id="default">
+					<l:ResponsiveSplitter >
+						<l:PaneContainer >
+							<l:SplitPane requiredParentWidth="400" id="idDetailPane" >
 								<Panel height="100%">
-									<IconTabBar id="idHeadIconTabBar" select="handleIconTabBarSelect" class="sapUiResponsiveContentPadding">
+									<IconTabBar select="handleIconTabBarSelect" class="sapUiResponsiveContentPadding">
 										<items>
 											<IconTabFilter icon="sap-icon://header" text="Header" key="Ok">
 												<content>
@@ -34,9 +38,14 @@
 													<core:Fragment fragmentName="com.dolphin.view.fragment.HistoryItems" type="XML"/>
 												</content>
 											</IconTabFilter>
+											<IconTabFilter icon="sap-icon://attachment" text="Attachment" key="Ok">
+												<content>
+													<core:Fragment fragmentName="com.dolphin.view.fragment.Attachments" type="XML"/>
+												</content>
+											</IconTabFilter>
 										</items>
 									</IconTabBar>
-									<IconTabBar id="idItemIconTabBar" select="handleIconTabBarSelect" class="sapUiResponsiveContentPadding">
+									<IconTabBar select="handleIconTabBarSelect" class="sapUiResponsiveContentPadding">
 										<items>
 											<IconTabFilter visible="{=!${/UIModel/isPORecord}}" icon="sap-icon://sales-order-item" text="G/L Lines" key="Ok">
 												<content>
@@ -52,8 +61,8 @@
 									</IconTabBar>
 								</Panel>
 							</l:SplitPane>
-							<l:SplitPane requiredParentWidth="400" id="default1">
-								<Panel height="100%">
+							<l:SplitPane requiredParentWidth="400" >
+								<Panel visible="true" height="100%">
 									<core:HTML content = "{parts:['/Tracks/URI'],formatter:'.formatURL'}"></core:HTML>
 								</Panel>
 							</l:SplitPane>
@@ -63,8 +72,9 @@
 				<footer>
 					<Toolbar>
 						<content>
-							<!-- <Button id="messagePopoverButton" icon="{messagePopover>/messagePopoverButonIcon}" text="{messagePopover>/messagePopoverButonText}" visible="{messagePopover>/messagePopoverVisible}" type="Emphasized" press="handleMessagePopoverPress" /> -->
+							<Button icon="sap-icon://message-popup" text="" visible="{UIModel>/messagePopover/visible}" type="Emphasized" press="handleMessagePopoverPress" />
 							<ToolbarSpacer />
+							<Button icon="sap-icon://complete" type="Emphasized" text="Submit" press="handleSubmitButtonClick" tooltip="Submit" />
 							<Button icon="sap-icon://save" type="Emphasized" text="Save" press="handleSaveButtonClick" tooltip="Save" />
 							<Button icon="sap-icon://accept" text="Accept" type="Accept" press="handleAcceptButtonClick" tooltip="Accept" />
 							<Button icon="sap-icon://decline" text="Reject" type="Reject" press="handleRejectButtonClick" tooltip="Reject" />

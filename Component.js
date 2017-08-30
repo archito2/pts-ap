@@ -126,7 +126,6 @@ sap.ui.define([
       }.bind(this));
     },
     _userDetailsService: function (oEvent) {
-      debugger;
       this.getModel('apModel').read("/UserListSet", {
         filters: [new Filter('Xuser', FilterOperator.EQ, 'sy-uname')],
         success: function (oData, oResponse) {

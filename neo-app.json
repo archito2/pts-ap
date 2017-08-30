@@ -97,7 +97,13 @@
 			"directive": "public",
 			"maxAge": 86400
     }
-  ],
+	],
+	"headerWhiteList": [
+		"PTSUser",
+		"PTSDestination",
+		"PTSLocale",
+		"PTSMaxHits"
+	],
 	"logoutPage": "/logout.html",
 	"ui5CacheBuster": true
 }

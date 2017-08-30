@@ -147,6 +147,11 @@
 					"target": "home"
 				},
 				{
+					"pattern": "noReload",
+					"name": "homeNoReload",
+					"target": "home"
+				},
+				{
 					"pattern": "search/{navParam}",
 					"name": "hitlist",
 					"target": "hitlist"
@@ -165,6 +170,11 @@
 					"pattern": "createER",
 					"name": "createER",
 					"target": "createER"
+				},
+				{
+					"pattern": "createAP",
+					"name": "createAP",
+					"target": "createAP"
 				}
 			],
 			"targets": {
@@ -179,6 +189,10 @@
 				"apDetail": {
 					"viewName": "Detail",
 					"viewLevel": 2
+				},
+				"createAP": {
+					"viewName": "Create",
+					"viewLevel": 1
 				},
 				"createER": {
 					"viewName": "ERDetail",

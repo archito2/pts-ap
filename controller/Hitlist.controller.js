@@ -1,7 +1,7 @@
 sap.ui.define([
     "com/dolphin/controller/BaseController",
     "sap/ui/model/json/JSONModel",
-    "com/dolphin/util/Formatter",
+    "com/dolphin/controller/utils/Formatter",
     "sap/m/MessageToast",
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',

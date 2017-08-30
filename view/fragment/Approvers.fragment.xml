@@ -7,21 +7,19 @@
 	<Table id="idApproversTable" inset="false" items="{ path: '/Approvers'}">
 		<headerToolbar>
 			<Toolbar>
-				<!-- <Title text="Items" level="H2"/> -->
 				<ToolbarSpacer/>
-				<!-- <Button text="Manager" icon="sap-icon://" press="handleAddManger"/><Button enabled = "{configModel>/rowSelected}" text="Reviewer" icon="sap-icon://add-employee" press="handleCopyItem"/> -->
 				<MenuButton icon="sap-icon://employee-approvals" text="Approver" buttonMode="Split" defaultAction="handleAddManger">
 					<menu>
 						<Menu itemSelected="handleApprovalMenuAction">
 							<items>
-								<MenuItem text="My Manager" icon="sap-icon://manager"/>
-								<MenuItem text="Reviewer" icon="sap-icon://employee-lookup"/>
+								<MenuItem id='myManager' text="My Manager" icon="sap-icon://manager"/>
+								<MenuItem id='reviewer' text="Reviewer" icon="sap-icon://employee-lookup"/>
 							</items>
 						</Menu>
 					</menu>
 				</MenuButton>
 				<Input width="10%" visible="{=${/WebStatus/WEB_ER_HIDE_PHXUSER}!=='X'&amp;&amp;${/UIModel/CreateMode}}" value="{/Tracks/User}" showValueHelp="true" app:ovsService="UserListSet" app:ovsIdField="Xuser" app:ovsDescField="Fname" app:ovsTitle="Select a Company Code" valueHelpRequest="handleValueHelp"/>
-				<Button enabled = "{configModel>/rowSelected}" text="Delete" icon="sap-icon://delete" press="handleDeleteItem"/>
+				<Button enabled = "{configModel>/rowSelected}" icon="sap-icon://delete" press="handleDeleteItem"/>
 			</Toolbar>
 		</headerToolbar>
 		<columns>
@@ -29,10 +27,10 @@
 				<Text text="Approver ID"/>
 			</Column>
 			<Column>
-				<Text text="Decision"/>
+				<Text visible="{=!${/UIModel/CreateMode}}" text="Decision"/>
 			</Column>
 			<Column>
-				<Text text="Current"/>
+				<Text visible="{=!${/UIModel/CreateMode}}" text="Current"/>
 			</Column>
 			<Column>
 				<Text text="Sequnce"/>

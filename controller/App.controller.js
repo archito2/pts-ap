@@ -39,7 +39,7 @@ sap.ui.define([
        */
       handlePressHome: function(oEvent) {
         this.getRouter()
-          .navTo("home");
+          .navTo("homeNoReload");
       },
       handleLogoffPress: function(oEvent) {
         sap.m.URLHelper.redirect("/logout.html", false);

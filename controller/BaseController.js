@@ -49,16 +49,15 @@ sap.ui.define([
           ovsId = filterInput.data("ovsIdField"),
           ovsDesc = filterInput.data("ovsDescField"),
           ovsTitle = filterInput.data("ovsTitle"),
-          ovsReqdField = filterInput.data("ovsReqdField"),
+          ovsReqdValue = filterInput.data("ovsReqdField"),
           ovsReqdFilter = filterInput.data("ovsReqdFilter"),
-          oReqdFilterControl = this.getView().byId(ovsReqdField),
           aFilter = [
             new Filter(filterInput.data("ovsIdField"), FilterOperator.EQ, oEvent.getParameter("value")),
             new Filter(filterInput.data("ovsDescField"), FilterOperator.EQ, oEvent.getParameter("value"))
           ],
           that = this;
-        if (oReqdFilterControl)
-          aFilter.push(new Filter(ovsReqdFilter, FilterOperator.EQ, oReqdFilterControl.getValue()));
+        if (ovsReqdValue)
+          aFilter.push(new Filter(ovsReqdFilter, FilterOperator.EQ, ovsReqdValue));
         this
           .getOwnerComponent()
           .getModel('apModel')
@@ -83,6 +82,12 @@ sap.ui.define([
           filterInput.setValue(aContexts.map(function (oContext) {
             return oContext.getObject()[filterInput.data("ovsIdField")];
           }).join(", "));
+          if(filterInput.data("ovsAdditionalField")){
+            var additionalField = this.getView().byId(filterInput.data("ovsAdditionalField"));
+            additionalField.setValue(aContexts.map(function (oContext) {
+              return oContext.getObject()[filterInput.data("ovsDescField")];
+            }).join(", "));
+          }
         }
       },
 

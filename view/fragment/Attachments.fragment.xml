@@ -1,0 +1,31 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:l="sap.ui.layout" 
+	xmlns:f="sap.ui.layout.form" 
+	xmlns:core="sap.ui.core" 
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<UploadCollection  
+		uploadUrl='{/Attachments/uploadURL}' 
+		maximumFilenameLength="55" 
+		maximumFileSize="10" 
+		multiple="true" 
+		showSeparators="All" 
+		change="onFileUploadChange" 
+		fileDeleted="onFileDeleted" 
+		filenameLengthExceed="onFilenameLengthExceed" 
+		fileRenamed="onFileRenamed" 
+		fileSizeExceed="onFileSizeExceed" 
+		selectionChange="onSelectionChange" 
+		typeMissmatch="onTypeMissmatch" 
+		uploadComplete="onUploadComplete" 
+		beforeUploadStarts="onBeforeUploadStarts" 
+		uploadTerminated="onUploadTerminated" 
+		items="{/Attachments/files}" 
+		numberOfAttachmentsText="Uploaded (8)" 
+		mode="SingleSelectMaster">
+		<!-- <toolbar><OverflowToolbar id="myId"><Title id="attachmentTitle"/><ToolbarSpacer/><UploadCollectionToolbarPlaceholder></UploadCollectionToolbarPlaceholder></OverflowToolbar></toolbar> -->
+		<items>
+			<UploadCollectionItem fileName="{ObjectId}" url="{Uri}" enableDelete="true" enableEdit="false" visibleEdit="false" />
+		</items>
+	</UploadCollection>
+</core:FragmentDefinition>

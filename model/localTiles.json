@@ -1,11 +1,11 @@
 {
     "results": [
         {
-            "id": "01",
+            "mode": "display",
             "section": "PTS",
             "tiles": [
                 {
-                    "id": "approvals",
+                    "navRoute": "approvals",
                     "header": "My Approvals",
                     "countable":true,
                     "busy":true,
@@ -14,7 +14,7 @@
                     "icon": "payment-approval"
                 },
                 {
-                    "id": "submissions",
+                    "navRoute": "submissions",
                     "icon": "sales-document",
                     "header": "My Submissions",
                     "countable":true,
@@ -23,7 +23,7 @@
                     "filterValue":"002"
                 },
                 {
-                    "id": "drafts",
+                    "navRoute": "drafts",
                     "icon": "monitor-payments",
                     "header": "My Drafts",
                     "countable":true,
@@ -32,24 +32,24 @@
                     "filterValue":"C"
                 },
                 {
-                    "id": "historySearch",
+                    "navRoute": "historySearch",
                     "icon": "my-sales-order",
                     "header": "Search"
                 }
             ]
         },
         {
-            "id": "02",
-            "section": "Create",
+            "mode": "create",
+            "section": "New...",
             "tiles": [
                 {
-                    "id": "createAP",
+                    "navRoute": "createAP",
                     "header": "AP",
                     "subheader": "Create AP",
                     "icon": "create-form"
                 },
                  {
-                    "id": "createER",
+                    "navRoute": "createER",
                     "header": "ER",
                     "subheader": "Create ER",
                     "icon": "monitor-payments"

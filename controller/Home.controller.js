@@ -3,7 +3,7 @@ sap.ui.define([
   "sap/ui/model/json/JSONModel",
   "sap/m/MessageToast",
   'sap/ui/model/Filter',
-	'sap/ui/model/FilterOperator'
+  'sap/ui/model/FilterOperator'
 ], function (BaseController, JSONModel, MessageToast, Filter, FilterOperator) {
   "use strict";
   return BaseController.extend(
@@ -27,11 +27,15 @@ sap.ui.define([
       /* =========================================================== */
       handleTilePress: function (oEvent) {
         var oCtx = oEvent.getSource().getBindingContext('tiles'),
-          sPath = oCtx.getPath() + '/id',
+          sPath = oCtx.getPath() + '/navRoute',
           sTileId = oCtx.getProperty(sPath);
-        this.getRouter().navTo("hitlist", {
-          navParam: sTileId
-        });
+        if (oCtx.getProperty(sPath).indexOf('create') === 0)
+          this.getRouter().navTo(sTileId);
+        else {
+          this.getRouter().navTo("hitlist", {
+            navParam: sTileId
+          });
+        }
       },
       /* =========================================================== */
       /* Internal Methods                                            */
