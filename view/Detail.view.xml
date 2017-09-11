@@ -74,12 +74,12 @@
 						<content>
 							<Button icon="sap-icon://message-popup" text="" visible="{UIModel>/messagePopover/visible}" type="Emphasized" press="handleMessagePopoverPress" />
 							<ToolbarSpacer />
-							<Button icon="sap-icon://complete" type="Emphasized" text="Submit" press="handleSubmitButtonClick" tooltip="Submit" />
+							<Button visible="{=${/UIModel/createMode}}" icon="sap-icon://complete" type="Emphasized" text="Submit" press="handleSubmitButtonClick" tooltip="Submit" />
 							<Button icon="sap-icon://save" type="Emphasized" text="Save" press="handleSaveButtonClick" tooltip="Save" />
-							<Button icon="sap-icon://accept" text="Accept" type="Accept" press="handleAcceptButtonClick" tooltip="Accept" />
-							<Button icon="sap-icon://decline" text="Reject" type="Reject" press="handleRejectButtonClick" tooltip="Reject" />
-							<Button icon="sap-icon://close-command-field" type="Reject" text="Last" press="handleReject2LastButtonClick" tooltip="Reject to last"/>
-							<Button type="Accept" iconFirst= "false" icon="sap-icon://open-command-field" text="Forward" press="handleForwardButtonClick" tooltip="Forward" />
+							<Button visible="{=!${/UIModel/createMode}}" icon="sap-icon://accept" text="Accept" type="Accept" press="handleAcceptButtonClick" tooltip="Accept" />
+							<Button visible="{=!${/UIModel/createMode}}" icon="sap-icon://decline" text="Reject" type="Reject" press="handleRejectButtonClick" tooltip="Reject" />
+							<Button visible="{=!${/UIModel/createMode}}" icon="sap-icon://close-command-field" type="Reject" text="Last" press="handleReject2LastButtonClick" tooltip="Reject to last"/>
+							<Button visible="{=!${/UIModel/createMode}}" type="Accept" iconFirst= "false" icon="sap-icon://open-command-field" text="Forward" press="handleForwardButtonClick" tooltip="Forward" />
 						</content>
 					</Toolbar>
 				</footer>

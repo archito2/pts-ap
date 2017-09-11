@@ -25,27 +25,29 @@
 									<core:Fragment fragmentName="com.dolphin.view.fragment.Notes" type="XML"/>
 								</content>
 							</IconTabFilter>
-						</items>
-					</IconTabBar>
-					<!-- <IconTabBar id="idItemIconTabBar" select="handleIconTabBarSelect" class="sapUiResponsiveContentPadding">
-						<items>
-							<IconTabFilter id="idIconTabFilterItems" icon="sap-icon://begin" text="Items" key="Ok">
-								<content> -->
-									<core:Fragment fragmentName="com.dolphin.view.fragment.ERInvoiceItems" type="XML"/>
-								<!-- </content>
+							<IconTabFilter icon="sap-icon://attachment" text="Attachment" key="Ok">
+								<content>
+									<core:Fragment fragmentName="com.dolphin.view.fragment.Attachments" type="XML"/>
+								</content>
 							</IconTabFilter>
 						</items>
-					</IconTabBar> -->
+					</IconTabBar>
+					<core:Fragment fragmentName="com.dolphin.view.fragment.ERInvoiceItems" type="XML"/>
 				</content>
 				<footer>
-						<Toolbar id="DetailToolbar">
-							<content>
-								<Button id="messagePopoverButton" icon="sap-icon://message-popup" text="Open" visible="true" type="Emphasized" press="handleMessagePress" />
-								<ToolbarSpacer />
-								<Button text="Save" press="handleSave" tooltip="Save as a draft" />
-							</content>
-						</Toolbar>
-					</footer>
+					<Toolbar>
+						<content>
+							<Button icon="sap-icon://message-popup" text="" visible="{UIModel>/messagePopover/visible}" type="Emphasized" press="handleMessagePopoverPress" />
+							<ToolbarSpacer />
+							<Button visible="{=${/UIModel/createMode}}" icon="sap-icon://complete" type="Emphasized" text="Submit" press="handleERSubmitButtonClick" tooltip="Submit" />
+							<Button icon="sap-icon://save" type="Emphasized" text="Save" press="handleERSaveButtonClick" tooltip="Save" />
+							<Button visible="{=!${/UIModel/createMode}}" icon="sap-icon://accept" text="Accept" type="Accept" press="handleAcceptButtonClick" tooltip="Accept" />
+							<Button visible="{=!${/UIModel/createMode}}" icon="sap-icon://decline" text="Reject" type="Reject" press="handleRejectButtonClick" tooltip="Reject" />
+							<Button visible="{=!${/UIModel/createMode}}" icon="sap-icon://close-command-field" type="Reject" text="Last" press="handleReject2LastButtonClick" tooltip="Reject to last"/>
+							<Button visible="{=!${/UIModel/createMode}}" type="Accept" iconFirst= "false" icon="sap-icon://open-command-field" text="Forward" press="handleForwardButtonClick" tooltip="Forward" />
+						</content>
+					</Toolbar>
+				</footer>
 			</Page>
 		</pages>
 	</App>

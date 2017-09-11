@@ -5,7 +5,7 @@ sap.ui.define([
     "sap/m/MessageToast",
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
-], function(BaseController, JSONModel, Formatter, MessageToast, Filter, FilterOperator) {
+], function (BaseController, JSONModel, Formatter, MessageToast, Filter, FilterOperator) {
     "use strict";
     return BaseController.extend(
         "com.dolphin.controller.Hitlist", {
@@ -16,13 +16,13 @@ sap.ui.define([
              * Called when the App view controller is instantiated.
              * @public
              */
-            onInit: function() {
+            onInit: function () {
                 this.getRouter().attachRouteMatched(this._onPatternMatched, this);
             },
             /* =========================================================== */
             /* formatter methods                                           */
             /* =========================================================== */
-            formatDate: function(date) {
+            formatDate: function (date) {
                 if (null === date)
                     return "";
                 return Formatter.MediumDateFormat.format(
@@ -36,23 +36,32 @@ sap.ui.define([
              * Event handler for the 'Home' icon on the page header
              * @param  oEvent
              */
-            handlePressHome: function(oEvent) {
+            handlePressHome: function (oEvent) {
                 this.getRouter()
                     .navTo("home");
             },
-            handleLogoffPress: function(oEvent) {
+            handleLogoffPress: function (oEvent) {
                 sap.m.URLHelper.redirect("/logout.html", false);
             },
-            handleSearchTracks: function(oEvent) {},
-            handleDetailRowSelect: function(oEvent) {
-                this.getRouter().navTo('apDetail', {
-                    RecNo: oEvent.getSource().getBindingContext().getProperty().RecNo
-                });
+            handleSearchTracks: function (oEvent) {},
+            handleDetailRowSelect: function (oEvent) {
+                //Find if the record is of type ER
+                //Then opne ER Detail view
+                var sSource = oEvent.getSource().getBindingContext().getProperty().Source;
+                if (sSource === 'ER')
+                    this.getRouter().navTo('erDetail', {
+                        RecNo: oEvent.getSource().getBindingContext().getProperty().RecNo
+                    });
+                //This most likely an AP type
+                else
+                    this.getRouter().navTo('apDetail', {
+                        RecNo: oEvent.getSource().getBindingContext().getProperty().RecNo
+                    });
             },
             /* =========================================================== */
             /* Internal Methods                                            */
             /* =========================================================== */
-            _onPatternMatched: function(oEvent) {
+            _onPatternMatched: function (oEvent) {
                 var aFilter = [];
                 this.setModel(new JSONModel({
                     'filterBar': {}
@@ -65,9 +74,11 @@ sap.ui.define([
                 var sSearchType = oEvent.getParameter("arguments").navParam;
                 this.getModel('configModel').setProperty('/filterBar/selectedAction', sSearchType);
                 this.getModel('configModel').refresh();
-                if (sSearchType === 'approvals')
+                if (sSearchType === 'approvals') {
                     aFilter.push(new Filter('MyApprovalsStr', FilterOperator.EQ, 'X'));
-                else if (sSearchType === 'submissions')
+                    // This is for testing ER development
+                    aFilter.push(new Filter('Source', FilterOperator.EQ, 'ER'));
+                } else if (sSearchType === 'submissions')
                     aFilter.push(new Filter('MyApprovalsStr', FilterOperator.EQ, 'C'));
                 else if (sSearchType === 'drafts')
                     aFilter.push(new Filter('Status', FilterOperator.EQ, '002'));
@@ -75,13 +86,13 @@ sap.ui.define([
                     aFilter.push([]);
                 this._searchTracks(aFilter);
             },
-            _getFilter: function(oEvent, customEvent) {
+            _getFilter: function (oEvent, customEvent) {
                 var aSelectionSet, aFilter = [];
                 if (oEvent)
                     aSelectionSet = oEvent.getParameter('selectionSet');
                 else
                     aSelectionSet = customEvent.selectionSet;
-                aSelectionSet.forEach(function(filterElement) {
+                aSelectionSet.forEach(function (filterElement) {
                     if (filterElement.data('filterId') === 'MySelection') {
                         if (filterElement.getProperty('selectedKey') === 'approvals')
                             aFilter.push(new Filter('MyApprovalsStr', FilterOperator.EQ, 'X'));
@@ -96,14 +107,14 @@ sap.ui.define([
                 });
                 return aFilter;
             },
-            _searchTracks: function(aFilter) {
+            _searchTracks: function (aFilter) {
                 var apModel = this.getOwnerComponent().getModel('apModel');
                 apModel.read('/Tracks', {
                     filters: aFilter,
-                    success: function(oData) {
+                    success: function (oData) {
                         this.getModel().setProperty('/Tracks', oData.results);
                     }.bind(this),
-                    failure: function(oError) {
+                    failure: function (oError) {
                         //TODO : 
                     }
                 });

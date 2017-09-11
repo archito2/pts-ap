@@ -1,12 +1,11 @@
-sap.ui.define([
-], function () {
+sap.ui.define([], function () {
     "use strict";
 
     return {
         /* =========================================================== */
         /* formatter methods                                           */
         /* =========================================================== */
-        formatDate: function (date) { },
+        formatDate: function (date) {},
         removeLeadingZeros: function (sValue) {
             if (sValue)
                 return parseInt(sValue, 10);
@@ -18,6 +17,14 @@ sap.ui.define([
         formatURL: function (sUrl) {
             return "<iframe style=\"border:none; overflow: hidden; height: 100%; width: 95%; position: absolute;\" height=\"100%\" width=\"100%\" src=" +
                 sUrl + "></iframe>";
+        },
+        formatCurrency: function (sAmount, sCurrency) {
+            debugger;
+            var aCurrency = [];
+            aCurrency.push(sAmount);
+            aCurrency.push(sCurrency);
+            var oAmount = new sap.ui.model.type.Currency();
+            return oAmount.formatValue(aCurrency, "");
         },
         isDetailVisible: function (sSpkzl) {
             var oSpkzl, iCalcRate;

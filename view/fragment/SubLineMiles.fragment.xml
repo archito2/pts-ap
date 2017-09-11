@@ -7,16 +7,20 @@
         <footer>
             <Toolbar>
                 <ToolbarSpacer/>
-                <Button text="Close" press="handleDetailClose" />
+                <Button text="Close" press="handleSubDetailClose" />
             </Toolbar>
         </footer>
         <l:VerticalLayout>
             <l:content>
                 <Label text="Calculation Rate" />
-                <Text  id ="idCalcRateText" />
+                <Text  text = "{/SubLineDetail/CalcRate}" />
                 <Label text="Count" />
-                <Text  visible="{=!${viewModel>/UIModel/CreateMode}}" id="idCountText" />
-                <Input editable="false" placeholder= "Amount" visible="{=${viewModel>/UIModel/CreateMode}}" value="{viewModel>Netwr}"/>
+                <Text  visible="{=!${/UIModel/createMode}}" />
+                <Input visible="{=${/UIModel/createMode}}" value="{/SubLineDetail/Count}"/>
+                <Label text="From" />
+                <Input visible="{=${/UIModel/createMode}}" value="{/SubLineDetail/From}"/>
+                <Label text="To" />
+                <Input visible="{=${/UIModel/createMode}}" value="{/SubLineDetail/To}"/>
             </l:content>
         </l:VerticalLayout>
     </Popover>

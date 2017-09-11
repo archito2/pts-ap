@@ -10,65 +10,65 @@
             <core:Title/>
             <!-- Reference -->
             <Label text="Reference" visible="{=${configModel>/WebStatus/WEB_HIDE_PHXBLNR}!=='X'}" design="Bold" />
-            <Input visible="{=${/UIModel/CreateMode}}" id="idReferenceNumber" value="{/CRHeader/Xblnr}"/>
+            <Input visible="{=${/UIModel/createMode}}" id="idReferenceNumber" value="{/CRHeader/Xblnr}"/>
             <!-- Document Date -->
             <Label text="Document Date" visible="{=${configModel>/WebStatus/WEB_HIDE_PHXBLDT}!=='X'}" design="Bold" />
-            <DatePicker visible="{=${/UIModel/CreateMode}}" id="idDocumentDate" dateValue="{/CRHeader/Xbldt}" displayFormat="MM/dd/yyyy"/>
+            <DatePicker visible="{=${/UIModel/createMode}}" id="idDocumentDate" dateValue="{/CRHeader/Xbldt}" displayFormat="MM/dd/yyyy"/>
             <!-- CompanyCode -->
             <Label text="Company Code" visible="{=${configModel>/WebStatus/WEB_HIDE_PHBUKRS}!=='X'}" design="Bold" />
-            <Input visible="{=${/UIModel/CreateMode}}" id="idInputBukrs" value="{/CRHeader/Bukrs}" app:ovsService="CompanycodeListSet" showValueHelp="true" app:ovsIdField="CompCode" app:ovsDescField="CompName" app:ovsTitle="Select a Company Code" valueHelpRequest="handleValueHelp" />
+            <Input visible="{=${/UIModel/createMode}}" id="idInputBukrs" value="{/CRHeader/Bukrs}" app:ovsService="CompanycodeListSet" showValueHelp="true" app:ovsIdField="CompCode" app:ovsDescField="CompName" app:ovsTitle="Select a Company Code" valueHelpRequest="handleValueHelp" />
             <!-- Plant -->
             <Label text="Plant" visible="{=${configModel>/WebStatus/WEB_HIDE_PHWERKS}!=='X'}" design="Bold" />
-            <Input visible="{=${/UIModel/CreateMode}}" id="idInputWerks" value="{/CRHeader/Werks}"/>
+            <Input visible="{=${/UIModel/createMode}}" id="idInputWerks" value="{/CRHeader/Werks}"/>
             <!-- Payment Method -->
             <Label text="Payment Method" visible="{=${configModel>/WebStatus/WEB_HIDE_PHRZAWE}!=='X'}" design="Bold" />
-            <Input visible="{=${/UIModel/CreateMode}}" id="idInputPaymentMethod" value="{/CRHeader/Rzawe}"/>
+            <Input visible="{=${/UIModel/createMode}}" id="idInputPaymentMethod" value="{/CRHeader/Rzawe}"/>
             <!-- Payment Reference -->
             <Label text="Payment Reference" visible="{=${configModel>/WebStatus/WEB_HIDE_PHUZAWE}!=='X'}" design="Bold" />
-            <Input visible="{=${/UIModel/CreateMode}}" id="idInputPaymentReference" value="{/CRHeader/Uzawe}"/>
+            <Input visible="{=${/UIModel/createMode}}" id="idInputPaymentReference" value="{/CRHeader/Uzawe}"/>
             <!-- Payment Terms -->
             <Label text="Payment Terms" visible="{=${configModel>/WebStatus/WEB_HIDE_PHZTERM}!=='X'}" design="Bold" />
-            <Input visible="{=${/UIModel/CreateMode}}" id="idInputPaymentTerms" value="{/CRHeader/Zterm}"/>
+            <Input visible="{=${/UIModel/createMode}}" id="idInputPaymentTerms" value="{/CRHeader/Zterm}"/>
             <!-- Column 2 -->
             <core:Title/>
             <!-- Vendor -->
             <Label text="Vendor" visible="{=${configModel>/WebStatus/WEB_HIDE_PHLIFNR}!=='X'}" design="Bold" />
-            <Input app:ovsService="VendorOVSSet" showValueHelp="true" app:ovsIdField="Vendor" app:ovsDescField="Name" app:ovsTitle="Select a vendor" app:ovsAdditionalField="idInputName1" valueHelpRequest="handleValueHelp" visible="{=${/UIModel/CreateMode}}" id="idInputLifnr" value="{/CRHeader/Lifnr}" />
+            <Input app:ovsService="VendorOVSSet" showValueHelp="true" app:ovsIdField="Vendor" app:ovsDescField="Name" app:ovsTitle="Select a vendor" app:ovsAdditionalField="idInputName1" valueHelpRequest="handleValueHelp" visible="{=${/UIModel/createMode}}" id="idInputLifnr" value="{/CRHeader/Lifnr}" />
             <!-- Vendor Name -->
             <Label text="Vendor Name" visible="{=${configModel>/WebStatus/WEB_HIDE_PHNAME1}!=='X'}" design="Bold" />
-            <Input visible="{=${/UIModel/CreateMode}}" id="idInputName1" value="{/CRHeader/Name1}" 
+            <Input visible="{=${/UIModel/createMode}}" id="idInputName1" value="{/CRHeader/Name1}" 
             />
             <!-- Reciept Date -->
             <Label text="Reciept Date" visible="{=${configModel>/WebStatus/WEB_HIDE_PHRCDAT}!=='X'}" design="Bold" />
-            <DatePicker visible="{=${/UIModel/CreateMode}}" id="idInputRcdat" dateValue="{/CRHeader/Rcdat}" displayFormat="MM/dd/yyyy"/>
+            <DatePicker visible="{=${/UIModel/createMode}}" id="idInputRcdat" dateValue="{/CRHeader/Rcdat}" displayFormat="MM/dd/yyyy"/>
             <!-- Vvalu -->
             <Label text="Custom" visible="{=${configModel>/WebStatus/WEB_HIDE_PHVVALU}!=='X'}" design="Bold" />
-            <Input visible="{=${/UIModel/CreateMode}}" id="idInputVvalu" value="{/CRHeader/Vvalu}"/>
+            <Input visible="{=${/UIModel/createMode}}" id="idInputVvalu" value="{/CRHeader/Vvalu}"/>
             <!-- Vvalu1 -->
             <Label text="Custom 1" visible="{=${configModel>/WebStatus/WEB_HIDE_PHVVALU1}!=='X'}" design="Bold" />
-            <Input visible="{=${/UIModel/CreateMode}}" id="idInputVvalu1" value="{/CRHeader/Vvalu1}"/>
+            <Input visible="{=${/UIModel/createMode}}" id="idInputVvalu1" value="{/CRHeader/Vvalu1}"/>
             <!-- Vvalu2 -->
             <Label text="Custom 2" visible="{=${configModel>/WebStatus/WEB_HIDE_PHVVALU2}!=='X'}" design="Bold" />
-            <Input visible="{=${/UIModel/CreateMode}}" id="idInputVvalu2" value="{/CRHeader/Vvalu2}"/>
+            <Input visible="{=${/UIModel/createMode}}" id="idInputVvalu2" value="{/CRHeader/Vvalu2}"/>
             <!-- Column 3 -->
             <core:Title/>
             <!-- Amount -->
             <Label text="Amount" visible="{=${configModel>/WebStatus/WEB_HIDE_PHWRBTR}!=='X'}" design="Bold" />
-            <Input visible="{=${/UIModel/CreateMode}}" id="idInputWrbtr" value="{/CRHeader/Wrbtr}"/>
-            <Input visible="{=${/UIModel/CreateMode}}" placeholder="Currency" id="idInputWaers" value="{/CRHeader/Waers}"/>
+            <Input visible="{=${/UIModel/createMode}}" id="idInputWrbtr" value="{/CRHeader/Wrbtr}"/>
+            <Input visible="{=${/UIModel/createMode}}" placeholder="Currency" id="idInputWaers" value="{/CRHeader/Waers}"/>
             <!-- Tax -->
             <Label text="Tax Amount" visible="{=${configModel>/WebStatus/WEB_HIDE_PHWMWST}!=='X'}" design="Bold" />
-            <Input visible="{=${/UIModel/CreateMode}}" id="idInputWmwst" value="{/CRHeader/Wmwst}"/>
-            <Input visible="{=${/UIModel/CreateMode}}" id="idInputTxcod" value="{/CRHeader/Txcod}"/>
+            <Input visible="{=${/UIModel/createMode}}" id="idInputWmwst" value="{/CRHeader/Wmwst}"/>
+            <Input visible="{=${/UIModel/createMode}}" id="idInputTxcod" value="{/CRHeader/Txcod}"/>
             <!-- Delivery Note -->
             <Label text="Delivery Note" visible="{=${configModel>/WebStatus/WEB_HIDE_PHLFSNR}!=='X'}" design="Bold" />
-            <Input visible="{=${/UIModel/CreateMode}}" id="idInputLfsnr" value="{/CRHeader/Lfsnr}"/>
+            <Input visible="{=${/UIModel/createMode}}" id="idInputLfsnr" value="{/CRHeader/Lfsnr}"/>
             <!-- Doc. Header Text -->
             <Label text="Doc. Header Text" visible="{=${configModel>/WebStatus/WEB_HIDE_PHBKTXT}!=='X'}" design="Bold" />
-            <Input visible="{=${/UIModel/CreateMode}}" id="idInputBktxt" value="{/CRHeader/Bktxt}"/>
+            <Input visible="{=${/UIModel/createMode}}" id="idInputBktxt" value="{/CRHeader/Bktxt}"/>
             <!--Logical System -->
             <Label text="Logical System" visible="{=${configModel>/WebStatus/WEB_HIDE_PHAWSYS}!=='X'}" design="Bold" />
-            <Input visible="{=${/UIModel/CreateMode}}" id="idInputAwsys" value="{/CRHeader/Awsys}"/>
+            <Input visible="{=${/UIModel/createMode}}" id="idInputAwsys" value="{/CRHeader/Awsys}"/>
             <!--Express -->
             <Label text="Express" visible="{=${configModel>/WebStatus/WEB_HIDE_PHDTYPZ}!=='X'}" design="Bold" />
             <Switch customTextOn="Yes" customTextOff="No" visible="{=${viewModel>/WebStatus/WEB_HIDE_PHDTYPZ}!=='X'}" state="{= ${/CRHeader/Awsys} === 'X'}"></Switch>

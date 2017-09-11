@@ -6,9 +6,11 @@ sap.ui.define([
     "sap/m/MessageToast",
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
-    'sap/m/Dialog'
-], function (BaseController, Helper, Formatter, JSONModel, MessageToast, Filter, FilterOperator, Dialog) {
+    'sap/m/Dialog',
+    'sap/ui/core/routing/History'
+], function (BaseController, Helper, Formatter, JSONModel, MessageToast, Filter, FilterOperator, Dialog, History) {
     "use strict";
+    var sInvoicePath;
 
     return BaseController.extend(
         "com.dolphin.controller.Detail", {
@@ -23,7 +25,6 @@ sap.ui.define([
             onInit: function () {
                 // if(this.byId('idPaneContainer'))
                 //     this.byId('idPaneContainer').removePane(1);
-                sap.ui.core.BusyIndicator.hide();
                 this.getRouter().attachRouteMatched(this._onAttachRouteMatched, this);
             },
             /**
@@ -66,7 +67,9 @@ sap.ui.define([
                     },
                     'busy': false
                 });
-                if (urlPattern === 'apDetail') {
+                var currTime = new Date();
+                if (urlPattern === 'apDetail' || urlPattern === 'erDetail') {
+                    sap.ui.core.BusyIndicator.hide();
                     var sRecNo = oEvent.getParameter('arguments').RecNo;
                     this._callTracksService(sRecNo);
                     this._callInvoiceItemsService(sRecNo);
@@ -74,15 +77,15 @@ sap.ui.define([
                     this._callHistoryItemsService(sRecNo);
                     this._callNotesService(sRecNo);
                     this._callAttachmentService(sRecNo);
-                } else {
-                    //This is create AP
+                } else if (urlPattern === 'apCreate') {
+                    //This is create AP 
+                    sap.ui.core.BusyIndicator.hide();
                     this.getModel().setProperty('/UIModel', {
-                        'CreateMode': true,
+                        'createMode': true,
                         'invoiceItems': {
                             'createMode': true
                         }
                     });
-                    var currTime = new Date();
                     this.getModel().setProperty('/CRHeader', {
                         'Bukrs': sap.ui.getCore().getModel('userModel').results[0].Bukrs,
                         'Waers': sap.ui.getCore().getModel('userModel').results[0].Waers,
@@ -92,10 +95,40 @@ sap.ui.define([
                         'Lifnr': '1000',
                         'Wrbtr': '100'
                     });
-                    this.getModel().setProperty('/Attachments', {
-                        'uploadURL': '/pts-ap/proxy_abap/sap/bc/dol/file_upload?temp=X'
+                } else {
+                    //This is create ER
+                    this.getModel().setProperty('/UIModel', {
+                        'createMode': true,
+                        'invoiceItems': {
+                            'createMode': true
+                        }
                     });
+                    this.getModel().setProperty('/Tracks', {
+                        'CompanyCode': sap.ui.getCore().getModel('userModel').results[0].Bukrs,
+                        'Currency': sap.ui.getCore().getModel('userModel').results[0].Waers,
+                        // this is only for testing 
+                        'DocumentHeaderText': 'ER-' + currTime.getHours() + ':' + currTime.getMinutes() + ':' + currTime.getSeconds(),
+                        'DocDate': new Date(),
+                        'ReceiptDate': new Date(),
+                        'User': 'ADAMS'
+                    });
+                    Helper._callExpenseTypeService(
+                            this.getModel('erModel'),
+                            sap.ui.getCore().getModel('userModel').results[0].Bukrs)
+                        .then(function (oData) {
+                            this.getModel().setProperty('/ExpenseTypeSet', oData.results);
+                            this.getModel().setProperty('/ExpenseType', Helper.getExpenseTypes(oData.results));
+                            this.getModel().setProperty('/SubLineDetail',
+                                this.getModel().getProperty('/ExpenseType')[this.getModel().getProperty('/ExpenseTypeSet')[0].ExpType]);
+                            sap.ui.core.BusyIndicator.hide();
+                        }.bind(this))
+                        .catch(function (oError) {
+                            sap.ui.core.BusyIndicator.hide();
+                        });
                 }
+                this.getModel().setProperty('/Attachments', {
+                    'uploadURL': '/pts-ap/proxy_abap/sap/bc/dol/file_upload?temp=X'
+                });
             },
             /* =========================================================== */
             /* event handlers                                              */
@@ -112,7 +145,7 @@ sap.ui.define([
             onBeforeUploadStarts: function (oEvent) {
                 var oCustomerHeader = new sap.m.UploadCollectionParameter({
                     name: "PTSUser",
-                    value: "ADAMS"
+                    value: sap.ui.getCore().getModel('userModel').results[0].Xuser
                 });
                 oEvent.getParameters().addHeaderParameter(oCustomerHeader);
             },
@@ -164,6 +197,18 @@ sap.ui.define([
                 var userModel = sap.ui.getCore().getModel('userModel');
                 var oInvoiceItem = {
                     Bukrs: this.getModel().getProperty('/CRHeader/Bukrs'),
+                    Shkzg: 'S'
+                };
+                if (this.getModel().getProperty('/InvoiceItems'))
+                    this.getModel().getProperty('/InvoiceItems').push(oInvoiceItem);
+                else
+                    this.getModel().setProperty('/InvoiceItems', [oInvoiceItem]);
+                this.getModel().refresh();
+            },
+            handleERAddItem: function (oEvent) {
+                var userModel = sap.ui.getCore().getModel('userModel');
+                var oInvoiceItem = {
+                    Bukrs: this.getModel().getProperty('/Header/Bukrs'),
                     Shkzg: 'S'
                 };
                 if (this.getModel().getProperty('/InvoiceItems'))
@@ -267,10 +312,21 @@ sap.ui.define([
             handleSubLineDetailClose: function (oEvent) {
                 oEvent.getSource().getParent().getParent().close();
             },
+            handleSubDetailClose: function (oEvent) {
+                var oInvoiceItem = this.getModel().getProperty(this.sInvoicePath),
+                    oSubLineDetail = this.getModel().getProperty('/SubLineDetail');
+                oInvoiceItem.ExpAmount = oSubLineDetail.CalcRate * oSubLineDetail.Count;
+                oInvoiceItem.Sgtxt = oSubLineDetail.From + " " + oSubLineDetail.To;
+                oEvent.getSource().getParent().getParent().close();
+                this.getModel().setProperty('/SubLineDetail', {});
+                this.getModel().refresh();
+            },
             handleExpTypeChange: function (oEvent) {
                 if (oEvent.getSource().getSelectedKey()) {
                     var sPath = oEvent.getSource().getBindingContext().sPath,
                         iPath = sPath.slice(sPath.lastIndexOf('/') + 1);
+                    this.getModel().setProperty('/CurrentExpenseType',
+                        this.getModel().getProperty('/ExpenseType')[oEvent.getSource().getSelectedKey()]);
                     if (oEvent.getSource().getSelectedKey() === 'ADVA') {
                         this._callADVALinesService().then(function () {
                                 this.oViewModel.getProperty('/AdvLinesSet').results.forEach(function (item) {
@@ -287,7 +343,7 @@ sap.ui.define([
                                 //Reject
                             });
                     } else {
-                        var sGlacc = this.getModel('configModel').getProperty('/ExpenseType')[oEvent.getSource().getSelectedKey()].GLAcc;
+                        var sGlacc = this.getModel().getProperty('/ExpenseType')[oEvent.getSource().getSelectedKey()].GLAcc;
                         this.getModel().getProperty(sPath).Glacc = sGlacc;
                         // debugger;
                         // this.getModel().setProperty(sPath,{Glacc:sGlacc});
@@ -295,12 +351,18 @@ sap.ui.define([
                     }
                 }
             },
-            handleDetailPress: function (oEvent) {
+            handleExpDetailPress: function (oEvent) {
                 var sExpType = oEvent.getSource().getBindingContext().getProperty('Spkzl'),
                     sQuantity = oEvent.getSource().getBindingContext().getProperty('Menge'),
-                    oSpkzl = this.getModel('configModel').getProperty('/ExpenseType')[sExpType],
+                    sAmount = oEvent.getSource().getBindingContext().getProperty('ExpAmount'),
+                    iAmount = parseInt(sAmount),
+                    oSpkzl = this.getModel().getProperty('/ExpenseType')[sExpType],
                     iCalcRate = parseInt(oSpkzl.CalcRate),
                     sPopOverXML;
+                this.sInvoicePath = oEvent.getSource().getBindingContext().getPath();
+                // var oInvoiceItem = this.getModel().getProperty(oEvent.getSource().getBindingContext().getPath());
+
+                // this.byId('idItemsTable').setSelectedItem()
                 //If calc rate is present we show the mile popup
                 if (iCalcRate <= 0) {
                     // Create a popup element if not existing
@@ -321,11 +383,12 @@ sap.ui.define([
                 }
                 // Else we show the details table
                 else {
+                    this.getModel().setProperty('/SubLineDetail/Count', (iAmount / iCalcRate)+"");
                     if (!this._oPopoverSubLines) {
                         this._oPopoverSubLines = sap.ui.xmlfragment("com.dolphin.view.fragment.SubLineMiles", this);
                         this.getView().addDependent(this._oPopoverSubLines);
-                        sap.ui.getCore().byId('idCalcRateText').setText(iCalcRate);
-                        sap.ui.getCore().byId('idCountText').setText(sQuantity);
+                        // sap.ui.getCore().byId('idCalcRateText').setText(iCalcRate);
+                        // sap.ui.getCore().byId('idCountText').setText(sQuantity);
                     }
                     this._oPopoverSubLines.openBy(oEvent.getSource());
                 }
@@ -362,6 +425,9 @@ sap.ui.define([
             handleSaveButtonClick: function (oEvent) {
                 this._saveAP();
             },
+            handleERSaveButtonClick: function (oEvent) {
+                this._saveExpenseReport();
+            },
             handleAcceptButtonClick: function (oEvent) {
                 this._saveAP().then(function () {
                     this.pressDialog.open();
@@ -379,8 +445,40 @@ sap.ui.define([
                     sPath = oCtx.getPath(),
                     sSubstats = oCtx.getProperty(sPath).Substats,
                     sRecNo = this.getModel().getProperty('/Tracks').RecNo;
-                this._callSetSubStatusCode('061', sSubstats, sRecNo)
-                    .then(this._callWorkflowService(sRecNo, 'A')).catch(function () {});
+                sap.ui.core.BusyIndicator.show();
+                Helper.callSetSubStatusCode(this.getModel('apModel'), '061', sSubstats, sRecNo)
+                    .then(function () {
+                        return Helper.callWorkflowService(this.getModel('apModel'), sRecNo, 'A');
+                    }.bind(this))
+                    .then(function () {
+                        return Helper.saveNotes(
+                            this.getModel('apModel'),
+                            sap.ui.getCore().getModel('userModel').results[0].Xuser,
+                            sap.ui.getCore().byId('submitDialogTextarea').getValue(),
+                            this.getModel().getProperty('/Tracks/RecNo'));
+                    }.bind(this))
+                    .then(function () {
+                        sap.ui.core.BusyIndicator.hide();
+                        this.that.pressDialog.close();
+                        MessageToast.show('Record accepted successfully');
+                        var oHistory = History.getInstance();
+                        var sPreviousHash = oHistory.getPreviousHash();
+                        if (sPreviousHash !== undefined) {
+                            // history contains a previous entry
+                            window.history.go(-1);
+                        } else {
+                            this.navTo("home");
+                        }
+                    }.bind({
+                        that: this
+                    }))
+                    .catch(function (oError) {
+                        sap.ui.core.BusyIndicator.hide();
+                        this._showErrorDialog(oError);
+                    }.bind(this));
+            },
+            handleCanceltReasonCodeButtonClick: function (oEvent) {
+                oEvent.getSource().getParent().close();
             },
             handleCreateButtonClick: function (oEvent) {
                 sap.ui.core.BusyIndicator.show();
@@ -420,11 +518,11 @@ sap.ui.define([
 
             },
             onNotesPost: function (oEvent) {
-                this.getModel().setProperty('/UIModel/busy',true);
+                this.getModel().setProperty('/UIModel/busy', true);
                 Helper.saveNotes(
                     this.getModel('apModel'),
                     sap.ui.getCore().getModel('userModel').results[0].Xuser,
-                    oEvent,
+                    oEvent.getSource().getValue(),
                     this.getModel().getProperty('/Tracks/RecNo')).then(function (oData) {
                     //Success
                     // this._callNotesService(this.getModel().getProperty('/Tracks/RecNo'));
@@ -441,6 +539,11 @@ sap.ui.define([
                     //Error
                     this.getModel().setProperty('/UIModel/busy', false);
                 });
+            },
+            handleLiveChange: function (oEvent) {
+                var sText = oEvent.getParameter('value');
+                var parent = oEvent.getSource().getParent();
+                parent.getBeginButton().setEnabled(sText.length > 0);
             },
             /* =========================================================== */
             /* Internal Methods                                            */
@@ -552,25 +655,6 @@ sap.ui.define([
                         }
                     });
             },
-            _callSetSubStatusCode: function (sStats, sSubstats, sRecNo) {
-                return new Promise(function (resolve, reject) {
-                    this.getModel('apModel')
-                        .callFunction("/set_substatus_code", {
-                            urlParameters: {
-                                Stats: sStats,
-                                RecNo: sRecNo,
-                                Substats: sSubstats
-                            },
-                            method: "POST",
-                            success: function (oData) {
-                                resolve();
-                            }.bind(this),
-                            error: function (oError) {
-                                reject(oError);
-                            }
-                        });
-                }.bind(this));
-            },
             _callCCLinesService: function () {
                 this.getOwnerComponent().getModel('erModel')
                     .read("/CCLinesSet", {
@@ -597,97 +681,42 @@ sap.ui.define([
                         });
                 }.bind(this));
             },
-            _callExpenseTypeService: function () {
-                this.getOwnerComponent().getModel('erModel')
-                    .read("/ExpenseTypeSet", {
-                        filters: [
-                            new Filter(
-                                'CompanyCode', FilterOperator.EQ,
-                                this.getModel().getProperty('/Tracks').CompanyCode)
-                        ],
-                        success: function (oData, oResponse) {
-                            this.getModel().setProperty('/ExpenseTypeSet', oData);
-                            var oExpTypes = oData.results.reduce(function (oFinal, oLine) {
-                                oFinal[oLine.ExpType] = oFinal[oLine.ExpType] || {};
-                                oFinal[oLine.ExpType].CompanyCode = oLine.CompanyCode;
-                                oFinal[oLine.ExpType].NameOfExpType = oLine.NameOfExpType;
-                                oFinal[oLine.ExpType].CalcRate = oLine.CalcRate;
-                                oFinal[oLine.ExpType].Vat = oLine.Vat;
-                                oFinal[oLine.ExpType].GLAcc = oLine.GLAcc;
-                                oFinal[oLine.ExpType].CountryKey = oLine.CountryKey;
-                                oFinal[oLine.ExpType].Title = oLine.Title;
-                                return oFinal;
-                            }, {});
-                            this.getModel('configModel').setProperty('/ExpenseType', oExpTypes);
-                        }.bind(this),
-                        error: function (oData, oResponse) {
-                            console.log(oResponse);
-                        }
-                    });
-                sap.ui.core.BusyIndicator.hide();
-            },
-            _callWorkflowService: function (sRecNo, sDecision) {
-                this.getModel('apModel')
-                    .callFunction("/record_action", {
-                        urlParameters: {
-                            USER: '',
-                            RECNO: sRecNo,
-                            DECISION: 'A'
-                        },
-                        method: "POST",
-                        success: function (oData) {}.bind(this),
-                        error: function (oError) {
-                            this._showErrorDialog(oError);
-                        }.bind(this)
-                    });
-            },
             _saveExpenseReport: function () {
                 var oTracks = this.getModel().getProperty('/Tracks'),
-                    oErModel = this.getModel('erModel'),
-                    that = this;
-
-
+                    oErModel = this.getModel('erModel');
                 oTracks.SubLines = [];
-                oTracks.ItemER = this.getModel().getProperty('/Items');
-                this.getModel().getProperty('/Items').forEach(function (item, index) {
-                    item.SubLines.forEach(function (subLine) {
-                        subLine.LineNum = index + 1 + '';
-                        oTracks.SubLines.push(subLine);
-                    }.bind({
-                        index: index,
-                        oTracks: oTracks
-                    }));
-                    delete item.SubLines;
-                }.bind(oTracks));
-
-
-                // oTracks.er_item = this.getModel().getProperty('/Items');
-                // oTracks.ApproversER = this.getModel().getProperty('/Approvers');
-                // oTracks.ContactsER = this.getModel().getProperty('/Contacts');
-                // oTracks.ERNotes = this.getModel().getProperty('/Notes');
-                // oTracks.SubLines = this.getModel().getProperty('/SubLines');
-                // oTracks.InvoiceItems = this.getModel().getProperty('/Items').results;
-                // oTracks.Sublines = this.getModel().getProperty('/Sublines');
+                oTracks.ItemER = this.getModel().getProperty('/InvoiceItems');
+                if (this.getModel().getProperty('/InvoiceItems'))
+                    this.getModel().getProperty('/InvoiceItems').forEach(function (item, index) {
+                        if (item.SubLines)
+                            item.SubLines.forEach(function (subLine) {
+                                subLine.LineNum = index + 1 + '';
+                                oTracks.SubLines.push(subLine);
+                            }.bind({
+                                index: index,
+                                oTracks: oTracks
+                            }));
+                        delete item.SubLines;
+                    }.bind(oTracks));
+                oTracks.Stats = '002';
+                oTracks.ApproversER = this.getModel().getProperty('/Approvers');
+                oTracks.ERNotes = this.getModel().getProperty('/Notes');
+                oTracks.ItemER = this.getModel().getProperty('/InvoiceItems');
+                oTracks.Sublines = this.getModel().getProperty('/Sublines');
                 sap.ui.core.BusyIndicator.show();
-                // oErModel.setUseBatch(true);
                 oErModel.setHeaders({
-                    'PTSUser': 'ADAMS',
+                    'PTSUser': sap.ui.getCore().getModel('userModel').results[0].Xuser,
                     'PTSLocale': 'E',
                     'PTSIgnoreWarning': 'X'
                 });
-
-                oErModel.create('/HeaderERSet', oTracks, {
-                    success: function (oData, response) {
-                        MessageToast.show(oData.Recno + ' created as a draft');
+                Helper.saveExpenseReport(oTracks, oErModel).then(function (oData) {
                         sap.ui.core.BusyIndicator.hide();
-                        // that._executeApprovalAction("", "A", sRecNo);
-                    },
-                    error: function (oError) {
+                        MessageToast.show(oData.Recno + ' saved');
+                    })
+                    .catch(function (oError) {
                         sap.ui.core.BusyIndicator.hide();
-                        that.displayErrorPopup(oError);
-                        // that._setMessageModel(oError);
-                    }.bind(this)
-                });
+                        this._showErrorDialog(oError);
+                    }.bind(this));
             },
             _saveAP: function () {
                 var apModel = this.getModel('apModel'),
@@ -695,7 +724,7 @@ sap.ui.define([
 
                 oTracks.InvoiceItems = this.getModel().getProperty('/InvoiceItems');
                 apModel.setHeaders({
-                    'PTSUser': 'ADAMS',
+                    'PTSUser': sap.ui.getCore().getModel('userModel').results[0].Xuser,
                     'PTSLocale': 'E',
                 });
                 sap.ui.core.BusyIndicator.show();

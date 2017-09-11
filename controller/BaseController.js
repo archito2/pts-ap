@@ -40,7 +40,6 @@ sap.ui.define([
           //to get access to the global model
           this.getView().addDependent(that.pressDialog);
         }
-
         that.pressDialog.open();
       },
       handleSearch: function (oEvent) {

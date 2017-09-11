@@ -2,10 +2,12 @@
     xmlns="sap.m" 
     xmlns:l="sap.ui.layout" 
     xmlns:f="sap.ui.layout.form" 
-    xmlns:core="sap.ui.core">
-    <Dialog contentWidth="200px" showHeader="false">
+    xmlns:core="sap.ui.core" class="sapUiSizeCompact">
+    <Dialog class="sapUiContentPadding" contentWidth="200px" title="Confirmation" showHeader="true">
         <content >
-            <Table  mode="SingleSelectMaster" id="idSubStatusTable" items="{/SubStatusSet}">
+            <Label text='Select a reason code' labelFor="idLabelInput"/>
+            <Input id='idLabelInput' visible="false"/>
+            <Table mode="SingleSelectMaster" id="idSubStatusTable" required="true" items="{/SubStatusSet}">
                 <columns>
                     <Column>
                         <Text text="Name"/>
@@ -23,10 +25,15 @@
                     </ColumnListItem>
                 </items>
             </Table>
+            <Label text='Comments' labelFor="submitDialogTextarea"/>
+            <TextArea required="true" id='submitDialogTextarea' liveChange="handleLiveChange" width='100%' placeholder='Add note(required)'/>
         </content>
-        <buttons>
-            <Button icon="sap-icon://accept" text="Accept" type="Accept" press="handleAcceptReasonCodeButtonClick" tooltip="Accept" />
-            <Button icon="sap-icon://decline" text="Cancel" type="Reject" press="handleRejectReasonCodeButtonClick" tooltip="Reject" />
-        </buttons>
+        <beginButton>
+            <Button enabled = "false" icon="sap-icon://accept" text="Accept" type="Accept" press="handleAcceptReasonCodeButtonClick" tooltip="Accept" />
+        </beginButton>
+        <endButton>
+            <Button icon="sap-icon://decline" text="Cancel" type="Reject" press="handleCanceltReasonCodeButtonClick" tooltip="Reject" />
+        </endButton>
+        <!-- <buttons><Button icon="sap-icon://accept" text="Accept" type="Accept" press="handleAcceptReasonCodeButtonClick" tooltip="Accept" /><Button icon="sap-icon://decline" text="Cancel" type="Reject" press="handleRejectReasonCodeButtonClick" tooltip="Reject" /></buttons> -->
     </Dialog>
 </core:FragmentDefinition>
