@@ -116,10 +116,15 @@ sap.ui.define([
                             this.getModel('erModel'),
                             sap.ui.getCore().getModel('userModel').results[0].Bukrs)
                         .then(function (oData) {
+                            oData.results.unshift({
+                                "ExpType": "--Select--",
+                                "NameOfExpType": "--Select--"
+                            });
                             this.getModel().setProperty('/ExpenseTypeSet', oData.results);
                             this.getModel().setProperty('/ExpenseType', Helper.getExpenseTypes(oData.results));
-                            this.getModel().setProperty('/SubLineDetail',
-                                this.getModel().getProperty('/ExpenseType')[this.getModel().getProperty('/ExpenseTypeSet')[0].ExpType]);
+
+                            // this.getModel().setProperty('/SubLineDetail',
+                            //     this.getModel().getProperty('/ExpenseType')[this.getModel().getProperty('/ExpenseTypeSet')[0].ExpType]);
                             sap.ui.core.BusyIndicator.hide();
                         }.bind(this))
                         .catch(function (oError) {
@@ -230,7 +235,8 @@ sap.ui.define([
                 this.getModel().refresh();
             },
             handleInvoiceDeleteItem: function (oEvent) {
-                var sPath = this.byId('idInvoiceItemsTable').getSelectedItems()[0].getBindingContext().sPath;
+                var sPath = oEvent.getSource().getParent().getParent().getSelectedItems()[0].getBindingContext().sPath;
+                // var sPath = this.byId('idInvoiceItemsTable').getSelectedItems()[0].getBindingContext().sPath;
                 var selectedIndex = sPath.slice(sPath.lastIndexOf('/') + 1);
                 this.getModel().getProperty('/InvoiceItems').splice(selectedIndex, 1);
                 this.getModel().refresh();
@@ -304,7 +310,8 @@ sap.ui.define([
                 oEvent.getSource().getParent().getParent().getSelectedItems().forEach(function (obj) {
                     var sPath = obj.getBindingContext().sPath;
                     // console.log(obj.getBindingContext().getProperty(sPath));
-                    that.getModel().getProperty('/Items').results.push(obj.getBindingContext().getProperty(sPath));
+                    if (that.getModel().getProperty('/InvoiceItems'))
+                        that.getModel().getProperty('/InvoiceItems').push(obj.getBindingContext().getProperty(sPath));
                     that.getModel().refresh();
                 });
                 oEvent.getSource().getParent().getParent().getParent().close();
@@ -316,7 +323,8 @@ sap.ui.define([
                 var oInvoiceItem = this.getModel().getProperty(this.sInvoicePath),
                     oSubLineDetail = this.getModel().getProperty('/SubLineDetail');
                 oInvoiceItem.ExpAmount = oSubLineDetail.CalcRate * oSubLineDetail.Count;
-                oInvoiceItem.Sgtxt = oSubLineDetail.From + " " + oSubLineDetail.To;
+                if (oSubLineDetail.From && oSubLineDetail.To )
+                    oInvoiceItem.Sgtxt = oSubLineDetail.From + " " + oSubLineDetail.To;
                 oEvent.getSource().getParent().getParent().close();
                 this.getModel().setProperty('/SubLineDetail', {});
                 this.getModel().refresh();
@@ -325,7 +333,7 @@ sap.ui.define([
                 if (oEvent.getSource().getSelectedKey()) {
                     var sPath = oEvent.getSource().getBindingContext().sPath,
                         iPath = sPath.slice(sPath.lastIndexOf('/') + 1);
-                    this.getModel().setProperty('/CurrentExpenseType',
+                    this.getModel().setProperty('/SubLineDetail',
                         this.getModel().getProperty('/ExpenseType')[oEvent.getSource().getSelectedKey()]);
                     if (oEvent.getSource().getSelectedKey() === 'ADVA') {
                         this._callADVALinesService().then(function () {
@@ -345,11 +353,11 @@ sap.ui.define([
                     } else {
                         var sGlacc = this.getModel().getProperty('/ExpenseType')[oEvent.getSource().getSelectedKey()].GLAcc;
                         this.getModel().getProperty(sPath).Glacc = sGlacc;
-                        // debugger;
                         // this.getModel().setProperty(sPath,{Glacc:sGlacc});
                         // this.oViewModel.getProperty('/Items').setProperty(sPath,{Glacc:})
                     }
                 }
+                this.getModel().refresh();
             },
             handleExpDetailPress: function (oEvent) {
                 var sExpType = oEvent.getSource().getBindingContext().getProperty('Spkzl'),
@@ -383,7 +391,8 @@ sap.ui.define([
                 }
                 // Else we show the details table
                 else {
-                    this.getModel().setProperty('/SubLineDetail/Count', (iAmount / iCalcRate)+"");
+                    this.getModel().setProperty('/SubLineDetail/CalcRate', iCalcRate);
+                    this.getModel().setProperty('/SubLineDetail/Count', iAmount ? (iAmount / iCalcRate) + "" : "");
                     if (!this._oPopoverSubLines) {
                         this._oPopoverSubLines = sap.ui.xmlfragment("com.dolphin.view.fragment.SubLineMiles", this);
                         this.getView().addDependent(this._oPopoverSubLines);
@@ -743,7 +752,6 @@ sap.ui.define([
                 }.bind(this));
             },
             _splitInvoiceItems: function () {
-                // debugger;
                 if (this.getModel().getProperty('/Tracks').PurchasingDocument)
                     this.getModel().setProperty('/UIModel/isPORecord', true);
                 else

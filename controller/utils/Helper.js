@@ -182,6 +182,15 @@ sap.ui.define([
             }, {});
         },
         saveExpenseReport: function (oTracks, oErModel) {
+            if (oTracks.ApproversER) {
+                var aModified = oTracks.ApproversER.map(function (approver) {
+                    var modifiedApprover = {};
+                    modifiedApprover.ApproversUserid = approver.ApproverID;
+                    modifiedApprover.SeqNoOfApprover = approver.Seq;
+                    return modifiedApprover;
+                });
+            }
+            oTracks.ApproversER= aModified;
             return new Promise(function (resolve, reject) {
                 oErModel.create('/HeaderERSet', oTracks, {
                     success: function (oData, response) {

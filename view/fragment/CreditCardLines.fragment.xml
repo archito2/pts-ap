@@ -6,7 +6,7 @@
     <Dialog showHeader="false">
         <content>
             <Table id="idCCLinesTable" inset="false" selectionChange="handleCCSelectionChange" mode="MultiSelect"
-            items="{ path: 'viewModel>/CCLines/results'}">
+            items="{/CCLines/results}">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="Used Credit Lines " level="H2"/>
@@ -43,14 +43,14 @@
                 <items>
                     <ColumnListItem >
                         <cells>
-                            <Text text="{viewModel>Spkzl}"/>
-                            <Text text="{viewModel>Sgtxt}"/>
-                            <Text text="{viewModel>Netwr}"/>
-                            <Text text="{viewModel>ExpAmount}"/>
-                            <Text text="{viewModel>ExpLand1}"/>
-                            <Text text="{path:'viewModel>ExpDate',type: 'sap.ui.model.type.Date', formatOptions: {style: 'medium'}}"/>
-                            <Text text="{viewModel>Ofdocumentid}"/>
-                            <Text text="{viewModel>CrgType}"/>
+                            <Text text="{Spkzl}"/>
+                            <Text text="{Sgtxt}"/>
+                            <Text text="{Netwr}"/>
+                            <Text text="{ExpAmount}"/>
+                            <Text text="{ExpLand1}"/>
+                            <Text text="{path:'ExpDate',type: 'sap.ui.model.type.Date', formatOptions: {style: 'medium'}}"/>
+                            <Text text="{Ofdocumentid}"/>
+                            <Text text="{CrgType}"/>
                         </cells>
                     </ColumnListItem>
                 </items>

@@ -9,11 +9,11 @@
             <Toolbar>
                 <Title text="Items" level="H2"/>
                 <ToolbarSpacer/>
-                <Button text="Add" icon="sap-icon://add" press="handleERAddItem"/>
-                <Button enabled = "{configModel>/rowSelected}" text="Copy" icon="sap-icon://copy" press="handleERCopyItem"/>
-                <Button enabled = "{configModel>/rowSelected}" text="Delete" icon="sap-icon://delete" press="handleERDeleteItem"/>
+                <Button icon ="{=${/UIModel/invoiceItems/createMode}?'sap-icon://display':'sap-icon://edit'}" press="handleEditInvoiceItem"/>
+                <Button icon="sap-icon://add" press="handleERAddItem"/>
+                <Button enabled = "{configModel>/rowSelected}"  icon="sap-icon://copy" press="handleERCopyItem"/>
+                <Button enabled = "{configModel>/rowSelected}" icon="sap-icon://delete" press="handleInvoiceDeleteItem"/>
                 <Button text="Credit Card Lines" icon="sap-icon://credit-card" press="handleCClines"/>
-                <Button text="Apply Template" icon="sap-icon://crm-service-manager" press="handleERApplyTemplate"/>
             </Toolbar>
         </headerToolbar>
         <columns>
@@ -109,7 +109,7 @@
                             formatOptions:{
                                 showMeasure: false
                             }}"/>
-                        <Input placeholder= "Amount" visible="{=${/UIModel/invoiceItems/createMode}}" value="ExpAmount"/>
+                        <Input placeholder= "Amount" visible="{=${/UIModel/invoiceItems/createMode}}" value="{ExpAmount}"/>
                     </VBox>
                     <!-- Currency -->
                     <VBox>
@@ -124,7 +124,7 @@
                     <VBox>
                         <Text visible="{=!${/UIModel/invoiceItems/createMode}}" text="{ExpLand1}"/>
                         <!-- <Input placeholder= "Country" visible="{=${/UIModel/invoiceItems/createMode}}" value="{ExpLand1}"/> -->
-                        <ComboBox showSecondaryValues= "true" filterSecondaryValues= "true" selectedKey="{ExpLand1}" items="{path: 'countryModel>/Countries'}">
+                        <ComboBox  visible="{=${/UIModel/invoiceItems/createMode}}" showSecondaryValues= "true" filterSecondaryValues= "true" selectedKey="{ExpLand1}" items="{path: 'countryModel>/Countries'}">
                             <core:ListItem key="{countryModel>code}" text="{countryModel>country}" additionalText="{countryModel>code}"/>
                         </ComboBox>
                     </VBox>
