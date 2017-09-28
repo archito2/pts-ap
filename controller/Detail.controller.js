@@ -320,10 +320,13 @@ sap.ui.define([
                 oEvent.getSource().getParent().getParent().close();
             },
             handleSubDetailClose: function (oEvent) {
+               
                 var oInvoiceItem = this.getModel().getProperty(this.sInvoicePath),
                     oSubLineDetail = this.getModel().getProperty('/SubLineDetail');
-                oInvoiceItem.ExpAmount = oSubLineDetail.CalcRate * oSubLineDetail.Count;
-                if (oSubLineDetail.From && oSubLineDetail.To )
+                var tempAmnt = oSubLineDetail.CalcRate * oSubLineDetail.Count;
+                tempAmnt ? tempAmnt.toString() : "";
+                oInvoiceItem.ExpAmount = tempAmnt.toString();
+                if (oSubLineDetail.From && oSubLineDetail.To)
                     oInvoiceItem.Sgtxt = oSubLineDetail.From + " " + oSubLineDetail.To;
                 oEvent.getSource().getParent().getParent().close();
                 this.getModel().setProperty('/SubLineDetail', {});

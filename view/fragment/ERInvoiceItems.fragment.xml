@@ -92,7 +92,7 @@
                 <cells>
                     <!-- Expense Type -->
                     <VBox>
-                        <Text visible="{=!${/UIModel/invoiceItems/createMode}}" text="{path : 'Spkzl',formatter : '.formatter.getSpkzlName'}"/>
+                        <Text visible="{=!${/UIModel/invoiceItems/createMode}}" text="{path : 'Spkzl'}"/>
                         <Select change="handleExpTypeChange" visible="{=${/UIModel/invoiceItems/createMode}}" forceSelection="true" selectedKey="{Spkzl}" items="{path: '/ExpenseTypeSet',templateShareable : false}">
                             <core:Item key="{ExpType}" text="{NameOfExpType}" />
                         </Select>
